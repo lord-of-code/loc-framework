@@ -22,3 +22,9 @@
 hs_err_pid*
 
 .idea
+
+# for mac
+.DS_Store
+
+# for redis dump
+*.rdb
