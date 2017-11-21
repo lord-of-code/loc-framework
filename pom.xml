@@ -9,10 +9,13 @@
   <version>0.1.0-SNAPSHOT</version>
   <name>loc-framework-build</name>
   <description>loc-framework-build</description>
+  <url>https://github.com/lord-of-code/loc-framework</url>
 
   <properties>
     <main.basedir>${basedir}</main.basedir>
+    <revision>0.1.0-SNAPSHOT</revision>
   </properties>
+
   <profiles>
     <profile>
       <id>default</id>
@@ -36,24 +39,6 @@
       </modules>
     </profile>
   </profiles>
-  <repositories>
-    <repository>
-      <id>central</id>
-      <url>https://oss.sonatype.org</url>
-      <snapshots>
-        <enabled>false</enabled>
-      </snapshots>
-    </repository>
-  </repositories>
-  <pluginRepositories>
-    <pluginRepository>
-      <id>central</id>
-      <url>https://oss.sonatype.org/</url>
-      <snapshots>
-        <enabled>false</enabled>
-      </snapshots>
-    </pluginRepository>
-  </pluginRepositories>
   <distributionManagement>
     <snapshotRepository>
       <id>oss</id>
