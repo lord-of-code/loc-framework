@@ -5,7 +5,7 @@
   <parent>
     <groupId>com.github.lord-of-code</groupId>
     <artifactId>loc-framework-dependencies</artifactId>
-    <version>0.1.0-SNAPSHOT</version>
+    <version>${revision}</version>
     <relativePath>../loc-dependencies</relativePath>
   </parent>
   <artifactId>loc-framework-parent</artifactId>

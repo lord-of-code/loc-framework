@@ -6,14 +6,14 @@
   <groupId>com.github.lord-of-code</groupId>
   <artifactId>loc-framework-build</artifactId>
   <packaging>pom</packaging>
-  <version>0.1.0-SNAPSHOT</version>
+  <version>${revision}</version>
   <name>loc-framework-build</name>
   <description>loc-framework-build</description>
   <url>https://github.com/lord-of-code/loc-framework</url>
 
   <properties>
     <main.basedir>${basedir}</main.basedir>
-    <revision>0.1.0-SNAPSHOT</revision>
+    <revision>0.0.1-TEST-RELEASE</revision>
   </properties>
 
   <profiles>
