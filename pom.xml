@@ -11,6 +11,27 @@
   <description>loc-framework-build</description>
   <url>https://github.com/lord-of-code/loc-framework</url>
 
+  <licenses>
+    <license>
+      <name>MIT License</name>
+      <url>http://www.opensource.org/licenses/mit-license.php</url>
+    </license>
+  </licenses>
+
+  <developers>
+    <developer>
+      <id>dragontree101</id>
+      <name>Long Zhe</name>
+      <email>dragonlong1986@126.com</email>
+      <url>https://github.com/dragontree101</url>
+    </developer>
+  </developers>
+
+  <scm>
+    <url>https://github.com/lord-of-code/loc-framework</url>
+    <connection>scm:git:git@github.com:lord-of-code/loc-framework.git</connection>
+  </scm>
+
   <properties>
     <main.basedir>${basedir}</main.basedir>
     <revision>0.0.1-TEST-RELEASE</revision>
@@ -38,5 +59,44 @@
         <module>loc-samples</module>
       </modules>
     </profile>
+    <profile>
+      <id>release</id>
+      <modules>
+        <module>loc-autoconfigure</module>
+        <module>loc-dependencies</module>
+        <module>loc-starters</module>
+        <module>loc-parent</module>
+      </modules>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-gpg-plugin</artifactId>
+            <version>1.6</version>
+            <executions>
+              <execution>
+                <id>sign-artifacts</id>
+                <phase>verify</phase>
+                <goals>
+                  <goal>sign</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
   </profiles>
+
+  <distributionManagement>
+    <snapshotRepository>
+      <id>oss</id>
+      <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+    </snapshotRepository>
+    <repository>
+      <id>oss</id>
+      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+    </repository>
+  </distributionManagement>
+
 </project>
