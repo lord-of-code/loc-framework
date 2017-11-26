@@ -28,6 +28,19 @@
 
 ## eureka的starter的统一标准
 
+# 源码编译
+如果你想了解最新的一些功能和改动，可以通过编译源码来进行使用和测试
+
+* 如果使用mvn wrapper来进行编译,你需要确保使用的JDK版本为1.8以上
+```
+$ ./mvnw clean install
+```
+
+* 如果使用mvn来进行编译，你需要确保使用的mvn为Apache Maven v3.5.0 +
+```
+$ mvn clean install
+```
+
 
 # License
 Loc Framework is Open Source software released under the MIT license.
