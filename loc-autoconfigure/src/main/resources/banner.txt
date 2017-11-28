@@ -1,0 +1,12 @@
+${AnsiColor.BRIGHT_YELLOW}
+  _                   _    ____   __    _____          _
+ | |                 | |  / __ \ / _|  / ____|        | |
+ | |     ___  _ __ __| | | |  | | |_  | |     ___   __| | ___
+ | |    / _ \| '__/ _` | | |  | |  _| | |    / _ \ / _` |/ _ \
+ | |___| (_) | | | (_| | | |__| | |   | |___| (_) | (_| |  __/
+ |______\___/|_|  \__,_|  \____/|_|    \_____\___/ \__,_|\___|
+
+${AnsiColor.BRIGHT_RED}
+Spring Boot Version: ${spring-boot.version}${spring-boot.formatted-version}
+Loc Framework Version: 0.1.0-SNAPSHOT
+${AnsiColor.WHITE}
