@@ -9,7 +9,7 @@
     <version>${revision}</version>
     <relativePath>../loc-parent</relativePath>
   </parent>
-  <artifactId>hn-framework-starters</artifactId>
+  <artifactId>loc-framework-starters</artifactId>
 
   <name>loc-framework-starters</name>
   <description>loc-framework-starters</description>
@@ -19,5 +19,9 @@
   <properties>
     <main.basedir>${basedir}/..</main.basedir>
   </properties>
+
+  <modules>
+    <module>loc-framework-springmvc-starter</module>
+  </modules>
 
 </project>
