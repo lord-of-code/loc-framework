@@ -1,5 +1,6 @@
 package com.loc.framework.autoconfigure.springmvc;
 
+import org.springframework.util.StopWatch;
 import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.web.util.ContentCachingRequestWrapper;
 
@@ -11,11 +12,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Created on 2017/11/30.
  */
 
+@Slf4j
 @AllArgsConstructor
 public class LocAccessLogFilter extends OncePerRequestFilter {
 
@@ -26,43 +29,29 @@ public class LocAccessLogFilter extends OncePerRequestFilter {
       HttpServletResponse httpServletResponse, FilterChain filterChain)
       throws ServletException, IOException {
 
-    boolean isFirstRequest = !isAsyncDispatch(httpServletRequest);
+    final boolean isFirstRequest = !isAsyncDispatch(httpServletRequest);
+    final LocAccessLogger accessLogger = new LocAccessLogger(this.properties);
     HttpServletRequest requestToUse = httpServletRequest;
 
-    if (properties
-        .isIncludeRequestBody() && isFirstRequest && !(httpServletRequest instanceof ContentCachingRequestWrapper)) {
+    StopWatch watch = new StopWatch();
+    watch.start();
+    if (properties.isIncludeRequest() && isFirstRequest &&
+        !(httpServletRequest instanceof ContentCachingRequestWrapper)) {
       requestToUse = new ContentCachingRequestWrapper(httpServletRequest,
           properties.getRequestBodyLength());
     }
 
-    if ((properties.isIncludeRequestBody() || properties
-        .isIncludeRequestHeaders()) && isFirstRequest) {
-      beforeRequest(requestToUse, getBeforeMessage(requestToUse));
+    if (properties.isIncludeRequest() && isFirstRequest) {
+      accessLogger.appendRequestMessage(requestToUse);
     }
     try {
       filterChain.doFilter(requestToUse, httpServletResponse);
     } finally {
-      if ((properties.isIncludeResponseBody() || properties
-          .isIncludeResponseHeaders()) && !isAsyncStarted(requestToUse)) {
-        afterRequest(requestToUse, httpServletResponse, getAfterMessage(requestToUse, httpServletResponse));
+      if (properties.isIncludeResponse() && !isAsyncStarted(requestToUse)) {
+        accessLogger.appendResponseMessage(httpServletResponse);
       }
+      accessLogger.appendTime(watch.getTotalTimeMillis());
+      accessLogger.printLog();
     }
   }
-
-  private void beforeRequest(HttpServletRequest request, String message) {
-
-  }
-
-  private void afterRequest(HttpServletRequest request, HttpServletResponse response, String message) {
-
-  }
-
-  private String getBeforeMessage(HttpServletRequest request) {
-    return "";
-  }
-
-  private String getAfterMessage(HttpServletRequest request, HttpServletResponse response) {
-    return "";
-  }
-
 }
