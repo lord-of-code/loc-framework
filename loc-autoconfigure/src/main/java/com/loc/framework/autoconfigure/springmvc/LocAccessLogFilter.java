@@ -58,11 +58,11 @@ public class LocAccessLogFilter extends OncePerRequestFilter {
   }
 
   private String getBeforeMessage(HttpServletRequest request) {
-    return null;
+    return "";
   }
 
   private String getAfterMessage(HttpServletRequest request, HttpServletResponse response) {
-    return null;
+    return "";
   }
 
 }
