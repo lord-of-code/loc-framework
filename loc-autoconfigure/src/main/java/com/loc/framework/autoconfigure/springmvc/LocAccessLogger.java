@@ -1,15 +1,16 @@
 package com.loc.framework.autoconfigure.springmvc;
 
 import org.springframework.http.server.ServletServerHttpRequest;
+import org.springframework.http.server.ServletServerHttpResponse;
 import org.springframework.util.StringUtils;
 import org.springframework.web.util.ContentCachingRequestWrapper;
+import org.springframework.web.util.ContentCachingResponseWrapper;
 import org.springframework.web.util.WebUtils;
 
 import java.io.UnsupportedEncodingException;
-import java.util.regex.Pattern;
+import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import lombok.extern.slf4j.Slf4j;
@@ -27,10 +28,6 @@ public class LocAccessLogger {
   private final static String RESPONSE_PREFIX = " Response Info [ ";
   private final static String RESPONSE_SUFFIX = " ] ";
 
-  private final static String DEFAULT_SKIP_PATTERN =
-      "/api-docs.*|/autoconfig|/env|/configprops|/dump|/health|/info|/metrics.*|/mappings|/trace|/swagger.*|.*\\.png|.*\\.css|.*\\.js|.*\\.html|/favicon.ico|/hystrix.stream";
-
-  private final static Pattern SKIP_PATTERNS = Pattern.compile(DEFAULT_SKIP_PATTERN);
 
   private StringBuilder normalMsg = new StringBuilder();
 
@@ -44,17 +41,35 @@ public class LocAccessLogger {
     normalMsg.append(REQUEST_SUFFIX);
   }
 
-  public void appendResponseMessage(HttpServletResponse response) {
+  public void appendResponseMessage(ContentCachingResponseWrapper response) {
     normalMsg.append(RESPONSE_PREFIX);
     normalMsg.append(normalResponseMessage(response));
   }
 
-  private String normalResponseMessage(HttpServletResponse response) {
-    return "";
+  private String normalResponseMessage(ContentCachingResponseWrapper response) {
+    StringBuilder msg = new StringBuilder();
+    String contentType = response.getContentType();
+    msg.append("status=").append(response.getStatusCode());
+    msg.append(";size=").append(response.getContentSize());
+    msg.append(";headers=").append(new ServletServerHttpResponse(response).getHeaders());
+    Optional.ofNullable(contentType).filter(c -> c.startsWith("application/json")).ifPresent(c -> {
+      byte[] buf = response.getContentAsByteArray();
+      if (buf.length > 0) {
+        int length = Math.min(buf.length, properties.getResponseBodyLength());
+        String payload;
+        try {
+          payload = new String(buf, 0, length, response.getCharacterEncoding());
+        } catch (UnsupportedEncodingException ex) {
+          payload = "[unknown]";
+        }
+        msg.append(";payload=").append(payload);
+      }
+    });
+    return msg.toString();
   }
 
   public void appendTime(long time) {
-    if(!properties.isIncludeResponse()) {
+    if (!properties.isIncludeResponse()) {
       normalMsg.append(RESPONSE_PREFIX);
     }
     normalMsg.append(";cost=").append(time);
@@ -65,7 +80,7 @@ public class LocAccessLogger {
     StringBuilder msg = new StringBuilder();
     msg.append("uri=").append(request.getRequestURI());
 
-    if(properties.isIncludeRequest()) {
+    if (properties.isIncludeRequest()) {
       String queryString = request.getQueryString();
       if (queryString != null) {
         msg.append('?').append(queryString);
@@ -86,12 +101,12 @@ public class LocAccessLogger {
       msg.append(";headers=").append(new ServletServerHttpRequest(request).getHeaders());
     }
 
-    if(!isNormalRequest(request)) {
+    if (!isNormalRequest(request)) {
       return msg.toString();
     }
 
-    ContentCachingRequestWrapper wrapper =
-        WebUtils.getNativeRequest(request, ContentCachingRequestWrapper.class);
+    ContentCachingRequestWrapper wrapper = WebUtils
+        .getNativeRequest(request, ContentCachingRequestWrapper.class);
     if (wrapper != null) {
       byte[] buf = wrapper.getContentAsByteArray();
       if (buf.length > 0) {
@@ -99,8 +114,7 @@ public class LocAccessLogger {
         String payload;
         try {
           payload = new String(buf, 0, length, wrapper.getCharacterEncoding());
-        }
-        catch (UnsupportedEncodingException ex) {
+        } catch (UnsupportedEncodingException ex) {
           payload = "[unknown]";
         }
         msg.append(";payload=").append(payload);
@@ -114,13 +128,8 @@ public class LocAccessLogger {
   }
 
 
-  private boolean noContain(HttpServletRequest request) {
-    String path = request.getServletPath();
-    return !SKIP_PATTERNS.matcher(path).matches();
-  }
-
   private boolean isNormalRequest(HttpServletRequest request) {
-    return !isMultipart(request) && !isBinaryContent(request) && noContain(request);
+    return !isMultipart(request) && !isBinaryContent(request);
   }
 
   private boolean isMultipart(final HttpServletRequest request) {
