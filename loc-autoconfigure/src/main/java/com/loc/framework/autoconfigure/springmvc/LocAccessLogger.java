@@ -13,6 +13,7 @@ import java.util.Optional;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -21,6 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class LocAccessLogger {
 
+  @Getter
   private LocSpringMvcProperties properties;
 
   private final static String REQUEST_PREFIX = " Request Info[ ";
@@ -44,6 +46,7 @@ public class LocAccessLogger {
   public void appendResponseMessage(ContentCachingResponseWrapper response) {
     normalMsg.append(RESPONSE_PREFIX);
     normalMsg.append(normalResponseMessage(response));
+    normalMsg.append(";");
   }
 
   private String normalResponseMessage(ContentCachingResponseWrapper response) {
@@ -72,7 +75,7 @@ public class LocAccessLogger {
     if (!properties.isIncludeResponse()) {
       normalMsg.append(RESPONSE_PREFIX);
     }
-    normalMsg.append(";cost=").append(time);
+    normalMsg.append("cost=").append(time);
     normalMsg.append(RESPONSE_SUFFIX);
   }
 

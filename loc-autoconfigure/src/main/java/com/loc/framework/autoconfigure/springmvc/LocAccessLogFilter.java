@@ -6,6 +6,7 @@ import org.springframework.web.util.ContentCachingRequestWrapper;
 import org.springframework.web.util.ContentCachingResponseWrapper;
 
 import java.io.IOException;
+import java.util.Optional;
 import java.util.regex.Pattern;
 
 import javax.servlet.FilterChain;
@@ -26,7 +27,8 @@ public class LocAccessLogFilter extends OncePerRequestFilter {
 
   private LocSpringMvcProperties properties;
 
-  private final static String DEFAULT_SKIP_PATTERN = "/api-docs.*|/autoconfig|/env|/configprops|/dump|/health|/info|/metrics.*|/mappings|/trace|/swagger.*|.*\\.png|.*\\.css|.*\\.js|.*\\.html|/favicon.ico|/hystrix.stream";
+  private final static String DEFAULT_SKIP_PATTERN =
+      "/api-docs.*|/actuator.*|/swagger.*|.*\\.png|.*\\.css|.*\\.js|.*\\.html|/favicon.ico|/hystrix.stream";
 
   private final static Pattern SKIP_PATTERNS = Pattern.compile(DEFAULT_SKIP_PATTERN);
 
@@ -34,13 +36,13 @@ public class LocAccessLogFilter extends OncePerRequestFilter {
   protected void doFilterInternal(HttpServletRequest httpServletRequest,
       HttpServletResponse httpServletResponse, FilterChain filterChain)
       throws ServletException, IOException {
-    if (noContain(httpServletRequest)) {
+    if (ignoreRequest(httpServletRequest)) {
       filterChain.doFilter(httpServletRequest, httpServletResponse);
     } else {
       final boolean isFirstRequest = !isAsyncDispatch(httpServletRequest);
       final LocAccessLogger accessLogger = new LocAccessLogger(this.properties);
       HttpServletRequest requestToUse = httpServletRequest;
-      ContentCachingResponseWrapper responseToUse = null;
+      ContentCachingResponseWrapper responseToUse = new ContentCachingResponseWrapper(httpServletResponse);
 
       StopWatch watch = new StopWatch();
       watch.start();
@@ -48,7 +50,6 @@ public class LocAccessLogFilter extends OncePerRequestFilter {
           .isIncludeRequest() && isFirstRequest && !(httpServletRequest instanceof ContentCachingRequestWrapper)) {
         requestToUse = new ContentCachingRequestWrapper(httpServletRequest,
             properties.getRequestBodyLength());
-        responseToUse = new ContentCachingResponseWrapper(httpServletResponse);
       }
 
       if (properties.isIncludeRequest() && isFirstRequest) {
@@ -67,9 +68,9 @@ public class LocAccessLogFilter extends OncePerRequestFilter {
     }
   }
 
-  private boolean noContain(HttpServletRequest request) {
-    String path = request.getServletPath();
-    return !SKIP_PATTERNS.matcher(path).matches();
+  private boolean ignoreRequest(HttpServletRequest request) {
+    String path = request.getRequestURI();
+    return SKIP_PATTERNS.matcher(path).matches();
   }
 
   private boolean isBinaryContent(final HttpServletResponse response) {
