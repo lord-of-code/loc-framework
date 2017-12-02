@@ -6,7 +6,6 @@ import org.springframework.web.util.ContentCachingRequestWrapper;
 import org.springframework.web.util.ContentCachingResponseWrapper;
 
 import java.io.IOException;
-import java.util.Optional;
 import java.util.regex.Pattern;
 
 import javax.servlet.FilterChain;
@@ -64,6 +63,8 @@ public class LocAccessLogFilter extends OncePerRequestFilter {
         }
         watch.stop();
         accessLogger.appendTime(watch.getTotalTimeMillis());
+
+        responseToUse.copyBodyToResponse();
         accessLogger.printLog();
       }
     }
