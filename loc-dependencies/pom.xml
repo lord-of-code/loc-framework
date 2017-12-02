@@ -45,6 +45,11 @@
         <artifactId>loc-framework-autoconfigure</artifactId>
         <version>${project.version}</version>
       </dependency>
+      <dependency>
+        <groupId>com.github.lord-of-code</groupId>
+        <artifactId>loc-framework-springmvc-starter</artifactId>
+        <version>${project.version}</version>
+      </dependency>
 
     </dependencies>
   </dependencyManagement>
