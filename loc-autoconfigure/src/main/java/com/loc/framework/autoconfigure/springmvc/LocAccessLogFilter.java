@@ -62,6 +62,7 @@ public class LocAccessLogFilter extends OncePerRequestFilter {
             httpServletResponse) && !isMultipart(httpServletResponse)) {
           accessLogger.appendResponseMessage(responseToUse);
         }
+        watch.stop();
         accessLogger.appendTime(watch.getTotalTimeMillis());
         accessLogger.printLog();
       }

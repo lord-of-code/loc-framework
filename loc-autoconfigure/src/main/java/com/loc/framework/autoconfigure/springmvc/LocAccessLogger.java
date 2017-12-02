@@ -1,5 +1,7 @@
 package com.loc.framework.autoconfigure.springmvc;
 
+import com.google.common.collect.Lists;
+
 import org.springframework.http.server.ServletServerHttpRequest;
 import org.springframework.http.server.ServletServerHttpResponse;
 import org.springframework.util.StringUtils;
@@ -8,7 +10,12 @@ import org.springframework.web.util.ContentCachingResponseWrapper;
 import org.springframework.web.util.WebUtils;
 
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -25,10 +32,10 @@ public class LocAccessLogger {
   @Getter
   private LocSpringMvcProperties properties;
 
-  private final static String REQUEST_PREFIX = " Request Info[ ";
-  private final static String REQUEST_SUFFIX = " ] ";
-  private final static String RESPONSE_PREFIX = " Response Info [ ";
-  private final static String RESPONSE_SUFFIX = " ] ";
+  private final static String REQUEST_PREFIX = "Request Info [";
+  private final static String REQUEST_SUFFIX = "] ";
+  private final static String RESPONSE_PREFIX = "Response Info [";
+  private final static String RESPONSE_SUFFIX = "] ";
 
 
   private StringBuilder normalMsg = new StringBuilder();
@@ -89,6 +96,13 @@ public class LocAccessLogger {
         msg.append('?').append(queryString);
       }
 
+      Map<String, String[]> params = request.getParameterMap();
+      if (params != null && !params.isEmpty()) {
+        msg.append(";params={");
+        msg.append(getParams(params));
+        msg.append("}");
+      }
+
       String client = request.getRemoteAddr();
       if (StringUtils.hasLength(client)) {
         msg.append(";client=").append(client);
@@ -146,6 +160,16 @@ public class LocAccessLogger {
     }
     return request.getContentType().startsWith("image") || request.getContentType()
         .startsWith("video") || request.getContentType().startsWith("audio");
+  }
+
+  private String getParams(final Map<String, String[]> params) {
+    List<String> parts = Lists.newArrayList();
+    params.forEach((k, v) -> {
+      String param = k + "=[" + Arrays.stream(v).map(String::valueOf)
+          .collect(Collectors.joining(",")) + "]";
+      parts.add(param);
+    });
+    return parts.stream().collect(Collectors.joining(","));
   }
 
 }
