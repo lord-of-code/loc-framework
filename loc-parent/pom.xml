@@ -80,6 +80,24 @@
             </execution>
           </executions>
         </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-checkstyle-plugin</artifactId>
+          <configuration>
+            <configLocation>google_checks.xml</configLocation>
+            <includeTestSourceDirectory>true</includeTestSourceDirectory>
+            <consoleOutput>true</consoleOutput>
+            <failsOnError>true</failsOnError>
+          </configuration>
+          <executions>
+            <execution>
+              <phase>verify</phase>
+              <goals>
+                <goal>check</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
       </plugins>
     </pluginManagement>
   </build>

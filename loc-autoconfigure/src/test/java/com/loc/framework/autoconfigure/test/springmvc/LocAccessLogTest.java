@@ -37,6 +37,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -58,6 +59,7 @@ public class LocAccessLogTest {
   @Before
   public void setUp() throws Exception {
     LocSpringMvcProperties requestProperties = new LocSpringMvcProperties();
+    requestProperties.setResponseBodyLength(1024);
 
     this.requestMockMvc = MockMvcBuilders
         .standaloneSetup(new GetController())
@@ -66,6 +68,7 @@ public class LocAccessLogTest {
         .build();
 
     LocSpringMvcProperties bothProperties = new LocSpringMvcProperties();
+    bothProperties.setResponseBodyLength(1024);
     bothProperties.setIncludeResponse(true);
     bothMockMvc = MockMvcBuilders
         .standaloneSetup(new GetController())
@@ -122,6 +125,29 @@ public class LocAccessLogTest {
         .andReturn();
   }
 
+  @Test
+  public void getMaxPlayload() throws Exception {
+    this.requestMockMvc.perform(
+        get("/get/maxPlayload")
+            .param("times", "200")
+            .accept("application/json"))
+        .andExpect(status().isOk())
+        .andExpect(content().contentType("application/json;charset=UTF-8"))
+        .andExpect(jsonPath("$.name" ).value("thomas"))
+        .andExpect(jsonPath("$.age" ).value("29"))
+        .andReturn();
+
+    this.bothMockMvc.perform(
+        get("/get/maxPlayload")
+            .param("times", "200")
+            .accept("application/json"))
+        .andExpect(status().isOk())
+        .andExpect(content().contentType("application/json;charset=UTF-8"))
+        .andExpect(jsonPath("$.name" ).value("thomas"))
+        .andExpect(jsonPath("$.age" ).value("29"))
+        .andReturn();
+  }
+
 
   @Data
   @NoArgsConstructor
@@ -165,6 +191,21 @@ public class LocAccessLogTest {
       Demo demo = new Demo();
       demo.setName(name);
       demo.setAge(age);
+      demo.setAddress(address);
+      return demo;
+    }
+
+    @GetMapping(value = "/get/maxPlayload")
+    public Demo responseDemo(
+        @RequestParam(value = "times")
+            long times) {
+      Demo demo = new Demo();
+      demo.setName("thomas");
+      demo.setAge(29);
+      List<String> address = Lists.newArrayList();
+      for(int i = 0; i < times; i++) {
+        address.add("a" + i);
+      }
       demo.setAddress(address);
       return demo;
     }
