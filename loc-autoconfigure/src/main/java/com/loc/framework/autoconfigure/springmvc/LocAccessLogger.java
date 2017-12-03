@@ -2,13 +2,6 @@ package com.loc.framework.autoconfigure.springmvc;
 
 import com.google.common.collect.Lists;
 
-import org.springframework.http.server.ServletServerHttpRequest;
-import org.springframework.http.server.ServletServerHttpResponse;
-import org.springframework.util.StringUtils;
-import org.springframework.web.util.ContentCachingRequestWrapper;
-import org.springframework.web.util.ContentCachingResponseWrapper;
-import org.springframework.web.util.WebUtils;
-
 import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 import java.util.List;
@@ -22,6 +15,13 @@ import javax.servlet.http.HttpSession;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
+import org.springframework.http.server.ServletServerHttpRequest;
+import org.springframework.http.server.ServletServerHttpResponse;
+import org.springframework.util.StringUtils;
+import org.springframework.web.util.ContentCachingRequestWrapper;
+import org.springframework.web.util.ContentCachingResponseWrapper;
+import org.springframework.web.util.WebUtils;
+
 /**
  * Created on 2017/11/30.
  */
@@ -31,25 +31,25 @@ public class LocAccessLogger {
   @Getter
   private LocSpringMvcProperties properties;
 
-  private final static String REQUEST_PREFIX = "Request Info [";
-  private final static String REQUEST_SUFFIX = "] ";
-  private final static String RESPONSE_PREFIX = "Response Info [";
-  private final static String RESPONSE_SUFFIX = "] ";
+  private static final String REQUEST_PREFIX = "Request Info [";
+  private static final String REQUEST_SUFFIX = "] ";
+  private static final String RESPONSE_PREFIX = "Response Info [";
+  private static final String RESPONSE_SUFFIX = "] ";
 
 
   private StringBuilder normalMsg = new StringBuilder();
 
-  public LocAccessLogger(LocSpringMvcProperties properties) {
+  LocAccessLogger(LocSpringMvcProperties properties) {
     this.properties = properties;
   }
 
-  public void appendRequestMessage(HttpServletRequest request) {
+  void appendRequestMessage(HttpServletRequest request) {
     normalMsg.append(REQUEST_PREFIX);
     normalMsg.append(normalRequestMessage(request));
     normalMsg.append(REQUEST_SUFFIX);
   }
 
-  public void appendResponseMessage(ContentCachingResponseWrapper response) {
+  void appendResponseMessage(ContentCachingResponseWrapper response) {
     normalMsg.append(RESPONSE_PREFIX);
     normalMsg.append(normalResponseMessage(response));
     normalMsg.append(";");
@@ -77,7 +77,7 @@ public class LocAccessLogger {
     return msg.toString();
   }
 
-  public void appendTime(long time) {
+  void appendTime(long time) {
     if (!properties.isIncludeResponse()) {
       normalMsg.append(RESPONSE_PREFIX);
     }
