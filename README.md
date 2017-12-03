@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/lord-of-code/loc-framework.svg?branch=master)](https://travis-ci.org/lord-of-code/loc-framework)
+[![codecov](https://codecov.io/gh/lord-of-code/loc-framework/branch/master/graph/badge.svg)](https://codecov.io/gh/lord-of-code/loc-framework)
 
 # loc-framework
 本项目是完全基于Spring Boot2和Springcloud Finchley所进行了开发的，目的是简化和统一公司内部使用微服务框架的使用方法
