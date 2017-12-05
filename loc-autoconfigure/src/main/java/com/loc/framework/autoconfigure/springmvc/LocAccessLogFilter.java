@@ -59,12 +59,14 @@ public class LocAccessLogFilter extends OncePerRequestFilter {
       try {
         filterChain.doFilter(requestToUse, responseToUse);
       } finally {
+        boolean hasResponse = false;
         if (properties.isIncludeResponse() && !isAsyncStarted(requestToUse) && !isBinaryContent(
             httpServletResponse) && !isMultipart(httpServletResponse)) {
           accessLogger.appendResponseMessage(responseToUse);
+          hasResponse = true;
         }
         watch.stop();
-        accessLogger.appendTime(watch.getTotalTimeMillis());
+        accessLogger.appendTime(hasResponse, watch.getTotalTimeMillis());
 
         responseToUse.copyBodyToResponse();
         accessLogger.printLog();

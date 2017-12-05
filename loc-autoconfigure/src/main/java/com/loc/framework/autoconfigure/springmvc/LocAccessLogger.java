@@ -77,8 +77,8 @@ public class LocAccessLogger {
     return msg.toString();
   }
 
-  void appendTime(long time) {
-    if (!properties.isIncludeResponse()) {
+  void appendTime(boolean hasResponse, long time) {
+    if (!hasResponse) {
       normalMsg.append(RESPONSE_PREFIX);
     }
     normalMsg.append("cost=").append(time);
