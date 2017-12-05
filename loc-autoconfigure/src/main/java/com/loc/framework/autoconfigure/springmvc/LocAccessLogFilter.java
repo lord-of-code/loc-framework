@@ -47,26 +47,27 @@ public class LocAccessLogFilter extends OncePerRequestFilter {
 
       StopWatch watch = new StopWatch();
       watch.start();
-      if (properties.isIncludeRequest() && isFirstRequest
-          && !(httpServletRequest instanceof ContentCachingRequestWrapper)) {
+      if (isFirstRequest && !(httpServletRequest instanceof ContentCachingRequestWrapper)) {
         requestToUse = new ContentCachingRequestWrapper(httpServletRequest,
             properties.getRequestBodyLength());
       }
       try {
         filterChain.doFilter(requestToUse, responseToUse);
       } finally {
-        if (properties.isIncludeRequest() && isFirstRequest) {
-          accessLogger.appendRequestMessage(requestToUse);
+        if (isFirstRequest) {
+          accessLogger.appendRequestCommonMessage(requestToUse);
+          accessLogger.appendRequestDetailMessage(properties.isIncludeRequest(), requestToUse);
         }
 
-        boolean hasResponse = false;
-        if (properties.isIncludeResponse() && !isAsyncStarted(requestToUse) && !isBinaryContent(
-            httpServletResponse) && !isMultipart(httpServletResponse)) {
-          accessLogger.appendResponseMessage(responseToUse);
-          hasResponse = true;
-        }
         watch.stop();
-        accessLogger.appendTime(hasResponse, watch.getTotalTimeMillis());
+        if(!isAsyncStarted(requestToUse)) {
+          accessLogger.appendResponseCommonMessage(responseToUse, watch.getTotalTimeMillis());
+          if(properties.isIncludeResponse() && !isBinaryContent(
+              httpServletResponse) && !isMultipart(httpServletResponse)) {
+            accessLogger.appendResponseDetailMessage(responseToUse);
+          }
+          accessLogger.appendResponseLast();
+        }
 
         responseToUse.copyBodyToResponse();
         accessLogger.printLog();

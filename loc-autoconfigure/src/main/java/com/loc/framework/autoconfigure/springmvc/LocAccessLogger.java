@@ -43,49 +43,8 @@ public class LocAccessLogger {
     this.properties = properties;
   }
 
-  void appendRequestMessage(HttpServletRequest request) {
+  void appendRequestCommonMessage(HttpServletRequest request) {
     normalMsg.append(REQUEST_PREFIX);
-    normalMsg.append(normalRequestMessage(request));
-    normalMsg.append(REQUEST_SUFFIX);
-  }
-
-  void appendResponseMessage(ContentCachingResponseWrapper response) {
-    normalMsg.append(RESPONSE_PREFIX);
-    normalMsg.append(normalResponseMessage(response));
-    normalMsg.append(";");
-  }
-
-  private String normalResponseMessage(ContentCachingResponseWrapper response) {
-    StringBuilder msg = new StringBuilder();
-    String contentType = response.getContentType();
-    msg.append("status=").append(response.getStatusCode());
-    msg.append(";size=").append(response.getContentSize());
-    msg.append(";headers=").append(new ServletServerHttpResponse(response).getHeaders());
-    Optional.ofNullable(contentType).filter(c -> c.startsWith("application/json")).ifPresent(c -> {
-      byte[] buf = response.getContentAsByteArray();
-      if (buf.length > 0) {
-        int length = Math.min(buf.length, properties.getResponseBodyLength());
-        String payload;
-        try {
-          payload = new String(buf, 0, length, response.getCharacterEncoding());
-        } catch (UnsupportedEncodingException ex) {
-          payload = "[unknown]";
-        }
-        msg.append(";payload=").append(payload);
-      }
-    });
-    return msg.toString();
-  }
-
-  void appendTime(boolean hasResponse, long time) {
-    if (!hasResponse) {
-      normalMsg.append(RESPONSE_PREFIX);
-    }
-    normalMsg.append("cost=").append(time);
-    normalMsg.append(RESPONSE_SUFFIX);
-  }
-
-  private String normalRequestMessage(HttpServletRequest request) {
     StringBuilder msg = new StringBuilder();
     msg.append("uri=").append(request.getRequestURI());
     msg.append(";method=").append(request.getMethod());
@@ -115,35 +74,70 @@ public class LocAccessLogger {
       if (user != null) {
         msg.append(";user=").append(user);
       }
+    }
+    normalMsg.append(msg.toString());
+  }
+
+  void appendRequestDetailMessage(boolean includeRequest, HttpServletRequest request) {
+    StringBuilder msg = new StringBuilder();
+    if(includeRequest && isNormalRequest(request)) {
       msg.append(";headers=").append(new ServletServerHttpRequest(request).getHeaders());
+      ContentCachingRequestWrapper wrapper = WebUtils
+          .getNativeRequest(request, ContentCachingRequestWrapper.class);
+      if (wrapper != null) {
+        byte[] buf = wrapper.getContentAsByteArray();
+        if (buf.length > 0) {
+          int length = Math.min(buf.length, properties.getRequestBodyLength());
+          String payload;
+          try {
+            payload = new String(buf, 0, length, wrapper.getCharacterEncoding());
+          } catch (UnsupportedEncodingException ex) {
+            payload = "[unknown]";
+          }
+          msg.append(";payload=").append(payload);
+        }
+      }
     }
+    normalMsg.append(msg.toString());
+    normalMsg.append(REQUEST_SUFFIX);
+  }
 
-    if (!isNormalRequest(request)) {
-      return msg.toString();
-    }
+  void appendResponseCommonMessage(ContentCachingResponseWrapper response, long cost) {
+    normalMsg.append(RESPONSE_PREFIX);
+    StringBuilder msg = new StringBuilder();
+    msg.append("status=").append(response.getStatusCode());
+    msg.append(";size=").append(response.getContentSize());
+    msg.append(";cost=").append(cost);
+    normalMsg.append(msg.toString());
+  }
 
-    ContentCachingRequestWrapper wrapper = WebUtils
-        .getNativeRequest(request, ContentCachingRequestWrapper.class);
-    if (wrapper != null) {
-      byte[] buf = wrapper.getContentAsByteArray();
+  void appendResponseDetailMessage(ContentCachingResponseWrapper response) {
+    StringBuilder msg = new StringBuilder();
+    String contentType = response.getContentType();
+    msg.append(";headers=").append(new ServletServerHttpResponse(response).getHeaders());
+    Optional.ofNullable(contentType).filter(c -> c.startsWith("application/json")).ifPresent(c -> {
+      byte[] buf = response.getContentAsByteArray();
       if (buf.length > 0) {
-        int length = Math.min(buf.length, properties.getRequestBodyLength());
+        int length = Math.min(buf.length, properties.getResponseBodyLength());
         String payload;
         try {
-          payload = new String(buf, 0, length, wrapper.getCharacterEncoding());
+          payload = new String(buf, 0, length, response.getCharacterEncoding());
         } catch (UnsupportedEncodingException ex) {
           payload = "[unknown]";
         }
         msg.append(";payload=").append(payload);
       }
-    }
-    return msg.toString();
+    });
+    normalMsg.append(msg.toString());
   }
 
-  public void printLog() {
+  void appendResponseLast() {
+    normalMsg.append(RESPONSE_SUFFIX);
+  }
+
+  void printLog() {
     log.info(this.normalMsg.toString());
   }
-
 
   private boolean isNormalRequest(HttpServletRequest request) {
     return !isMultipart(request) && !isBinaryContent(request);
