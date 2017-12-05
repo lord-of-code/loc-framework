@@ -1,10 +1,12 @@
 package com.loc.framework.autoconfigure.test.springmvc;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.Lists;
 import com.loc.framework.autoconfigure.springmvc.LocAccessLogFilter;
 import com.loc.framework.autoconfigure.springmvc.LocSpringMvcProperties;
@@ -46,14 +48,23 @@ import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.http.converter.HttpMessageNotWritableException;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.stereotype.Controller;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * Created on 2017/12/1.
@@ -75,10 +86,11 @@ public class LocAccessLogTest {
   @Before
   public void setUp() throws Exception {
     LocSpringMvcProperties requestProperties = new LocSpringMvcProperties();
+    requestProperties.setRequestBodyLength(1024);
     requestProperties.setResponseBodyLength(1024);
 
     this.requestMockMvc = MockMvcBuilders
-        .standaloneSetup(new GetController(), new StreamController())
+        .standaloneSetup(new GetController(), new PostController(), new StreamController())
         .setMessageConverters(jackson2HttpMessageConverter, streamMessageConverter)
         .addFilters(new LocAccessLogFilter(requestProperties))
         .build();
@@ -87,7 +99,7 @@ public class LocAccessLogTest {
     bothProperties.setResponseBodyLength(1024);
     bothProperties.setIncludeResponse(true);
     bothMockMvc = MockMvcBuilders
-        .standaloneSetup(new GetController(), new StreamController())
+        .standaloneSetup(new GetController(), new PostController(), new StreamController())
         .setMessageConverters(jackson2HttpMessageConverter, streamMessageConverter)
         .addFilters(new LocAccessLogFilter(bothProperties)).build();
   }
@@ -104,6 +116,17 @@ public class LocAccessLogTest {
 
     this.bothMockMvc
         .perform(get("/actuator/info").header("header-key", "header-value").accept("application/json"))
+        .andExpect(status().isOk()).andReturn();
+  }
+
+  @Test
+  public void postTest1() throws Exception {
+    this.requestMockMvc
+        .perform(post("/post/test1").header("header-key", "header-value").accept("application/json"))
+        .andExpect(status().isOk()).andReturn();
+
+    this.bothMockMvc
+        .perform(post("/post/test1").header("header-key", "header-value").accept("application/json"))
         .andExpect(status().isOk()).andReturn();
   }
 
@@ -126,6 +149,121 @@ public class LocAccessLogTest {
     this.bothMockMvc.perform(get("/get/octetStream").accept(MediaType.APPLICATION_OCTET_STREAM_VALUE))
         .andExpect(content().contentType(MediaType.APPLICATION_OCTET_STREAM_VALUE))
         .andExpect(status().isOk()).andReturn();
+  }
+
+  @Test
+  public void postFormData() throws Exception {
+    this.requestMockMvc.perform(
+        post("/post/form-demo")
+            .param("name", "thomas")
+            .param("age", "29")
+            .param("address", "a1", "a2")
+            .contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE))
+        .andExpect(status().isOk())
+        .andExpect(content().contentType("application/json;charset=UTF-8"))
+        .andExpect(jsonPath("$.name" ).value("thomas"))
+        .andExpect(jsonPath("$.age" ).value("29"))
+        .andExpect(jsonPath("$.address" ).value(Lists.newArrayList("a1", "a2")))
+        .andReturn();
+
+    this.bothMockMvc.perform(
+        post("/post/form-demo")
+            .param("name", "thomas")
+            .param("age", "29")
+            .param("address", "a1", "a2")
+            .contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE))
+        .andExpect(status().isOk())
+        .andExpect(content().contentType("application/json;charset=UTF-8"))
+        .andExpect(jsonPath("$.name" ).value("thomas"))
+        .andExpect(jsonPath("$.age" ).value("29"))
+        .andExpect(jsonPath("$.address" ).value(Lists.newArrayList("a1", "a2")))
+        .andReturn();
+  }
+
+  @Test
+  public void postJsonData() throws Exception {
+    Demo demo = new Demo();
+    demo.setName("thomas");
+    demo.setAge(29);
+    demo.setAddress(Lists.newArrayList("a1", "a2"));
+
+    ObjectMapper objectMapper = new ObjectMapper();
+    String content = objectMapper.writeValueAsString(demo);
+    this.requestMockMvc.perform(
+        post("/post/json-demo")
+            .content(content)
+            .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+        .andExpect(status().isOk())
+        .andExpect(content().contentType("application/json;charset=UTF-8"))
+        .andExpect(jsonPath("$.name" ).value("thomas"))
+        .andExpect(jsonPath("$.age" ).value("29"))
+        .andExpect(jsonPath("$.address" ).value(Lists.newArrayList("a1", "a2")))
+        .andReturn();
+
+    this.bothMockMvc.perform(
+        post("/post/json-demo")
+            .content(content)
+            .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+        .andExpect(status().isOk())
+        .andExpect(content().contentType("application/json;charset=UTF-8"))
+        .andExpect(jsonPath("$.name" ).value("thomas"))
+        .andExpect(jsonPath("$.age" ).value("29"))
+        .andExpect(jsonPath("$.address" ).value(Lists.newArrayList("a1", "a2")))
+        .andReturn();
+  }
+
+  @Test
+  public void postMaxJsonData() throws Exception {
+    Demo demo = new Demo();
+    demo.setName("thomas");
+    demo.setAge(29);
+    List<String> address = Lists.newArrayList();
+    for(int i = 0; i < 200; i++) {
+      address.add("a" + i);
+    }
+    demo.setAddress(address);
+
+    ObjectMapper objectMapper = new ObjectMapper();
+    String content = objectMapper.writeValueAsString(demo);
+    this.requestMockMvc.perform(
+        post("/post/json-demo")
+            .content(content)
+            .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+        .andExpect(status().isOk())
+        .andExpect(content().contentType("application/json;charset=UTF-8"))
+        .andExpect(jsonPath("$.name" ).value("thomas"))
+        .andExpect(jsonPath("$.age" ).value("29"))
+        .andReturn();
+
+    this.bothMockMvc.perform(
+        post("/post/json-demo")
+            .content(content)
+            .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+        .andExpect(status().isOk())
+        .andExpect(content().contentType("application/json;charset=UTF-8"))
+        .andExpect(jsonPath("$.name" ).value("thomas"))
+        .andExpect(jsonPath("$.age" ).value("29"))
+        .andReturn();
+
+    this.requestMockMvc.perform(
+        post("/post/maxPlayload")
+            .param("times", "200")
+            .contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE))
+        .andExpect(status().isOk())
+        .andExpect(content().contentType("application/json;charset=UTF-8"))
+        .andExpect(jsonPath("$.name" ).value("thomas"))
+        .andExpect(jsonPath("$.age" ).value("29"))
+        .andReturn();
+
+    this.bothMockMvc.perform(
+        post("/post/maxPlayload")
+            .param("times", "200")
+            .contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE))
+        .andExpect(status().isOk())
+        .andExpect(content().contentType("application/json;charset=UTF-8"))
+        .andExpect(jsonPath("$.name" ).value("thomas"))
+        .andExpect(jsonPath("$.age" ).value("29"))
+        .andReturn();
   }
 
   @Test
@@ -180,6 +318,27 @@ public class LocAccessLogTest {
         .andReturn();
   }
 
+  @Test
+  public void testMultiPart() throws Exception {
+    MockMultipartFile firstFile = new MockMultipartFile("data", "filename.txt", "text/plain", "some xml".getBytes());
+    MockMultipartFile secondFile = new MockMultipartFile("data", "other-file-name.data", "text/plain", "some other type".getBytes());
+    MockMultipartFile jsonFile = new MockMultipartFile("json", "", "application/json", "{\"json\": \"someValue\"}".getBytes());
+
+    this.requestMockMvc.perform(MockMvcRequestBuilders.fileUpload("/post/multiPart")
+        .file(firstFile)
+        .file(secondFile).file(jsonFile)
+        .param("some-random", "4"))
+        .andExpect(status().is(200))
+        .andReturn();
+
+    this.bothMockMvc.perform(MockMvcRequestBuilders.fileUpload("/post/multiPart")
+        .file(firstFile)
+        .file(secondFile).file(jsonFile)
+        .param("some-random", "4"))
+        .andExpect(status().is(200))
+        .andReturn();
+  }
+
 
   @Data
   @NoArgsConstructor
@@ -205,6 +364,76 @@ public class LocAccessLogTest {
           .contentType(MediaType.parseMediaType("application/octet-stream"))
           .body(resource.getInputStream());
     }
+
+    @RequestMapping(value = "/post/multiPart", method = RequestMethod.POST)
+    @ResponseBody
+    public String saveAuto(
+        @RequestPart(value = "json") JsonPojo pojo,
+        @RequestParam(value = "some-random") String random,
+        @RequestParam(value = "data", required = false) List<MultipartFile> files) {
+      System.out.println(random);
+      System.out.println(pojo.getJson());
+      for (MultipartFile file : files) {
+        System.out.println(file.getOriginalFilename());
+      }
+      return "success";
+    }
+
+    @Data
+    static class JsonPojo {
+      private String json;
+    }
+  }
+
+  @MinimalWebConfiguration
+  @RestController
+  public static class PostController {
+
+    @PostMapping(value = "/post/test1")
+    public String responsePlainTest() {
+      return "OK";
+    }
+
+    @PostMapping(value = "/post/form-demo")
+    public Demo responseFormDemo(
+        @RequestParam(value = "name")
+            String name,
+        @RequestParam(value = "age")
+            int age,
+        @RequestParam(value = "address")
+            List<String> address) {
+      Demo demo = new Demo();
+      demo.setName(name);
+      demo.setAge(age);
+      demo.setAddress(address);
+      return demo;
+    }
+
+    @PostMapping(value = "/post/json-demo")
+    public Demo responseJsonDemo(
+        @RequestBody Demo reqDemo) {
+      Demo demo = new Demo();
+      demo.setName(reqDemo.getName());
+      demo.setAge(reqDemo.getAge());
+      demo.setAddress(reqDemo.getAddress());
+      return demo;
+    }
+
+    @PostMapping(value = "/post/maxPlayload")
+    public Demo responseDemo(
+        @RequestParam(value = "times")
+            long times) {
+      Demo demo = new Demo();
+      demo.setName("thomas");
+      demo.setAge(29);
+      List<String> address = Lists.newArrayList();
+      for(int i = 0; i < times; i++) {
+        address.add("a" + i);
+      }
+      demo.setAddress(address);
+      return demo;
+    }
+
   }
 
   @MinimalWebConfiguration

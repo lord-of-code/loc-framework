@@ -52,13 +52,13 @@ public class LocAccessLogFilter extends OncePerRequestFilter {
         requestToUse = new ContentCachingRequestWrapper(httpServletRequest,
             properties.getRequestBodyLength());
       }
-
-      if (properties.isIncludeRequest() && isFirstRequest) {
-        accessLogger.appendRequestMessage(requestToUse);
-      }
       try {
         filterChain.doFilter(requestToUse, responseToUse);
       } finally {
+        if (properties.isIncludeRequest() && isFirstRequest) {
+          accessLogger.appendRequestMessage(requestToUse);
+        }
+
         boolean hasResponse = false;
         if (properties.isIncludeResponse() && !isAsyncStarted(requestToUse) && !isBinaryContent(
             httpServletResponse) && !isMultipart(httpServletResponse)) {

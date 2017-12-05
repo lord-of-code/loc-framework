@@ -88,6 +88,7 @@ public class LocAccessLogger {
   private String normalRequestMessage(HttpServletRequest request) {
     StringBuilder msg = new StringBuilder();
     msg.append("uri=").append(request.getRequestURI());
+    msg.append(";method=").append(request.getMethod());
 
     if (properties.isIncludeRequest()) {
       String queryString = request.getQueryString();
