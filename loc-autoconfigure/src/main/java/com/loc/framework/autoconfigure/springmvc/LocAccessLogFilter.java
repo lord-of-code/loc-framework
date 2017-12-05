@@ -1,10 +1,5 @@
 package com.loc.framework.autoconfigure.springmvc;
 
-import org.springframework.util.StopWatch;
-import org.springframework.web.filter.OncePerRequestFilter;
-import org.springframework.web.util.ContentCachingRequestWrapper;
-import org.springframework.web.util.ContentCachingResponseWrapper;
-
 import java.io.IOException;
 import java.util.regex.Pattern;
 
@@ -16,6 +11,12 @@ import javax.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+import org.springframework.util.StopWatch;
+import org.springframework.web.filter.OncePerRequestFilter;
+import org.springframework.web.util.ContentCachingRequestWrapper;
+import org.springframework.web.util.ContentCachingResponseWrapper;
+
+
 /**
  * Created on 2017/11/30.
  */
@@ -26,10 +27,10 @@ public class LocAccessLogFilter extends OncePerRequestFilter {
 
   private LocSpringMvcProperties properties;
 
-  private final static String DEFAULT_SKIP_PATTERN =
+  private static final String DEFAULT_SKIP_PATTERN =
       "/api-docs.*|/actuator.*|/swagger.*|.*\\.png|.*\\.css|.*\\.js|.*\\.html|/favicon.ico|/hystrix.stream";
 
-  private final static Pattern SKIP_PATTERNS = Pattern.compile(DEFAULT_SKIP_PATTERN);
+  private static final Pattern SKIP_PATTERNS = Pattern.compile(DEFAULT_SKIP_PATTERN);
 
   @Override
   protected void doFilterInternal(HttpServletRequest httpServletRequest,
@@ -41,12 +42,13 @@ public class LocAccessLogFilter extends OncePerRequestFilter {
       final boolean isFirstRequest = !isAsyncDispatch(httpServletRequest);
       final LocAccessLogger accessLogger = new LocAccessLogger(this.properties);
       HttpServletRequest requestToUse = httpServletRequest;
-      ContentCachingResponseWrapper responseToUse = new ContentCachingResponseWrapper(httpServletResponse);
+      ContentCachingResponseWrapper responseToUse =
+          new ContentCachingResponseWrapper(httpServletResponse);
 
       StopWatch watch = new StopWatch();
       watch.start();
-      if (properties
-          .isIncludeRequest() && isFirstRequest && !(httpServletRequest instanceof ContentCachingRequestWrapper)) {
+      if (properties.isIncludeRequest() && isFirstRequest
+          && !(httpServletRequest instanceof ContentCachingRequestWrapper)) {
         requestToUse = new ContentCachingRequestWrapper(httpServletRequest,
             properties.getRequestBodyLength());
       }

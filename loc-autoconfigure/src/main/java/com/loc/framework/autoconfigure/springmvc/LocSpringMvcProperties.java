@@ -1,8 +1,9 @@
 package com.loc.framework.autoconfigure.springmvc;
 
+import lombok.Data;
+
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
-import lombok.Data;
 
 /**
  * Created on 2017/11/30.
