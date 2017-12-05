@@ -80,7 +80,7 @@ public class LocAccessLogger {
 
   void appendRequestDetailMessage(boolean includeRequest, HttpServletRequest request) {
     StringBuilder msg = new StringBuilder();
-    if(includeRequest && isNormalRequest(request)) {
+    if (includeRequest && isNormalRequest(request)) {
       msg.append(";headers=").append(new ServletServerHttpRequest(request).getHeaders());
       ContentCachingRequestWrapper wrapper = WebUtils
           .getNativeRequest(request, ContentCachingRequestWrapper.class);
