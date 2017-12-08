@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -22,7 +23,7 @@ public class LocAdviceErrorConfig {
   @ConditionalOnClass(MethodArgumentNotValidException.class)
   @Configuration
   @RestControllerAdvice
-  static class MethodArgumentNotValidExceptionConfiguration {
+  public static class MethodArgumentNotValidExceptionConfiguration {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public BasicResult handMethodArgumentNotValidException(MethodArgumentNotValidException e) {
@@ -37,6 +38,43 @@ public class LocAdviceErrorConfig {
         return bindingResult.getAllErrors().stream().findFirst()
             .map(ObjectError::getDefaultMessage).orElse("");
       }
+    }
+  }
+
+  @ConditionalOnClass(MissingServletRequestParameterException.class)
+  @Configuration
+  @RestControllerAdvice
+  public static class MissingServletRequestParameterExceptionConfiguration {
+
+    @ExceptionHandler(MissingServletRequestParameterException.class)
+    public BasicResult handleMissingServletRequestParameterException(
+        MissingServletRequestParameterException e) {
+      return BasicResult
+          .fail(BasicResultCode.METHOD_ARGUMENT_ERROR.getCode(),
+              BasicResultCode.METHOD_ARGUMENT_ERROR.getMsg(),
+              String.format("参数%s未传", e.getParameterName()));
+    }
+  }
+
+  @ConditionalOnClass(RuntimeException.class)
+  @Configuration
+  @RestControllerAdvice
+  public static class RuntimeExceptionConfiguration {
+
+    @ExceptionHandler(RuntimeException.class)
+    public BasicResult handleRuntimeException(RuntimeException e) {
+      return BasicResult.fail(BasicResultCode.RUNTIME_ERROR.getCode(), e.getMessage());
+    }
+  }
+
+  @ConditionalOnClass(LocCommonException.class)
+  @Configuration
+  @RestControllerAdvice
+  public static class LocCommonExceptionConfiguration {
+
+    @ExceptionHandler(LocCommonException.class)
+    public BasicResult handleLocException(LocCommonException e) {
+      return BasicResult.fail(e.getCode(), e.getMsg());
     }
   }
 }

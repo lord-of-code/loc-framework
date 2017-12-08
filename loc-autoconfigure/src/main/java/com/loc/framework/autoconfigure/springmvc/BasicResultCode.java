@@ -10,7 +10,7 @@ public enum BasicResultCode {
 
   SUCCESS(200_000, "success"),
 
-  UNKNOWN_ERROR(500_000, "unknown exception"),
+  RUNTIME_ERROR(500_000, "runtime exception"),
 
   METHOD_ARGUMENT_ERROR(400_000, "method argument error")
   ;

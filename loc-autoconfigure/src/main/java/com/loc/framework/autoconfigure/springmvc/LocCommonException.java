@@ -24,9 +24,9 @@ public class LocCommonException extends RuntimeException {
   }
 
   public LocCommonException(Throwable t)  {
-    super(BasicResultCode.UNKNOWN_ERROR.getMsg(), t);
-    this.code = BasicResultCode.UNKNOWN_ERROR.getCode();
-    this.msg = BasicResultCode.UNKNOWN_ERROR.getMsg();
+    super(BasicResultCode.RUNTIME_ERROR.getMsg(), t);
+    this.code = BasicResultCode.RUNTIME_ERROR.getCode();
+    this.msg = t.getMessage();
   }
 
   public LocCommonException(BasicResultCode basicResultCode) {

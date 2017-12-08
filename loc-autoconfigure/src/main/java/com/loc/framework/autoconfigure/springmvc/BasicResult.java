@@ -1,5 +1,7 @@
 package com.loc.framework.autoconfigure.springmvc;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonView;
 import lombok.Data;
 
@@ -7,6 +9,7 @@ import lombok.Data;
  * Created on 2017/12/6.
  */
 @Data
+@JsonInclude(Include.NON_NULL)
 public class BasicResult<T> {
 
   //code返回自定义的状态码，框架会把code的前面三位作为http的status设置到response, 后面4位为不同的异常进行定义
