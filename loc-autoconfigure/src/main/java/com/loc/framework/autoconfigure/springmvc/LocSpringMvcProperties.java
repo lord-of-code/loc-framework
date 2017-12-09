@@ -1,7 +1,6 @@
 package com.loc.framework.autoconfigure.springmvc;
 
 import lombok.Data;
-
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 

@@ -1,20 +1,16 @@
 package com.loc.framework.autoconfigure.springmvc;
 
 import com.google.common.collect.Lists;
-
 import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
-
 import org.springframework.http.server.ServletServerHttpRequest;
 import org.springframework.http.server.ServletServerHttpResponse;
 import org.springframework.util.StringUtils;
