@@ -48,7 +48,7 @@ import org.springframework.web.bind.annotation.RestController;
  * Created on 2017/12/6.
  */
 @RunWith(SpringRunner.class)
-@WebMvcTest(BasicRequestController.class)
+@WebMvcTest(value = BasicRequestController.class)
 @DirtiesContext
 public class LocBasicResultTest {
 
