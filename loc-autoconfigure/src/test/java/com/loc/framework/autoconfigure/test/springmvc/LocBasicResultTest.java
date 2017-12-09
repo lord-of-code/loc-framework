@@ -190,9 +190,33 @@ public class LocBasicResultTest {
   @Test
   public void locExceptionTest() throws Exception {
     this.mockMvc
-        .perform(get("/loc/exception").accept("application/json"))
+        .perform(get("/loc/exception1").accept("application/json"))
+        .andDo(print())
+        .andExpect(jsonPath("$.code").value("200001"))
+        .andExpect(jsonPath("$.msg").value("loc exception"))
+        .andExpect(jsonPath("$.detailMsg").value("loc exception"))
+        .andExpect(status().isOk()).andReturn();
+
+    this.mockMvc
+        .perform(get("/loc/exception2").accept("application/json"))
         .andDo(print())
         .andExpect(jsonPath("$.code").value("200002"))
+        .andExpect(jsonPath("$.msg").value("loc exception"))
+        .andExpect(jsonPath("$.detailMsg").value("loc exception"))
+        .andExpect(status().isOk()).andReturn();
+
+    this.mockMvc
+        .perform(get("/loc/exception3").accept("application/json"))
+        .andDo(print())
+        .andExpect(jsonPath("$.code").value("200003"))
+        .andExpect(jsonPath("$.msg").value("loc exception"))
+        .andExpect(jsonPath("$.detailMsg").value("detail exception msg"))
+        .andExpect(status().isOk()).andReturn();
+
+    this.mockMvc
+        .perform(get("/loc/exception4").accept("application/json"))
+        .andDo(print())
+        .andExpect(jsonPath("$.code").value("200004"))
         .andExpect(jsonPath("$.msg").value("loc exception"))
         .andExpect(jsonPath("$.detailMsg").value("detail exception msg"))
         .andExpect(status().isOk()).andReturn();
@@ -260,9 +284,24 @@ public class LocBasicResultTest {
       return BasicResult.success(demo);
     }
 
-    @GetMapping(value = "/loc/exception")
-    public BasicResult<Demo> locException() {
-      throw new LocCommonException(200_002, "loc exception", "detail exception msg");
+    @GetMapping(value = "/loc/exception1")
+    public BasicResult<Demo> locException1() {
+      throw new LocCommonException(200_001, "loc exception");
+    }
+
+    @GetMapping(value = "/loc/exception2")
+    public BasicResult<Demo> locException2() {
+      throw new LocCommonException(200_002, "loc exception", new IllegalArgumentException("illegal argument"));
+    }
+
+    @GetMapping(value = "/loc/exception3")
+    public BasicResult<Demo> locException3() {
+      throw new LocCommonException(200_003, "loc exception", "detail exception msg");
+    }
+
+    @GetMapping(value = "/loc/exception4")
+    public BasicResult<Demo> locException4() {
+      throw new LocCommonException(200_004, "loc exception", "detail exception msg", new IllegalArgumentException("illegal argument"));
     }
 
     @PostMapping(value = "/mediatype/exception", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
