@@ -19,16 +19,14 @@ public class BasicResult<T> {
   //返回的用户展示的详细信息
   @JsonView(BasicResultView.class)
   private String msg;
-  //用于内部具体定位错误的信息，这个字段不会传给客户端，但是会在错误日志中打出
-  @JsonView(BasicResultDetailView.class)
+  //用于内部具体定位错误的信息
+  @JsonView(BasicResultView.class)
   private String detailMsg;
   //返回的具体类型
   @JsonView(BasicResultView.class)
   private T data;
 
   interface BasicResultView { }
-
-  interface BasicResultDetailView { }
 
   public static <T> BasicResult<T> fail(int code, String msg) {
     return fail(code, msg, msg);

@@ -27,7 +27,7 @@
 ```
   private int code;          #返回的状态码
   private String msg;        #返回的信息，用于前端进行展示
-  private String detailMsg;  #返回的详细信息，用户内部调试和排查问题（不会返回给前端）
+  private String detailMsg;  #返回的详细信息，用户内部调试和排查问题
   private T data;            #返回的具体数据(泛型)
 ```
 
