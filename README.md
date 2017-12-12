@@ -44,7 +44,7 @@
 ```
 2xx  正常返回, 通过LocCommonException抛出的异常
 4xx  客户端请求失败，如http method错误，参数错误，MediaType错误 等
-5**  服务端错误，如Runtime Exception错误 等
+5xx  服务端错误，如Runtime Exception错误 等
 ```
 
 ## logger的starter的统一标准
