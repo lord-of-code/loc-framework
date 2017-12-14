@@ -10,6 +10,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @Data
 @ConfigurationProperties(prefix = "loc.web.springmvc")
 public class LocSpringMvcProperties {
+
   private boolean includeRequest = true;
   private boolean includeResponse = false;
 

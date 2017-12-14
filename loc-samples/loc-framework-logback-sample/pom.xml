@@ -5,24 +5,19 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>com.github.lord-of-code</groupId>
-    <artifactId>loc-framework-starters</artifactId>
+    <artifactId>loc-framework-samples</artifactId>
     <version>${revision}</version>
   </parent>
 
-  <artifactId>loc-framework-springmvc-starter</artifactId>
+  <artifactId>loc-framework-logback-sample</artifactId>
+
   <properties>
     <main.basedir>${basedir}/../..</main.basedir>
   </properties>
-
   <dependencies>
     <dependency>
       <groupId>com.github.lord-of-code</groupId>
-      <artifactId>loc-framework-autoconfigure</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-web</artifactId>
+      <artifactId>loc-framework-logback-starter</artifactId>
     </dependency>
   </dependencies>
 

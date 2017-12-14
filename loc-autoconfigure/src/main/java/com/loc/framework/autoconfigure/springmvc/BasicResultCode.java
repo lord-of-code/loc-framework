@@ -18,8 +18,7 @@ public enum BasicResultCode {
   METHOD_NOT_ALLOW_ERROR(405_000, "method not allow error"),
 
 
-  UNSUPPORTED_MEDIA_TYPE_ERROR(415_000, "unsupported media type error"),
-  ;
+  UNSUPPORTED_MEDIA_TYPE_ERROR(415_000, "unsupported media type error"),;
 
   private int code;
   private String msg;

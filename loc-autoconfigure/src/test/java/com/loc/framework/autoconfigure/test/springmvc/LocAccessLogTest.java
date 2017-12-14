@@ -115,18 +115,21 @@ public class LocAccessLogTest {
         .andExpect(status().isOk()).andReturn();
 
     this.bothMockMvc
-        .perform(get("/actuator/info").header("header-key", "header-value").accept("application/json"))
+        .perform(
+            get("/actuator/info").header("header-key", "header-value").accept("application/json"))
         .andExpect(status().isOk()).andReturn();
   }
 
   @Test
   public void postTest1() throws Exception {
     this.requestMockMvc
-        .perform(post("/post/test1").header("header-key", "header-value").accept("application/json"))
+        .perform(
+            post("/post/test1").header("header-key", "header-value").accept("application/json"))
         .andExpect(status().isOk()).andReturn();
 
     this.bothMockMvc
-        .perform(post("/post/test1").header("header-key", "header-value").accept("application/json"))
+        .perform(
+            post("/post/test1").header("header-key", "header-value").accept("application/json"))
         .andExpect(status().isOk()).andReturn();
   }
 
@@ -141,12 +144,14 @@ public class LocAccessLogTest {
 
   @Test
   public void getStream() throws Exception {
-    this.requestMockMvc.perform(get("/get/octetStream").accept(MediaType.APPLICATION_OCTET_STREAM_VALUE))
+    this.requestMockMvc
+        .perform(get("/get/octetStream").accept(MediaType.APPLICATION_OCTET_STREAM_VALUE))
         .andExpect(content().contentType(MediaType.APPLICATION_OCTET_STREAM_VALUE))
         .andExpect(status().isOk())
         .andReturn();
 
-    this.bothMockMvc.perform(get("/get/octetStream").accept(MediaType.APPLICATION_OCTET_STREAM_VALUE))
+    this.bothMockMvc
+        .perform(get("/get/octetStream").accept(MediaType.APPLICATION_OCTET_STREAM_VALUE))
         .andExpect(content().contentType(MediaType.APPLICATION_OCTET_STREAM_VALUE))
         .andExpect(status().isOk()).andReturn();
   }
@@ -161,9 +166,9 @@ public class LocAccessLogTest {
             .contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE))
         .andExpect(status().isOk())
         .andExpect(content().contentType("application/json;charset=UTF-8"))
-        .andExpect(jsonPath("$.name" ).value("thomas"))
-        .andExpect(jsonPath("$.age" ).value("29"))
-        .andExpect(jsonPath("$.address" ).value(Lists.newArrayList("a1", "a2")))
+        .andExpect(jsonPath("$.name").value("thomas"))
+        .andExpect(jsonPath("$.age").value("29"))
+        .andExpect(jsonPath("$.address").value(Lists.newArrayList("a1", "a2")))
         .andReturn();
 
     this.bothMockMvc.perform(
@@ -174,9 +179,9 @@ public class LocAccessLogTest {
             .contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE))
         .andExpect(status().isOk())
         .andExpect(content().contentType("application/json;charset=UTF-8"))
-        .andExpect(jsonPath("$.name" ).value("thomas"))
-        .andExpect(jsonPath("$.age" ).value("29"))
-        .andExpect(jsonPath("$.address" ).value(Lists.newArrayList("a1", "a2")))
+        .andExpect(jsonPath("$.name").value("thomas"))
+        .andExpect(jsonPath("$.age").value("29"))
+        .andExpect(jsonPath("$.address").value(Lists.newArrayList("a1", "a2")))
         .andReturn();
   }
 
@@ -195,9 +200,9 @@ public class LocAccessLogTest {
             .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
         .andExpect(status().isOk())
         .andExpect(content().contentType("application/json;charset=UTF-8"))
-        .andExpect(jsonPath("$.name" ).value("thomas"))
-        .andExpect(jsonPath("$.age" ).value("29"))
-        .andExpect(jsonPath("$.address" ).value(Lists.newArrayList("a1", "a2")))
+        .andExpect(jsonPath("$.name").value("thomas"))
+        .andExpect(jsonPath("$.age").value("29"))
+        .andExpect(jsonPath("$.address").value(Lists.newArrayList("a1", "a2")))
         .andReturn();
 
     this.bothMockMvc.perform(
@@ -206,9 +211,9 @@ public class LocAccessLogTest {
             .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
         .andExpect(status().isOk())
         .andExpect(content().contentType("application/json;charset=UTF-8"))
-        .andExpect(jsonPath("$.name" ).value("thomas"))
-        .andExpect(jsonPath("$.age" ).value("29"))
-        .andExpect(jsonPath("$.address" ).value(Lists.newArrayList("a1", "a2")))
+        .andExpect(jsonPath("$.name").value("thomas"))
+        .andExpect(jsonPath("$.age").value("29"))
+        .andExpect(jsonPath("$.address").value(Lists.newArrayList("a1", "a2")))
         .andReturn();
   }
 
@@ -218,7 +223,7 @@ public class LocAccessLogTest {
     demo.setName("thomas");
     demo.setAge(29);
     List<String> address = Lists.newArrayList();
-    for(int i = 0; i < 200; i++) {
+    for (int i = 0; i < 200; i++) {
       address.add("a" + i);
     }
     demo.setAddress(address);
@@ -231,8 +236,8 @@ public class LocAccessLogTest {
             .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
         .andExpect(status().isOk())
         .andExpect(content().contentType("application/json;charset=UTF-8"))
-        .andExpect(jsonPath("$.name" ).value("thomas"))
-        .andExpect(jsonPath("$.age" ).value("29"))
+        .andExpect(jsonPath("$.name").value("thomas"))
+        .andExpect(jsonPath("$.age").value("29"))
         .andReturn();
 
     this.bothMockMvc.perform(
@@ -241,8 +246,8 @@ public class LocAccessLogTest {
             .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
         .andExpect(status().isOk())
         .andExpect(content().contentType("application/json;charset=UTF-8"))
-        .andExpect(jsonPath("$.name" ).value("thomas"))
-        .andExpect(jsonPath("$.age" ).value("29"))
+        .andExpect(jsonPath("$.name").value("thomas"))
+        .andExpect(jsonPath("$.age").value("29"))
         .andReturn();
 
     this.requestMockMvc.perform(
@@ -251,8 +256,8 @@ public class LocAccessLogTest {
             .contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE))
         .andExpect(status().isOk())
         .andExpect(content().contentType("application/json;charset=UTF-8"))
-        .andExpect(jsonPath("$.name" ).value("thomas"))
-        .andExpect(jsonPath("$.age" ).value("29"))
+        .andExpect(jsonPath("$.name").value("thomas"))
+        .andExpect(jsonPath("$.age").value("29"))
         .andReturn();
 
     this.bothMockMvc.perform(
@@ -261,8 +266,8 @@ public class LocAccessLogTest {
             .contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE))
         .andExpect(status().isOk())
         .andExpect(content().contentType("application/json;charset=UTF-8"))
-        .andExpect(jsonPath("$.name" ).value("thomas"))
-        .andExpect(jsonPath("$.age" ).value("29"))
+        .andExpect(jsonPath("$.name").value("thomas"))
+        .andExpect(jsonPath("$.age").value("29"))
         .andReturn();
   }
 
@@ -276,9 +281,9 @@ public class LocAccessLogTest {
             .accept("application/json"))
         .andExpect(status().isOk())
         .andExpect(content().contentType("application/json;charset=UTF-8"))
-        .andExpect(jsonPath("$.name" ).value("thomas"))
-        .andExpect(jsonPath("$.age" ).value("29"))
-        .andExpect(jsonPath("$.address" ).value(Lists.newArrayList("a1", "a2")))
+        .andExpect(jsonPath("$.name").value("thomas"))
+        .andExpect(jsonPath("$.age").value("29"))
+        .andExpect(jsonPath("$.address").value(Lists.newArrayList("a1", "a2")))
         .andReturn();
 
     this.bothMockMvc.perform(
@@ -289,9 +294,9 @@ public class LocAccessLogTest {
             .accept("application/json"))
         .andExpect(status().isOk())
         .andExpect(content().contentType("application/json;charset=UTF-8"))
-        .andExpect(jsonPath("$.name" ).value("thomas"))
-        .andExpect(jsonPath("$.age" ).value("29"))
-        .andExpect(jsonPath("$.address" ).value(Lists.newArrayList("a1", "a2")))
+        .andExpect(jsonPath("$.name").value("thomas"))
+        .andExpect(jsonPath("$.age").value("29"))
+        .andExpect(jsonPath("$.address").value(Lists.newArrayList("a1", "a2")))
         .andReturn();
   }
 
@@ -303,8 +308,8 @@ public class LocAccessLogTest {
             .accept("application/json"))
         .andExpect(status().isOk())
         .andExpect(content().contentType("application/json;charset=UTF-8"))
-        .andExpect(jsonPath("$.name" ).value("thomas"))
-        .andExpect(jsonPath("$.age" ).value("29"))
+        .andExpect(jsonPath("$.name").value("thomas"))
+        .andExpect(jsonPath("$.age").value("29"))
         .andReturn();
 
     this.bothMockMvc.perform(
@@ -313,16 +318,19 @@ public class LocAccessLogTest {
             .accept("application/json"))
         .andExpect(status().isOk())
         .andExpect(content().contentType("application/json;charset=UTF-8"))
-        .andExpect(jsonPath("$.name" ).value("thomas"))
-        .andExpect(jsonPath("$.age" ).value("29"))
+        .andExpect(jsonPath("$.name").value("thomas"))
+        .andExpect(jsonPath("$.age").value("29"))
         .andReturn();
   }
 
   @Test
   public void testMultiPart() throws Exception {
-    MockMultipartFile firstFile = new MockMultipartFile("data", "filename.txt", "text/plain", "some xml".getBytes());
-    MockMultipartFile secondFile = new MockMultipartFile("data", "other-file-name.data", "text/plain", "some other type".getBytes());
-    MockMultipartFile jsonFile = new MockMultipartFile("json", "", "application/json", "{\"json\": \"someValue\"}".getBytes());
+    MockMultipartFile firstFile = new MockMultipartFile("data", "filename.txt", "text/plain",
+        "some xml".getBytes());
+    MockMultipartFile secondFile = new MockMultipartFile("data", "other-file-name.data",
+        "text/plain", "some other type".getBytes());
+    MockMultipartFile jsonFile = new MockMultipartFile("json", "", "application/json",
+        "{\"json\": \"someValue\"}".getBytes());
 
     this.requestMockMvc.perform(MockMvcRequestBuilders.fileUpload("/post/multiPart")
         .file(firstFile)
@@ -344,6 +352,7 @@ public class LocAccessLogTest {
   @NoArgsConstructor
   @AllArgsConstructor
   public static class Demo {
+
     private String name;
     private int age;
     private List<String> address;
@@ -381,6 +390,7 @@ public class LocAccessLogTest {
 
     @Data
     static class JsonPojo {
+
       private String json;
     }
   }
@@ -427,7 +437,7 @@ public class LocAccessLogTest {
       demo.setName("thomas");
       demo.setAge(29);
       List<String> address = Lists.newArrayList();
-      for(int i = 0; i < times; i++) {
+      for (int i = 0; i < times; i++) {
         address.add("a" + i);
       }
       demo.setAddress(address);
@@ -485,7 +495,7 @@ public class LocAccessLogTest {
       demo.setName("thomas");
       demo.setAge(29);
       List<String> address = Lists.newArrayList();
-      for(int i = 0; i < times; i++) {
+      for (int i = 0; i < times; i++) {
         address.add("a" + i);
       }
       demo.setAddress(address);
@@ -499,6 +509,7 @@ public class LocAccessLogTest {
     public StreamMessageConverter(MediaType supportedMediaType) {
       super(supportedMediaType);
     }
+
     @Override
     protected boolean supports(Class<?> clazz) {
       return clazz.isAssignableFrom(ByteArrayInputStream.class);
@@ -532,7 +543,6 @@ public class LocAccessLogTest {
     public StreamMessageConverter streamMessageConverter() {
       return new StreamMessageConverter(MediaType.APPLICATION_OCTET_STREAM);
     }
-
 
 
     public Jackson2ObjectMapperBuilder jacksonBuilder() {

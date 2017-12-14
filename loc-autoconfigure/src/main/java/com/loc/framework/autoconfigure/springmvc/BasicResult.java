@@ -26,7 +26,9 @@ public class BasicResult<T> {
   @JsonView(BasicResultView.class)
   private T data;
 
-  interface BasicResultView { }
+  interface BasicResultView {
+
+  }
 
   public static <T> BasicResult<T> fail(int code, String msg) {
     return fail(code, msg, msg);

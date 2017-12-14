@@ -291,7 +291,8 @@ public class LocBasicResultTest {
 
     @GetMapping(value = "/loc/exception2")
     public BasicResult<Demo> locException2() {
-      throw new LocCommonException(200_002, "loc exception", new IllegalArgumentException("illegal argument"));
+      throw new LocCommonException(200_002, "loc exception",
+          new IllegalArgumentException("illegal argument"));
     }
 
     @GetMapping(value = "/loc/exception3")
@@ -301,7 +302,8 @@ public class LocBasicResultTest {
 
     @GetMapping(value = "/loc/exception4")
     public BasicResult<Demo> locException4() {
-      throw new LocCommonException(200_004, "loc exception", "detail exception msg", new IllegalArgumentException("illegal argument"));
+      throw new LocCommonException(200_004, "loc exception", "detail exception msg",
+          new IllegalArgumentException("illegal argument"));
     }
 
     @PostMapping(value = "/mediatype/exception", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
