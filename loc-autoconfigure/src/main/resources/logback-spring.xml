@@ -20,7 +20,8 @@
     </encoder>
     <file>${LOG_FILE:-/tmp/loc.log}</file>
     <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-      <fileNamePattern>./logs/${LOG_FILE}/%d{yyyy-MM-dd, aux}/${LOG_FILE}_%d{HH}.log
+      <fileNamePattern>
+        ${LOG_PATH:-./logs}/%d{yyyy-MM-dd, aux}/%d{HH}.log
       </fileNamePattern>
       <maxHistory>720</maxHistory>
     </rollingPolicy>

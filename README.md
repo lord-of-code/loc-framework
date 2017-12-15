@@ -49,6 +49,15 @@
 
 ## logger的starter的统一标准
 
+* 统一了logger的输出格式，主要考虑到后续的日志采集、统计、分析的统一
+```
+[%d{yyyy-MM-dd HH:mm:ss.SSS}] [%t] %-5level %logger{50} - %msg%n
+```
+* 默认了logger的输出，分为console和file，默认的file存储在`/tmp/loc.log`目录，可以通过配置文件`logging.file`进行修改
+* 日志按小时进行切割，切割后存放目录，默认是`./logs`目录，可以通过`logging.path`进行修改
+* 日志文件备份默认存放720小时(30天)
+
+
 
 ## jdbc的starter的统一标准
 

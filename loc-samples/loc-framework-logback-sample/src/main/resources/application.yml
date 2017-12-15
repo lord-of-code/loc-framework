@@ -3,3 +3,4 @@ server:
 
 logging:
   file: ./logs/loc.log
+  path: /tmp/logs
