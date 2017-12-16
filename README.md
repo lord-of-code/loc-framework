@@ -47,7 +47,7 @@
 5xx  服务端错误，如Runtime Exception错误 等
 ```
 
-## logger的starter的统一标准
+## logger的starter的统一标准(依赖logback日志框架)
 
 * 统一了logger的输出格式，主要考虑到后续的日志采集、统计、分析的统一
 ```
@@ -66,6 +66,7 @@
 
 
 ## eureka的starter的统一标准
+
 
 # 源码编译
 如果你想了解最新的一些功能和改动，可以通过编译源码来进行使用和测试
