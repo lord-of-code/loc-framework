@@ -46,6 +46,17 @@
       <artifactId>spring-boot-starter-web</artifactId>
       <optional>true</optional>
     </dependency>
+    <dependency>
+      <groupId>io.springfox</groupId>
+      <artifactId>springfox-swagger2</artifactId>
+      <optional>true</optional>
+    </dependency>
+
+    <dependency>
+      <groupId>io.springfox</groupId>
+      <artifactId>springfox-swagger-ui</artifactId>
+      <optional>true</optional>
+    </dependency>
 
 
     <!--for test-->
