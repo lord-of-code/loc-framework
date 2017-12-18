@@ -1,1 +1,1 @@
-provides: spring-boot-starter-web
+provides: spring-boot-starter-web, springfox-swagger2

@@ -47,6 +47,26 @@
 5xx  服务端错误，如Runtime Exception错误 等
 ```
 
+* 加入了swagger的相关配置
+```
+loc.web.springmvc.swagger2.enabled: true  #默认为true, 表示是否开启swagger功能
+
+loc.web.springmvc.swagger2.apiinfo.title = "project title";
+loc.web.springmvc.swagger2.apiinfo.description = "project description";
+loc.web.springmvc.swagger2.apiinfo.version = "v1";
+loc.web.springmvc.swagger2.apiinfo.termsOfServiceUrl = "https://github.com/lord-of-code/loc-framework";
+loc.web.springmvc.swagger2.apiinfo.contactName = "loc project";
+loc.web.springmvc.swagger2.apiinfo.contactUrl = "https://github.com/lord-of-code/loc-framework";
+loc.web.springmvc.swagger2.apiinfo.contactEmail = "dragonlong1986@126.com";
+loc.web.springmvc.swagger2.apiinfo.license = "project license";
+loc.web.springmvc.swagger2.apiinfo.licenseUrl = "https://github.com/lord-of-code/loc-framework";
+
+loc.web.springmvc.swagger2.restapi.basePackage   #扫描的包路径，默认为all
+loc.web.springmvc.swagger2.restapi.paths         #扫描的paths，默认为all
+```
+
+
+
 ## logger的starter的统一标准(依赖logback日志框架)
 
 * 统一了logger的输出格式，主要考虑到后续的日志采集、统计、分析的统一
