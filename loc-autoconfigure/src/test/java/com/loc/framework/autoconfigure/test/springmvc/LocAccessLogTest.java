@@ -9,7 +9,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.Lists;
 import com.loc.framework.autoconfigure.springmvc.LocAccessLogFilter;
-import com.loc.framework.autoconfigure.springmvc.LocSpringMvcProperties;
+import com.loc.framework.autoconfigure.springmvc.LocSpringMvcLogProperties;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
@@ -85,7 +85,7 @@ public class LocAccessLogTest {
 
   @Before
   public void setUp() throws Exception {
-    LocSpringMvcProperties requestProperties = new LocSpringMvcProperties();
+    LocSpringMvcLogProperties requestProperties = new LocSpringMvcLogProperties();
     requestProperties.setRequestBodyLength(1024);
     requestProperties.setResponseBodyLength(1024);
 
@@ -95,7 +95,7 @@ public class LocAccessLogTest {
         .addFilters(new LocAccessLogFilter(requestProperties))
         .build();
 
-    LocSpringMvcProperties bothProperties = new LocSpringMvcProperties();
+    LocSpringMvcLogProperties bothProperties = new LocSpringMvcLogProperties();
     bothProperties.setResponseBodyLength(1024);
     bothProperties.setIncludeResponse(true);
     bothMockMvc = MockMvcBuilders

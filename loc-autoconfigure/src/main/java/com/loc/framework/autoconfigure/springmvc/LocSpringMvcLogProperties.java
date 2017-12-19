@@ -8,8 +8,8 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * Created on 2017/11/30.
  */
 @Data
-@ConfigurationProperties(prefix = "loc.web.springmvc")
-public class LocSpringMvcProperties {
+@ConfigurationProperties(prefix = "loc.web.springmvc.log")
+public class LocSpringMvcLogProperties {
 
   private boolean includeRequest = true;
   private boolean includeResponse = false;

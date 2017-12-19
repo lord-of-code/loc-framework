@@ -22,7 +22,7 @@ import org.springframework.web.util.ContentCachingResponseWrapper;
 @AllArgsConstructor
 public class LocAccessLogFilter extends OncePerRequestFilter {
 
-  private LocSpringMvcProperties properties;
+  private LocSpringMvcLogProperties properties;
 
   private static final String DEFAULT_SKIP_PATTERN =
       "/api-docs.*|/actuator.*|/swagger.*|.*\\.png|.*\\.css|.*\\.js|.*\\.html|/favicon.ico|/hystrix.stream";

@@ -25,7 +25,7 @@ import org.springframework.web.util.WebUtils;
 public class LocAccessLogger {
 
   @Getter
-  private LocSpringMvcProperties properties;
+  private LocSpringMvcLogProperties properties;
 
   private static final String REQUEST_PREFIX = "Request Info [";
   private static final String REQUEST_SUFFIX = "] ";
@@ -35,7 +35,7 @@ public class LocAccessLogger {
 
   private StringBuilder normalMsg = new StringBuilder();
 
-  LocAccessLogger(LocSpringMvcProperties properties) {
+  LocAccessLogger(LocSpringMvcLogProperties properties) {
     this.properties = properties;
   }
 
