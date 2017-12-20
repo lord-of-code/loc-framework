@@ -20,7 +20,7 @@
 
 ## springmvc的starter的统一标准
 
-* 添加了Filter，增加了http请求的accesslog的记录，记录的request和response的关键信息
+* 增加了http请求的accesslog的记录的Filter，记录的request和response的关键信息
 * 添加了ExceptionHandler，增加了异常情况的处理
 * 添加了统一的Response返回的数据格式
 
@@ -47,6 +47,24 @@
 5xx  服务端错误，如Runtime Exception错误 等
 ```
 
+* 加入了cors跨域相关的Filter的配置
+```
+loc.web.springmvc.cors.enabled: false   #默认为false，默认不开启cors跨域的配置, 如果要开启，改成true
+loc.web.springmvc.cors.allowOrigins:    #默认为*, 可以通过数组进行添加
+  - ...
+  - ...
+loc.web.springmvc.cors.allowHeaders:    #默认为*, 可以通过数组进行添加
+  - ...
+  - ...
+loc.web.springmvc.cors.allowMethods:    #默认为*, 可以通过数组进行添加
+  - GET
+  - POST
+  - ...
+loc.web.springmvc.cors.allowExposeHeaders:   #默认没有，可以通过数组进行添加
+  - ...
+  - ...
+```
+
 * 加入了swagger的相关配置
 ```
 loc.web.springmvc.swagger2.enabled: true  #默认为true, 表示是否开启swagger功能
@@ -63,25 +81,6 @@ loc.web.springmvc.swagger2.apiinfo.licenseUrl = "https://github.com/lord-of-code
 
 loc.web.springmvc.swagger2.restapi.basePackage   #扫描的包路径，默认为all
 loc.web.springmvc.swagger2.restapi.paths         #扫描的paths，默认为all
-```
-
-* 加入了cors的相关配置
-```
-loc.web.springmvc.cors.enabled: false   #默认为false，默认不开启cors跨域的配置, 如果要开启，改成true
-loc.web.springmvc.cors.allowOrigins:    #默认为*, 可以通过数组进行添加
-  - ...
-  - ...
-loc.web.springmvc.cors.allowHeaders:    #默认为*, 可以通过数组进行添加
-  - ...
-  - ...
-loc.web.springmvc.cors.allowMethods:    #默认为*, 可以通过数组进行添加
-  - GET
-  - POST
-  - ...
-loc.web.springmvc.cors.allowExposeHeaders:   #默认没有，可以通过数组进行添加
-  - ...
-  - ...
-
 ```
 
 ## logger的starter的统一标准(依赖logback日志框架)
