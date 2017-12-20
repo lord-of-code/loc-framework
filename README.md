@@ -65,7 +65,24 @@ loc.web.springmvc.swagger2.restapi.basePackage   #扫描的包路径，默认为
 loc.web.springmvc.swagger2.restapi.paths         #扫描的paths，默认为all
 ```
 
+* 加入了cors的相关配置
+```
+loc.web.springmvc.cors.enabled: false   #默认为false，默认不开启cors跨域的配置, 如果要开启，改成true
+loc.web.springmvc.cors.allowOrigins:    #默认为*, 可以通过数组进行添加
+  - ...
+  - ...
+loc.web.springmvc.cors.allowHeaders:    #默认为*, 可以通过数组进行添加
+  - ...
+  - ...
+loc.web.springmvc.cors.allowMethods:    #默认为*, 可以通过数组进行添加
+  - GET
+  - POST
+  - ...
+loc.web.springmvc.cors.allowExposeHeaders:   #默认没有，可以通过数组进行添加
+  - ...
+  - ...
 
+```
 
 ## logger的starter的统一标准(依赖logback日志框架)
 
