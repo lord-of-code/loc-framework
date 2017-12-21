@@ -37,8 +37,9 @@ public class TomcatGracefulShutdown implements TomcatConnectorCustomizer,
     LocalDateTime startShutdown = LocalDateTime.now();
     LocalDateTime stopShutdown = LocalDateTime.now();
     try {
-      log.info("We are now in down mode, please wait " + tomcatGracefulShutdownProperties.getWaitTime()
-          + " second(s)...");
+      log.info(
+          "We are now in down mode, please wait " + tomcatGracefulShutdownProperties.getWaitTime()
+              + " second(s)...");
       connector.pause();
 
       final Executor executor = connector.getProtocolHandler().getExecutor();
@@ -48,7 +49,8 @@ public class TomcatGracefulShutdown implements TomcatConnectorCustomizer,
         threadPoolExecutor.shutdown();
         if (!threadPoolExecutor
             .awaitTermination(tomcatGracefulShutdownProperties.getWaitTime(), TimeUnit.SECONDS)) {
-          log.warn("Tomcat thread pool did not shut down gracefully within " + tomcatGracefulShutdownProperties
+          log.warn("Tomcat thread pool did not shut down gracefully within "
+              + tomcatGracefulShutdownProperties
               .getWaitTime() + " second(s). Proceeding with force shutdown");
         } else {
           log.debug("Tomcat thread pool is empty, we stop now");
