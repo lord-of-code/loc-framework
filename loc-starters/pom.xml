@@ -23,6 +23,7 @@
   <modules>
     <module>loc-framework-springmvc-starter</module>
     <module>loc-framework-logback-starter</module>
+    <module>loc-framework-shutdown-starter</module>
   </modules>
 
 </project>

@@ -21,7 +21,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @ConditionalOnClass(Docket.class)
 @ConditionalOnProperty(value = "loc.web.springmvc.swagger2.enabled", matchIfMissing = true)
 @EnableConfigurationProperties({Swagger2RestApiProperties.class, Swagger2ApiInfoProperties.class})
-public class Swagger2Config {
+public class Swagger2AutoConfiguration {
 
   @Bean
   public Docket createRestApi(Swagger2RestApiProperties swaggerProperties, ApiInfo apiInfo) {

@@ -8,10 +8,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.Lists;
+import com.loc.framework.autoconfigure.shutdown.TomcatGracefulShutdownAutoConfiguration;
 import com.loc.framework.autoconfigure.springmvc.BasicResult;
-import com.loc.framework.autoconfigure.springmvc.LocAdviceErrorConfig;
+import com.loc.framework.autoconfigure.springmvc.LocAdviceErrorAutoConfiguration;
 import com.loc.framework.autoconfigure.springmvc.LocCommonException;
-import com.loc.framework.autoconfigure.springmvc.LocSpringMvcConfig;
+import com.loc.framework.autoconfigure.springmvc.LocSpringMvcAutoConfiguration;
 import com.loc.framework.autoconfigure.test.springmvc.LocBasicResultTest.BasicRequestController;
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -333,8 +334,9 @@ public class LocBasicResultTest {
   @Import({
       ServletWebServerFactoryAutoConfiguration.class,
       JacksonAutoConfiguration.class,
-      LocAdviceErrorConfig.class,
-      LocSpringMvcConfig.class
+      LocAdviceErrorAutoConfiguration.class,
+      LocSpringMvcAutoConfiguration.class,
+      TomcatGracefulShutdownAutoConfiguration.class
   })
   protected @interface MinimalWebConfiguration {
 

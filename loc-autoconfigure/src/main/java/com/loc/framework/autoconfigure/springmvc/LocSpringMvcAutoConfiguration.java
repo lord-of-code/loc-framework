@@ -20,7 +20,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 @Configuration
 @ConditionalOnWebApplication
 @EnableConfigurationProperties({LocSpringMvcLogProperties.class, LocSpringMvcCorsProperties.class})
-public class LocSpringMvcConfig {
+public class LocSpringMvcAutoConfiguration {
 
   @Bean
   @ConditionalOnClass(CorsFilter.class)

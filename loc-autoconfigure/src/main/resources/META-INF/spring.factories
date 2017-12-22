@@ -1,5 +1,5 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-com.loc.framework.autoconfigure.springmvc.LocSpringMvcConfig,\
-com.loc.framework.autoconfigure.springmvc.LocAdviceErrorConfig,\
-com.loc.framework.autoconfigure.swagger.Swagger2Config,\
+com.loc.framework.autoconfigure.springmvc.LocSpringMvcAutoConfiguration,\
+com.loc.framework.autoconfigure.springmvc.LocAdviceErrorAutoConfiguration,\
+com.loc.framework.autoconfigure.swagger.Swagger2AutoConfiguration,\
 com.loc.framework.autoconfigure.shutdown.TomcatGracefulShutdownAutoConfiguration

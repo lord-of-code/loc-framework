@@ -1,6 +1,7 @@
 package com.loc.framework.autoconfigure.shutdown;
 
 import javax.servlet.Servlet;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.catalina.startup.Tomcat;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
@@ -12,6 +13,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 
+@Slf4j
 @Configuration
 @ConditionalOnProperty(value = "loc.tomcat.shutdown.enabled", matchIfMissing = true)
 @EnableConfigurationProperties(TomcatGracefulShutdownProperties.class)
@@ -29,6 +31,7 @@ public class TomcatGracefulShutdownAutoConfiguration {
 
   @Bean
   public TomcatGracefulShutdown tomcatGracefulShutdown() {
+    log.info("register tomcat graceful shutdown ... ");
     return new TomcatGracefulShutdown(tomcatGracefulShutdownProperties);
   }
 

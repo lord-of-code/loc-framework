@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @Slf4j
 @RestControllerAdvice
 @ConditionalOnWebApplication
-public class LocAdviceErrorConfig {
+public class LocAdviceErrorAutoConfiguration {
 
   @ConditionalOnClass(MethodArgumentNotValidException.class)
   @Configuration

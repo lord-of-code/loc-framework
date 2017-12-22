@@ -3,7 +3,7 @@ package com.loc.framework.autoconfigure.test.springmvc;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.loc.framework.autoconfigure.springmvc.BasicResult;
-import com.loc.framework.autoconfigure.springmvc.LocSpringMvcConfig;
+import com.loc.framework.autoconfigure.springmvc.LocSpringMvcAutoConfiguration;
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -73,7 +73,7 @@ public class LocCorsTest {
   @Import({
       ServletWebServerFactoryAutoConfiguration.class,
       JacksonAutoConfiguration.class,
-      LocSpringMvcConfig.class
+      LocSpringMvcAutoConfiguration.class
   })
   protected @interface MinimalWebConfiguration {
 

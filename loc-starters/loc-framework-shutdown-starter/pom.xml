@@ -9,7 +9,7 @@
     <version>${revision}</version>
   </parent>
 
-  <artifactId>loc-framework-springmvc-starter</artifactId>
+  <artifactId>loc-framework-shutdown-starter</artifactId>
   <properties>
     <main.basedir>${basedir}/../..</main.basedir>
   </properties>
@@ -19,24 +19,11 @@
       <groupId>com.github.lord-of-code</groupId>
       <artifactId>loc-framework-autoconfigure</artifactId>
     </dependency>
-    <dependency>
-      <groupId>com.github.lord-of-code</groupId>
-      <artifactId>loc-framework-shutdown-starter</artifactId>
-    </dependency>
 
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-web</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>io.springfox</groupId>
-      <artifactId>springfox-swagger2</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>io.springfox</groupId>
-      <artifactId>springfox-swagger-ui</artifactId>
+      <scope>provided</scope>
     </dependency>
   </dependencies>
 

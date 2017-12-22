@@ -3,7 +3,7 @@ package com.loc.framework.autoconfigure.test.springmvc;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.loc.framework.autoconfigure.springmvc.BasicResult;
-import com.loc.framework.autoconfigure.swagger.Swagger2Config;
+import com.loc.framework.autoconfigure.swagger.Swagger2AutoConfiguration;
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -128,7 +128,7 @@ public class LocSwagger2Test {
   @Import({
       ServletWebServerFactoryAutoConfiguration.class,
       JacksonAutoConfiguration.class,
-      Swagger2Config.class
+      Swagger2AutoConfiguration.class
   })
   protected @interface MinimalWebConfiguration {
 

@@ -5,9 +5,11 @@ import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -20,6 +22,7 @@ public class Application {
     SpringApplication.run(Application.class, args);
   }
 
+  @Slf4j
   @RestController
   public static class GetController {
 
@@ -30,6 +33,15 @@ public class Application {
       demo.setAge(12);
       demo.setAddress(Lists.newArrayList());
       return demo;
+    }
+
+    @GetMapping(value = "/sleep")
+    public String sleep(@RequestParam long time) throws Exception {
+      long startTime = System.currentTimeMillis();
+      log.info("before sleep, time is {}", time);
+      Thread.sleep(time);
+      log.info("after sleep, sleep time is {}", (System.currentTimeMillis() - startTime));
+      return "OK";
     }
   }
 
