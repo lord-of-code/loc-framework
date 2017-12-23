@@ -8,3 +8,6 @@ loc.web.springmvc.swagger2:
   restapi:
     base-package: com.loc.framework.springmvc.sample
 #  enabled: false
+
+
+loc.tomcat.shutdown.wait-time: 20

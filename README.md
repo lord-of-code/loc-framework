@@ -11,6 +11,7 @@
 ## 计划主要的starter
 - springmvc
 - logger
+- shutdown
 - jdbc
 - redis
 - eureka
@@ -83,7 +84,7 @@ loc.web.springmvc.swagger2.restapi.basePackage   #扫描的包路径，默认为
 loc.web.springmvc.swagger2.restapi.paths         #扫描的paths，默认为all
 ```
 
-## logger的starter的统一标准(依赖logback日志框架)
+## logger的starter统一日志标准(依赖logback日志框架)
 
 * 统一了logger的输出格式，主要考虑到后续的日志采集、统计、分析的统一
 ```
@@ -93,6 +94,15 @@ loc.web.springmvc.swagger2.restapi.paths         #扫描的paths，默认为all
 * 日志按小时进行切割，切割后存放目录，默认是`./logs`目录，可以通过`logging.path`进行修改
 * 日志文件备份默认存放720小时(30天)
 
+
+## shutdown的starter来进行优雅的停机操作
+
+* 完成了tomcat的优雅停机策略
+
+```
+loc.tomcat.shutdown.enabled: true  #默认优雅停机策略是打开的
+loc.tomcat.shutdown.waitTime: 30   #默认30s的优雅停机等待时间，超过时间强行关闭
+```
 
 
 ## jdbc的starter的统一标准
