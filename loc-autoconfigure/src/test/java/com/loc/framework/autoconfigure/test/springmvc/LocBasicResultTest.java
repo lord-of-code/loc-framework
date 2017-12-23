@@ -36,6 +36,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.validation.annotation.Validated;
@@ -50,12 +51,14 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RunWith(SpringRunner.class)
 @WebMvcTest(value = BasicRequestController.class)
+@TestPropertySource(properties = {
+    "loc.tomcat.shutdown.waitTime = 5"
+})
 @DirtiesContext
 public class LocBasicResultTest {
 
   @Autowired
   private MockMvc mockMvc;
-
 
   @Test
   public void getSuccess() throws Exception {

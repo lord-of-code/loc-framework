@@ -40,6 +40,11 @@ public class TomcatGracefulShutdown implements TomcatConnectorCustomizer,
       log.info(
           "We are now in down mode, please wait " + tomcatGracefulShutdownProperties.getWaitTime()
               + " second(s)...");
+
+      if(connector == null) {
+        log.info("We are running unit test ... ");
+        return ;
+      }
       connector.pause();
 
       final Executor executor = connector.getProtocolHandler().getExecutor();
