@@ -34,7 +34,7 @@
 
   <properties>
     <main.basedir>${basedir}</main.basedir>
-    <revision>0.1.0.RELEASE</revision>
+    <revision>0.1.1-SNAPSHOT</revision>
   </properties>
 
   <profiles>

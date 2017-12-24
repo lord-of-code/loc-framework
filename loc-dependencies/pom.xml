@@ -42,22 +42,22 @@
       <dependency>
         <groupId>com.github.lord-of-code</groupId>
         <artifactId>loc-framework-autoconfigure</artifactId>
-        <version>${project.version}</version>
+        <version>${revision}</version>
       </dependency>
       <dependency>
         <groupId>com.github.lord-of-code</groupId>
         <artifactId>loc-framework-springmvc-starter</artifactId>
-        <version>${project.version}</version>
+        <version>${revision}</version>
       </dependency>
       <dependency>
         <groupId>com.github.lord-of-code</groupId>
         <artifactId>loc-framework-logback-starter</artifactId>
-        <version>${project.version}</version>
+        <version>${revision}</version>
       </dependency>
       <dependency>
         <groupId>com.github.lord-of-code</groupId>
         <artifactId>loc-framework-shutdown-starter</artifactId>
-        <version>${project.version}</version>
+        <version>${revision}</version>
       </dependency>
 
     </dependencies>
@@ -82,6 +82,11 @@
           <version>3.0.0</version>
         </plugin>
         <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>flatten-maven-plugin</artifactId>
+          <version>1.0.0</version>
+        </plugin>
+        <plugin>
           <groupId>org.springframework.boot</groupId>
           <artifactId>spring-boot-maven-plugin</artifactId>
           <version>${spring.boot.version}</version>
@@ -98,6 +103,54 @@
         </plugin>
       </plugins>
     </pluginManagement>
+
+    <plugins>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>flatten-maven-plugin</artifactId>
+        <inherited>false</inherited>
+        <executions>
+          <execution>
+            <id>flatten-effective-pom</id>
+            <phase>process-resources</phase>
+            <goals>
+              <goal>flatten</goal>
+            </goals>
+            <configuration>
+              <updatePomFile>false</updatePomFile>
+              <flattenMode>oss</flattenMode>
+              <pomElements>
+                <dependencyManagement>expand</dependencyManagement>
+                <pluginManagement>expand</pluginManagement>
+                <properties>remove</properties>
+                <repositories>remove</repositories>
+              </pomElements>
+            </configuration>
+          </execution>
+          <execution>
+            <id>flatten</id>
+            <phase>process-resources</phase>
+            <goals>
+              <goal>flatten</goal>
+            </goals>
+            <configuration>
+              <updatePomFile>true</updatePomFile>
+              <flattenMode>bom</flattenMode>
+              <pomElements>
+                <pluginManagement>keep</pluginManagement>
+              </pomElements>
+            </configuration>
+          </execution>
+          <execution>
+            <id>flatten-clean</id>
+            <phase>clean</phase>
+            <goals>
+              <goal>clean</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
   </build>
 
   <repositories>

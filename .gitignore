@@ -33,3 +33,5 @@ hs_err_pid*
 
 # jar project
 target/
+
+*.flattened-pom.xml

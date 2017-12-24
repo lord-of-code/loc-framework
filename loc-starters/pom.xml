@@ -21,6 +21,7 @@
   </properties>
 
   <modules>
+    <module>loc-framework-starter-parent</module>
     <module>loc-framework-springmvc-starter</module>
     <module>loc-framework-logback-starter</module>
     <module>loc-framework-shutdown-starter</module>
