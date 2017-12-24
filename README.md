@@ -8,6 +8,82 @@
 通过一定的规则来统一编写各种starter，方便在企业内部进行规则的统一，配置的统一，用法的统一，监控的统一，部署的统一
 方便再进一步的简化springboot和springcloud的使用
 
+## 使用方式
+- pom.xml中加入parent
+```
+<parent>
+    <groupId>com.github.lord-of-code</groupId>
+    <artifactId>loc-framework-starter-parent</artifactId>
+    <version>0.1.1.RELEASE</version>
+    <relativePath/>
+  </parent>
+```
+
+- pom.xml中指定仓库地址(因为springboot2在中央仓库还没有，所以需要指定仓库)
+```
+<repositories>
+  <repository>
+    <id>spring-snapshots</id>
+    <name>Spring Snapshots</name>
+    <url>https://repo.spring.io/snapshot</url>
+    <snapshots>
+      <enabled>true</enabled>
+    </snapshots>
+  </repository>
+  <repository>
+    <id>spring-milestones</id>
+    <name>Spring Milestones</name>
+    <url>https://repo.spring.io/milestone</url>
+    <snapshots>
+      <enabled>false</enabled>
+    </snapshots>
+  </repository>
+</repositories>
+
+<pluginRepositories>
+  <pluginRepository>
+    <id>spring-snapshots</id>
+    <name>Spring Snapshots</name>
+    <url>https://repo.spring.io/snapshot</url>
+    <snapshots>
+      <enabled>true</enabled>
+    </snapshots>
+  </pluginRepository>
+  <pluginRepository>
+    <id>spring-milestones</id>
+    <name>Spring Milestones</name>
+    <url>https://repo.spring.io/milestone</url>
+    <snapshots>
+      <enabled>false</enabled>
+    </snapshots>
+  </pluginRepository>
+</pluginRepositories>
+```
+- pom.xml加入相关插件(插件打出的uber.jar可以直接通过`java -jar uber.jar`来启动)
+```
+<build>
+  <plugins>
+    <plugin>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-maven-plugin</artifactId>
+    </plugin>
+    <plugin>
+      <groupId>org.apache.maven.plugins</groupId>
+      <artifactId>maven-compiler-plugin</artifactId>
+    </plugin>
+  </plugins>
+</build>
+```
+
+
+## demo程序
+
+具体代码可以参考
+
+- [具体的demo](https://github.com/lord-of-code/loc-framework-demo)
+
+
+
 ## 计划主要的starter
 - springmvc
 - logger
