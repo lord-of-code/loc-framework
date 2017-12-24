@@ -41,9 +41,9 @@ public class TomcatGracefulShutdown implements TomcatConnectorCustomizer,
           "We are now in down mode, please wait " + tomcatGracefulShutdownProperties.getWaitTime()
               + " second(s)...");
 
-      if(connector == null) {
+      if (connector == null) {
         log.info("We are running unit test ... ");
-        return ;
+        return;
       }
       connector.pause();
 
