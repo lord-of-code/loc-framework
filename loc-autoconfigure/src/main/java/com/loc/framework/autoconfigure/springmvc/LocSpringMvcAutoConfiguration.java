@@ -49,7 +49,7 @@ public class LocSpringMvcAutoConfiguration {
   @Bean
   @ConditionalOnClass(OncePerRequestFilter.class)
   @ConditionalOnProperty(value = "loc.web.springmvc.log.enabled", matchIfMissing = true)
-  public Filter accessLogFilter(LocSpringMvcLogProperties hnSpringMvcProperties) {
-    return new LocAccessLogFilter(hnSpringMvcProperties);
+  public Filter accessLogFilter(LocSpringMvcLogProperties locSpringMvcProperties) {
+    return new LocAccessLogFilter(locSpringMvcProperties);
   }
 }
