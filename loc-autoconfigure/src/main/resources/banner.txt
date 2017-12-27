@@ -8,5 +8,5 @@ ${AnsiColor.BRIGHT_YELLOW}
 
 ${AnsiColor.BRIGHT_RED}
 Spring Boot Version: ${spring-boot.version}${spring-boot.formatted-version}
-Loc Framework Version: 0.1.0-SNAPSHOT
+Loc Framework Version: 0.2.0-SNAPSHOT
 ${AnsiColor.WHITE}

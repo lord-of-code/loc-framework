@@ -23,7 +23,6 @@ public class JdbcPoolProperties {
   public static final String DEFAULT_DRIVER_CLASS_NAME = null;
   public static final int DEFAULT_VALIDATION_TIMEOUT = 5000;
   public static final int DEFAULT_LEAK_DETECTION_THRESHOLD = 0;
-  public static final String DEFAULT_JDBC_INTERCEPTORS = "SlowQueryReport(threshold=300)";
 
   private boolean autoCommit = DEFAULT_AUTO_COMMIT;
   private int connectionTimeout = DEFAULT_CONNECTION_TIMEOUT;
@@ -39,5 +38,4 @@ public class JdbcPoolProperties {
   private String driverClassName = DEFAULT_DRIVER_CLASS_NAME;
   private int validationTimeout = DEFAULT_VALIDATION_TIMEOUT;
   private int leakDetectionThreshold = DEFAULT_LEAK_DETECTION_THRESHOLD;
-  private String jdbcInterceptors = DEFAULT_JDBC_INTERCEPTORS;
 }

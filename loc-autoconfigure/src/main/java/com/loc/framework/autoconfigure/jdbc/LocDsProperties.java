@@ -9,5 +9,5 @@ import lombok.Data;
 @Data
 public class LocDsProperties {
 
-  private Map<String, JdbcProperties> locDs;
+  private Map<String, JdbcProperties> dataSource;
 }
