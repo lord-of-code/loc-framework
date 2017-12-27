@@ -3,8 +3,7 @@ package com.loc.framework.autoconfigure.test.springmvc;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.loc.framework.autoconfigure.jdbc.LocDataSourceAutoConfiguration;
-import com.loc.framework.autoconfigure.jdbc.LocLog4jdbcAutoConfiguration;
-import com.loc.framework.autoconfigure.jdbc.LocLog4jdbcBeanPostProcessor;
+import com.loc.framework.autoconfigure.jdbc.Log4jdbcAutoConfiguration;
 import com.loc.framework.autoconfigure.springmvc.BasicResult;
 import com.zaxxer.hikari.HikariDataSource;
 import java.lang.annotation.Documented;
@@ -12,6 +11,7 @@ import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
+import javax.sql.DataSource;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,18 +39,16 @@ import org.springframework.web.bind.annotation.RestController;
     "loc.dataSource.firstDs.jdbcUrl = jdbc:log4jdbc:mysql://127.0.0.1:3306/test?useUnicode=true&characterEncoding=utf8&autoReconnect=true&failOverReadOnly=false",
     "loc.dataSource.firstDs.jdbcPool.autoCommit = false",
     "loc.dataSource.firstDs.jdbcPool.maximumPoolSize = 30",
-    "loc.log4jdbc.debug.stack.prefix = com.loc.framework.autoconfigure.test.springmvc",
-    "loc.log4jdbc.sqltiming.warn.threshold = 300",
-    "loc.log4jdbc.sqltiming.error.threshold = 2000",
+    "log4jdbc.debug.stack.prefix = com.loc.framework.autoconfigure.test.springmvc",
+    "log4jdbc.sqltiming.warn.threshold = 300",
+    "log4jdbc.sqltiming.error.threshold = 2000",
 })
 @DirtiesContext
 public class LocDatasourceTest {
 
   @Autowired
-  private HikariDataSource dataSource;
+  private DataSource dataSource;
 
-  @Autowired
-  private LocLog4jdbcBeanPostProcessor locLog4jdbcBeanPostProcessor;
 
   @Autowired
   private Environment environment;
@@ -59,33 +57,33 @@ public class LocDatasourceTest {
   @Test
   public void testDataSource() throws Exception {
     assertThat(dataSource).isNotNull();
-    assertThat(dataSource.getUsername()).isEqualTo("root");
-    assertThat(dataSource.getPassword()).isEqualTo("");
-    assertThat(dataSource.getJdbcUrl()).isEqualTo("jdbc:log4jdbc:mysql://127.0.0.1:3306/test?useUnicode=true&characterEncoding=utf8&autoReconnect=true&failOverReadOnly=false");
+    HikariDataSource hikariDataSource = dataSource.unwrap(HikariDataSource.class);
+    assertThat(hikariDataSource.getUsername()).isEqualTo("root");
+    assertThat(hikariDataSource.getPassword()).isEqualTo("");
+    assertThat(hikariDataSource.getJdbcUrl()).isEqualTo("jdbc:log4jdbc:mysql://127.0.0.1:3306/test?useUnicode=true&characterEncoding=utf8&autoReconnect=true&failOverReadOnly=false");
 
-    assertThat(dataSource.isAutoCommit()).isEqualTo(false);
-    assertThat(dataSource.getConnectionTimeout()).isEqualTo(30000);
-    assertThat(dataSource.getIdleTimeout()).isEqualTo(600000);
-    assertThat(dataSource.getMaxLifetime()).isEqualTo(1800000);
-    assertThat(dataSource.getMaximumPoolSize()).isEqualTo(30);
-    assertThat(dataSource.getMinimumIdle()).isEqualTo(10);
-    assertThat(dataSource.getInitializationFailTimeout()).isEqualTo(1);
-    assertThat(dataSource.isIsolateInternalQueries()).isEqualTo(false);
-    assertThat(dataSource.isReadOnly()).isEqualTo(false);
-    assertThat(dataSource.isRegisterMbeans()).isEqualTo(false);
-    assertThat(dataSource.getDriverClassName()).isEqualTo(null);
-    assertThat(dataSource.getValidationTimeout()).isEqualTo(5000);
-    assertThat(dataSource.getLeakDetectionThreshold()).isEqualTo(0);
+    assertThat(hikariDataSource.isAutoCommit()).isEqualTo(false);
+    assertThat(hikariDataSource.getConnectionTimeout()).isEqualTo(30000);
+    assertThat(hikariDataSource.getIdleTimeout()).isEqualTo(600000);
+    assertThat(hikariDataSource.getMaxLifetime()).isEqualTo(1800000);
+    assertThat(hikariDataSource.getMaximumPoolSize()).isEqualTo(30);
+    assertThat(hikariDataSource.getMinimumIdle()).isEqualTo(10);
+    assertThat(hikariDataSource.getInitializationFailTimeout()).isEqualTo(1);
+    assertThat(hikariDataSource.isIsolateInternalQueries()).isEqualTo(false);
+    assertThat(hikariDataSource.isReadOnly()).isEqualTo(false);
+    assertThat(hikariDataSource.isRegisterMbeans()).isEqualTo(false);
+    assertThat(hikariDataSource.getDriverClassName()).isEqualTo(null);
+    assertThat(hikariDataSource.getValidationTimeout()).isEqualTo(5000);
+    assertThat(hikariDataSource.getLeakDetectionThreshold()).isEqualTo(0);
   }
 
   @Test
   public void testLog4jdbc() {
-    assertThat(locLog4jdbcBeanPostProcessor).isNotNull();
     assertThat(environment).isNotNull();
 
-    assertThat(this.environment.getProperty("loc.log4jdbc.debug.stack.prefix")).isEqualTo("com.loc.framework.autoconfigure.test.springmvc");
-    assertThat(this.environment.getProperty("loc.log4jdbc.sqltiming.warn.threshold")).isEqualTo("300");
-    assertThat(this.environment.getProperty("loc.log4jdbc.sqltiming.error.threshold")).isEqualTo("2000");
+    assertThat(this.environment.getProperty("log4jdbc.debug.stack.prefix")).isEqualTo("com.loc.framework.autoconfigure.test.springmvc");
+    assertThat(this.environment.getProperty("log4jdbc.sqltiming.warn.threshold")).isEqualTo("300");
+    assertThat(this.environment.getProperty("log4jdbc.sqltiming.error.threshold")).isEqualTo("2000");
   }
 
   @MinimalWebConfiguration
@@ -108,7 +106,7 @@ public class LocDatasourceTest {
       ServletWebServerFactoryAutoConfiguration.class,
       JacksonAutoConfiguration.class,
       LocDataSourceAutoConfiguration.class,
-      LocLog4jdbcAutoConfiguration.class
+      Log4jdbcAutoConfiguration.class
   })
   protected @interface MinimalWebConfiguration {
 

@@ -7,6 +7,7 @@ import com.zaxxer.hikari.HikariDataSource;
 import java.util.Optional;
 import javax.sql.DataSource;
 import lombok.extern.slf4j.Slf4j;
+import net.sf.log4jdbc.sql.jdbcapi.DataSourceSpy;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.FatalBeanException;
 import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
@@ -29,12 +30,11 @@ import org.springframework.transaction.aspectj.AnnotationTransactionAspect;
 @Slf4j
 @Configuration
 @ConditionalOnClass({
-    DataSource.class, HikariDataSource.class
+    DataSource.class, HikariDataSource.class, DataSourceSpy.class
 })
 public class LocDataSourceAutoConfiguration implements BeanFactoryPostProcessor, EnvironmentAware {
 
   private ConfigurableEnvironment environment;
-
 
   @Override
   public void postProcessBeanFactory(
@@ -56,18 +56,20 @@ public class LocDataSourceAutoConfiguration implements BeanFactoryPostProcessor,
     checkArgument(!Strings.isNullOrEmpty(jdbcUrl), prefixName + " url is null or empty");
     log.info("prefixName is {}, jdbc properties is {}", prefixName, jdbcProperties);
 
-    HikariDataSource dataSource = createHikariDataSource(jdbcProperties);
+    HikariDataSource hikariDataSource = createHikariDataSource(jdbcProperties);
+    DataSourceSpy dataSource = new DataSourceSpy(hikariDataSource);
+
     DataSourceTransactionManager transactionManager = new DataSourceTransactionManager(dataSource);
     AnnotationTransactionAspect.aspectOf().setTransactionManager(transactionManager);
 
     JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
 
-    register(configurableListableBeanFactory, transactionManager, prefixName + "TransactionManager",
-        prefixName + "Tx");
     register(configurableListableBeanFactory, dataSource, prefixName + "DataSource",
         prefixName + "Ds");
     register(configurableListableBeanFactory, jdbcTemplate, prefixName + "JdbcTemplate",
         prefixName + "Jt");
+    register(configurableListableBeanFactory, transactionManager, prefixName + "TransactionManager",
+        prefixName + "Tx");
   }
 
   private void register(ConfigurableListableBeanFactory beanFactory, Object bean, String name,

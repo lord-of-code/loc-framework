@@ -4,4 +4,4 @@ com.loc.framework.autoconfigure.springmvc.LocAdviceErrorAutoConfiguration,\
 com.loc.framework.autoconfigure.swagger.Swagger2AutoConfiguration,\
 com.loc.framework.autoconfigure.shutdown.TomcatGracefulShutdownAutoConfiguration,\
 com.loc.framework.autoconfigure.jdbc.LocDataSourceAutoConfiguration,\
-com.loc.framework.autoconfigure.jdbc.LocLog4jdbcAutoConfiguration
+com.loc.framework.autoconfigure.jdbc.Log4jdbcAutoConfiguration

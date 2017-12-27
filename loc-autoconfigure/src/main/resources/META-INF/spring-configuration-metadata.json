@@ -1,0 +1,19 @@
+{
+  "properties": [
+    {
+      "name": "log4jdbc.debug.stack.prefix",
+      "type": "java.util.regex.Pattern",
+      "description": "A REGEX matching the package name of your application. The call stack will be searched down to the first occurrence of a class that has the matching REGEX. If this is not set, the actual class that called into log4jdbc is used in the debug output (in many cases this will be a connection pool class). For example, setting a system property such as this: -Dlog4jdbc.debug.stack.prefix=^com.mycompany.myapp.* would cause the call stack to be searched for the first call that came from code in the com.mycompany.myapp package or below, thus if all of your sql generating code was in code located in the com.mycompany.myapp package or any subpackages, this would be printed in the debug information, rather than the package name for a connection pool, object relational system, etc. Please note that the behavior of this property has changed as compared to the standard log4jdbc implementation. This property is now a REGEX, instead of being just the package prefix of the stack trace. So, for instance, if you want to target the prefix org.mypackage, the value of this property should be: ^org.mypackage.*."
+    },
+    {
+      "name": "log4jdbc.sqltiming.warn.threshold",
+      "type": "java.lang.Long",
+      "description": "Millisecond time value. Causes SQL that takes the number of milliseconds specified or more time to execute to be logged at the warning level in the sqltiming log. Note that the sqltiming log must be enabled at the warn log level for this feature to work. Also the logged output for this setting will log with debug information that is normally only shown when the sqltiming log is enabled at the debug level. This can help you to more quickly find slower running SQL without adding overhead or logging for normal running SQL that executes below the threshold level (if the logging level is set appropriately)."
+    },
+    {
+      "name": "log4jdbc.sqltiming.error.threshold",
+      "type": "java.lang.Long",
+      "description": "Millisecond time value. Causes SQL that takes the number of milliseconds specified or more time to execute to be logged at the error level in the sqltiming log. Note that the sqltiming log must be enabled at the error log level for this feature to work. Also the logged output for this setting will log with debug information that is normally only shown when the sqltiming log is enabled at the debug level. This can help you to more quickly find slower running SQL without adding overhead or logging for normal running SQL that executes below the threshold level (if the logging level is set appropriately.)"
+    }
+  ]
+}
