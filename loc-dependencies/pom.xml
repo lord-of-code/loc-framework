@@ -22,7 +22,7 @@
     <spring.cloud.version>Finchley.M3</spring.cloud.version>
 
     <springfox-swagger2.version>2.7.0</springfox-swagger2.version>
-    <log4jdbc.version>1.2</log4jdbc.version>
+    <log4jdbc.version>1.16</log4jdbc.version>
   </properties>
 
   <dependencyManagement>
@@ -79,8 +79,8 @@
 
       <!--jdbc-->
       <dependency>
-        <groupId>com.googlecode.log4jdbc</groupId>
-        <artifactId>log4jdbc</artifactId>
+        <groupId>org.bgee.log4jdbc-log4j2</groupId>
+        <artifactId>log4jdbc-log4j2-jdbc4.1</artifactId>
         <version>${log4jdbc.version}</version>
       </dependency>
 

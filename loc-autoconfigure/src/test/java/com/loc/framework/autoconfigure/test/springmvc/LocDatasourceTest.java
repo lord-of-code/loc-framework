@@ -3,6 +3,8 @@ package com.loc.framework.autoconfigure.test.springmvc;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.loc.framework.autoconfigure.jdbc.LocDataSourceAutoConfiguration;
+import com.loc.framework.autoconfigure.jdbc.LocLog4jdbcAutoConfiguration;
+import com.loc.framework.autoconfigure.jdbc.LocLog4jdbcBeanPostProcessor;
 import com.loc.framework.autoconfigure.springmvc.BasicResult;
 import com.zaxxer.hikari.HikariDataSource;
 import java.lang.annotation.Documented;
@@ -18,6 +20,7 @@ import org.springframework.boot.autoconfigure.web.servlet.ServletWebServerFactor
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import org.springframework.core.env.Environment;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -35,13 +38,22 @@ import org.springframework.web.bind.annotation.RestController;
     "loc.dataSource.firstDs.password = ",
     "loc.dataSource.firstDs.jdbcUrl = jdbc:log4jdbc:mysql://127.0.0.1:3306/test?useUnicode=true&characterEncoding=utf8&autoReconnect=true&failOverReadOnly=false",
     "loc.dataSource.firstDs.jdbcPool.autoCommit = false",
-    "loc.dataSource.firstDs.jdbcPool.maximumPoolSize = 30"
+    "loc.dataSource.firstDs.jdbcPool.maximumPoolSize = 30",
+    "loc.log4jdbc.debug.stack.prefix = com.loc.framework.autoconfigure.test.springmvc",
+    "loc.log4jdbc.sqltiming.warn.threshold = 300",
+    "loc.log4jdbc.sqltiming.error.threshold = 2000",
 })
 @DirtiesContext
 public class LocDatasourceTest {
 
   @Autowired
   private HikariDataSource dataSource;
+
+  @Autowired
+  private LocLog4jdbcBeanPostProcessor locLog4jdbcBeanPostProcessor;
+
+  @Autowired
+  private Environment environment;
 
 
   @Test
@@ -66,6 +78,16 @@ public class LocDatasourceTest {
     assertThat(dataSource.getLeakDetectionThreshold()).isEqualTo(0);
   }
 
+  @Test
+  public void testLog4jdbc() {
+    assertThat(locLog4jdbcBeanPostProcessor).isNotNull();
+    assertThat(environment).isNotNull();
+
+    assertThat(this.environment.getProperty("loc.log4jdbc.debug.stack.prefix")).isEqualTo("com.loc.framework.autoconfigure.test.springmvc");
+    assertThat(this.environment.getProperty("loc.log4jdbc.sqltiming.warn.threshold")).isEqualTo("300");
+    assertThat(this.environment.getProperty("loc.log4jdbc.sqltiming.error.threshold")).isEqualTo("2000");
+  }
+
   @MinimalWebConfiguration
   @RestController
   @Validated
@@ -85,7 +107,8 @@ public class LocDatasourceTest {
   @Import({
       ServletWebServerFactoryAutoConfiguration.class,
       JacksonAutoConfiguration.class,
-      LocDataSourceAutoConfiguration.class
+      LocDataSourceAutoConfiguration.class,
+      LocLog4jdbcAutoConfiguration.class
   })
   protected @interface MinimalWebConfiguration {
 

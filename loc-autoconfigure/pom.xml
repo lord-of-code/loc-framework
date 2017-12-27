@@ -65,8 +65,8 @@
       <optional>true</optional>
     </dependency>
     <dependency>
-      <groupId>com.googlecode.log4jdbc</groupId>
-      <artifactId>log4jdbc</artifactId>
+      <groupId>org.bgee.log4jdbc-log4j2</groupId>
+      <artifactId>log4jdbc-log4j2-jdbc4.1</artifactId>
       <optional>true</optional>
     </dependency>
     <dependency>
@@ -87,6 +87,7 @@
       <artifactId>spring-boot-starter-test</artifactId>
       <scope>test</scope>
     </dependency>
+
     <dependency>
       <groupId>mysql</groupId>
       <artifactId>mysql-connector-java</artifactId>
