@@ -1,0 +1,1 @@
+provides: spring-boot-starter-jdbc, log4jdbc, spring-tx, spring-aspects
