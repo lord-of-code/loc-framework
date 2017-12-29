@@ -1,0 +1,19 @@
+spring.h2.console.enabled: true
+
+loc.dataSource:
+  firstDs:
+    username: root
+    password: password
+    jdbcUrl: jdbc:h2:mem:test
+    jdbcPool:
+      maximumPoolSize: 30
+
+log4jdbc.sqltiming:
+  warn:
+    threshold: 300
+  error:
+    threshold: 2000
+
+spring.datasource:
+  schema: classpath:db/schema.sql
+  data: classpath:db/data.sql
