@@ -184,6 +184,12 @@ loc.tomcat.shutdown.waitTime: 30   #默认30s的优雅停机等待时间，超�
 
 ## jdbc的starter的统一标准
 
+* springboot从2.0开始使用HikariCP作为默认的DataSource
+关于HikariCP的配置可以参考[官方配置文档](https://github.com/brettwooldridge/HikariCP)
+
+* 通过利用log4jdbc给HikariCP做相关的日志记录
+关于log4jdbc的配置可以参考[log4jdbc定义文件](https://github.com/lord-of-code/loc-framework/blob/master/loc-autoconfigure/src/main/resources/META-INF/spring-configuration-metadata.json)
+
 
 ## redis的starter的统一标准
 
