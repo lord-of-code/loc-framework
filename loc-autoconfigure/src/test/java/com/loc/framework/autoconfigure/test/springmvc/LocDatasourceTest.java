@@ -104,8 +104,7 @@ public class LocDatasourceTest {
   @Import({
       ServletWebServerFactoryAutoConfiguration.class,
       JacksonAutoConfiguration.class,
-      LocDataSourceAutoConfiguration.class,
-      Log4jdbcAutoConfiguration.class
+      LocDataSourceAutoConfiguration.class
   })
   protected @interface MinimalWebConfiguration {
 
