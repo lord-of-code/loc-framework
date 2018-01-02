@@ -1,19 +1,35 @@
+server.port: 8081
+
 spring.h2.console.enabled: true
 
 loc.dataSource:
   firstDs:
     username: root
-    password: password
-    jdbcUrl: jdbc:h2:mem:test
+    password:
+    jdbcUrl: jdbc:mysql://127.0.0.1:3306/test
     jdbcPool:
       maximumPoolSize: 30
+      driverClassName: com.mysql.jdbc.Driver
 
-log4jdbc.sqltiming:
-  warn:
-    threshold: 300
-  error:
-    threshold: 2000
+log4jdbc:
+  sqltiming:
+    warn:
+      threshold: 300
+    error:
+      threshold: 2000
+  dump.sql.select: false
 
-spring.datasource:
-  schema: classpath:db/schema.sql
-  data: classpath:db/data.sql
+logging.level.jdbc:
+  sqlonly: OFF
+  sqltiming: INFO
+  audit: OFF
+  resultset: OFF
+  resultsettable: OFF
+  connection: OFF
+
+
+
+spring:
+  datasource:
+    schema: classpath:db/schema.sql
+    data: classpath:db/data.sql

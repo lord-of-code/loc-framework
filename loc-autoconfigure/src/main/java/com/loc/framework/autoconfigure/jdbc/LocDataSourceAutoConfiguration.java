@@ -7,6 +7,7 @@ import com.zaxxer.hikari.HikariDataSource;
 import java.util.Optional;
 import javax.sql.DataSource;
 import lombok.extern.slf4j.Slf4j;
+import net.sf.log4jdbc.log.slf4j.Slf4jSpyLogDelegator;
 import net.sf.log4jdbc.sql.jdbcapi.DataSourceSpy;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.FatalBeanException;
@@ -36,10 +37,31 @@ public class LocDataSourceAutoConfiguration implements BeanFactoryPostProcessor,
 
   private ConfigurableEnvironment environment;
 
+  private static final String[] PROPERTIES_TO_COPY = {
+      "log4jdbc.debug.stack.prefix",
+      "log4jdbc.sqltiming.warn.threshold",
+      "log4jdbc.sqltiming.error.threshold",
+      "log4jdbc.dump.booleanastruefalse",
+      "log4jdbc.dump.fulldebugstacktrace",
+      "log4jdbc.dump.sql.maxlinelength",
+      "log4jdbc.statement.warn",
+      "log4jdbc.dump.sql.select",
+      "log4jdbc.dump.sql.insert",
+      "log4jdbc.dump.sql.update",
+      "log4jdbc.dump.sql.delete",
+      "log4jdbc.dump.sql.create",
+      "log4jdbc.dump.sql.addsemicolon",
+      "log4jdbc.auto.load.popular.drivers",
+      "log4jdbc.drivers",
+      "log4jdbc.trim.sql",
+      "log4jdbc.trim.sql.extrablanklines",
+  };
+
   @Override
   public void postProcessBeanFactory(
       ConfigurableListableBeanFactory configurableListableBeanFactory) throws BeansException {
     LocDsProperties locDsProperties = resolverSetting(LocDsProperties.class);
+    initLog4Jdbc();
     locDsProperties.getDataSource().forEach(
         (name, properties) -> createBean(configurableListableBeanFactory, name, properties));
   }
@@ -111,5 +133,15 @@ public class LocDataSourceAutoConfiguration implements BeanFactoryPostProcessor,
         .bind("loc", Bindable.of(clazz))
         .orElseThrow(() -> new FatalBeanException("Could not bind DataSourceSettings properties"));
 
+  }
+
+  private void initLog4Jdbc() {
+    for (final String property : PROPERTIES_TO_COPY) {
+      if (this.environment.containsProperty(property)) {
+        System.setProperty(property, this.environment.getProperty(property));
+      }
+    }
+    System.setProperty("log4jdbc.spylogdelegator.name", this.environment
+        .getProperty("log4jdbc.spylogdelegator.name", Slf4jSpyLogDelegator.class.getName()));
   }
 }

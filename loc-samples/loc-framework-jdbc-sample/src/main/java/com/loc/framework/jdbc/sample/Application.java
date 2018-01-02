@@ -1,10 +1,10 @@
 package com.loc.framework.jdbc.sample;
 
-import com.google.common.cache.CacheBuilder;
-import com.google.common.cache.CacheLoader;
 import com.google.common.collect.Lists;
+import com.loc.framework.autoconfigure.springmvc.BasicResult;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.UUID;
 import javax.annotation.Resource;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -17,6 +17,7 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerA
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -36,8 +37,8 @@ public class Application {
   @RestController
   public static class GetController {
 
-    @Resource(name = "firstJdbcTemplate")
-    private JdbcTemplate firstJdbcTemplate;
+    @Resource(name = "firstDsJdbcTemplate")
+    private JdbcTemplate firstDsJdbcTemplate;
 
     @GetMapping(value = "/person")
     public List<Person> getPerson(@RequestParam("name") String name) throws SQLException {
@@ -46,9 +47,16 @@ public class Application {
       return list;
     }
 
+    @PostMapping(value = "/addPerson")
+    public BasicResult addPerson(@RequestParam("name") String name, @RequestParam("age") int age) throws SQLException {
+      String sql = "INSERT INTO person_table(name,age,address) VALUES (?, ?, ?)";
+      firstDsJdbcTemplate.update(sql, name, age, UUID.randomUUID().toString());
+      return BasicResult.success();
+    }
+
     private Person firstJdbcTemplate(String name) throws SQLException {
       String sql = "select * from person_table where name=? limit 1;";
-      Person person = firstJdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(Person.class), name);
+      Person person = firstDsJdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(Person.class), name);
       log.info("person is {}", person);
       return person;
     }

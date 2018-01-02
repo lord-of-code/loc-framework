@@ -14,6 +14,84 @@
       "name": "log4jdbc.sqltiming.error.threshold",
       "type": "java.lang.Long",
       "description": "Millisecond time value. Causes SQL that takes the number of milliseconds specified or more time to execute to be logged at the error level in the sqltiming log. Note that the sqltiming log must be enabled at the error log level for this feature to work. Also the logged output for this setting will log with debug information that is normally only shown when the sqltiming log is enabled at the debug level. This can help you to more quickly find slower running SQL without adding overhead or logging for normal running SQL that executes below the threshold level (if the logging level is set appropriately.)"
+    },
+    {
+      "name": "log4jdbc.dump.booleanastruefalse",
+      "type": "java.lang.Boolean",
+      "description": "When dumping boolean values in SQL, dump them as 'true' or 'false'. If this option is not set, they will be dumped as 1 or 0 as many databases do not have a boolean type, and this allows for more portable sql dumping.",
+      "defaultValue": false
+    },
+    {
+      "name": "log4jdbc.dump.sql.maxlinelength",
+      "type": "java.lang.Integer",
+      "description": "When dumping SQL, if this is greater than 0, than the dumped SQL will be broken up into lines that are no longer than this value. Set this value to 0 if you don't want log4jdbc to try and break the SQL into lines this way. In future versions of log4jdbc, this will probably default to 0.",
+      "defaultValue": 90
+    },
+    {
+      "name": "log4jdbc.dump.fulldebugstacktrace",
+      "type": "java.lang.Boolean",
+      "description": "If dumping in debug mode, dump the full stack trace. This will result in EXTREMELY voluminous output, but can be very useful under some circumstances when trying to track down the call chain for generated SQL.",
+      "defaultValue": false
+    },
+    {
+      "name": "log4jdbc.dump.sql.select",
+      "type": "java.lang.Boolean",
+      "description": "Set this to false to suppress SQL select statements in the output. Note that if you use the Log4j 2 logger, it is also possible to control select statements output via the marker LOG4JDBC_SELECT. The use of this property prepend the use of the marker.",
+      "defaultValue": true
+    },
+    {
+      "name": "log4jdbc.dump.sql.insert",
+      "type": "java.lang.Boolean",
+      "description": "Set this to false to suppress SQL insert statements in the output. Note that if you use the Log4j 2 logger, it is also possible to control insert statements output via the marker. The use of this property prepend the use of the marker.",
+      "defaultValue": true
+    },
+    {
+      "name": "log4jdbc.dump.sql.update",
+      "type": "java.lang.Boolean",
+      "description": "Set this to false to suppress SQL update statements in the output. Note that if you use the Log4j 2 logger, it is also possible to control update statements output via the marker LOG4JDBC_UPDATE. The use of this property prepend the use of the marker.",
+      "defaultValue": true
+    },
+    {
+      "name": "log4jdbc.dump.sql.delete",
+      "type": "java.lang.Boolean",
+      "description": "Set this to false to suppress SQL delete statements in the output. Note that if you use the Log4j 2 logger, it is also possible to control delete statements output via the marker LOG4JDBC_DELETE. The use of this property prepend the use of the marker.",
+      "defaultValue": true
+    },
+    {
+      "name": "log4jdbc.dump.sql.create",
+      "type": "java.lang.Boolean",
+      "description": "Set this to false to suppress SQL create statements in the output. Note that if you use the Log4j 2 logger, it is also possible to control create statements output via the marker LOG4JDBC_CREATE. The use of this property prepend the use of the marker.",
+      "defaultValue": true
+    },
+    {
+      "name": "log4jdbc.dump.sql.addsemicolon",
+      "type": "java.lang.Boolean",
+      "description": "Set this to true to add an extra semicolon to the end of SQL in the output. This can be useful when you want to generate SQL from a program with log4jdbc in order to create a script to feed back into a database to run at a later time.",
+      "defaultValue": false
+    },
+    {
+      "name": "log4jdbc.spylogdelegator.name",
+      "type": "java.lang.Class<? extends net.sf.log4jdbc.log.SpyLogDelegator>",
+      "description": "The qualified class name of the SpyLogDelegator to use. Note that if you want to use log4jdbc-log4j2 with Log4j 2 rather than SLF4J, you must set this property to: net.sf.log4jdbc.log.log4j2.Log4j2SpyLogDelegator. Note that the default in this Starter is to use SLF4J which is different from the log4jdbc library's default.",
+      "defaultValue": "net.sf.log4jdbc.log.slf4j.Slf4jSpyLogDelegator"
+    },
+    {
+      "name": "log4jdbc.statement.warn",
+      "type": "java.lang.Boolean",
+      "description": "Set this to true to display warnings (Why would you care?) in the log when Statements are used in the log.",
+      "defaultValue": false
+    },
+    {
+      "name": "log4jdbc.trim.sql",
+      "type": "java.lang.Boolean",
+      "description": "Set this to false to not trim the logged SQL.",
+      "defaultValue": true
+    },
+    {
+      "name": "log4jdbc.trim.sql.extrablanklines",
+      "type": "java.lang.Boolean",
+      "description": "Set this to false to not trim extra blank lines in the logged SQL (by default, when more than one blank line in a row occurs, the contiguous lines are collapsed to just one blank line.)",
+      "defaultValue": true
     }
   ]
 }
