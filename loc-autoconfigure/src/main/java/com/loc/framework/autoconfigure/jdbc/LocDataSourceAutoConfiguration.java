@@ -3,6 +3,7 @@ package com.loc.framework.autoconfigure.jdbc;
 import static com.google.common.base.Preconditions.checkArgument;
 
 import com.google.common.base.Strings;
+import com.loc.framework.autoconfigure.ConditionalOnPrefixProperty;
 import com.zaxxer.hikari.HikariDataSource;
 import java.util.Optional;
 import javax.sql.DataSource;
@@ -30,6 +31,7 @@ import org.springframework.transaction.aspectj.AnnotationTransactionAspect;
  */
 @Slf4j
 @Configuration
+@ConditionalOnPrefixProperty(prefix = "loc", value = LocDsProperties.class)
 @ConditionalOnClass({
     DataSource.class, HikariDataSource.class, DataSourceSpy.class
 })

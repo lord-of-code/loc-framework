@@ -187,9 +187,33 @@ loc.tomcat.shutdown.waitTime: 30   #默认30s的优雅停机等待时间，超�
 * springboot从2.0开始使用HikariCP作为默认的DataSource
 关于HikariCP的配置可以参考[官方配置文档](https://github.com/brettwooldridge/HikariCP)
 
+程序启动的时候，通过实现`BeanFactoryPostProcessor`接口，来读取配置文件里面特定的字段来实现多数据源的加载
+```
+loc.dataSource:
+  firstDs:
+    username: root
+    password:
+    jdbcUrl: jdbc:mysql://127.0.0.1:3306/test
+    jdbcPool:
+      maximumPoolSize: 30
+      driverClassName: com.mysql.jdbc.Driver
+```
+因为都是通过手动进行读取的配置然后加载的，而没有走默认的`DataSourceAutoConfiguration`和`DataSourceTransactionManagerAutoConfiguration`
+所以在使用的时候`exclude`排出掉`DataSourceAutoConfiguration.class`和`DataSourceTransactionManagerAutoConfiguration.class`
+
 * 通过利用log4jdbc给HikariCP做相关的日志记录
 关于log4jdbc的配置可以参考[log4jdbc定义文件](https://github.com/lord-of-code/loc-framework/blob/master/loc-autoconfigure/src/main/resources/META-INF/spring-configuration-metadata.json)
 
+* 可以通过logging级别来控制数据库日志的输出
+```
+logging.level.jdbc:
+  sqlonly: OFF
+  sqltiming: INFO
+  audit: OFF
+  resultset: OFF
+  resultsettable: OFF
+  connection: OFF
+```
 
 ## redis的starter的统一标准
 
