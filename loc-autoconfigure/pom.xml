@@ -80,6 +80,18 @@
       <optional>true</optional>
     </dependency>
 
+    <!-- okhttp3-->
+    <dependency>
+      <groupId>com.squareup.okhttp3</groupId>
+      <artifactId>okhttp</artifactId>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>com.squareup.okhttp3</groupId>
+      <artifactId>logging-interceptor</artifactId>
+      <optional>true</optional>
+    </dependency>
+
 
     <!--for test-->
     <dependency>
