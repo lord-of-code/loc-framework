@@ -59,7 +59,8 @@ public class LocDatasourceTest {
     HikariDataSource hikariDataSource = dataSource.unwrap(HikariDataSource.class);
     assertThat(hikariDataSource.getUsername()).isEqualTo("root");
     assertThat(hikariDataSource.getPassword()).isEqualTo("");
-    assertThat(hikariDataSource.getJdbcUrl()).isEqualTo("jdbc:log4jdbc:mysql://127.0.0.1:3306/test?useUnicode=true&characterEncoding=utf8&autoReconnect=true&failOverReadOnly=false");
+    assertThat(hikariDataSource.getJdbcUrl()).isEqualTo(
+        "jdbc:log4jdbc:mysql://127.0.0.1:3306/test?useUnicode=true&characterEncoding=utf8&autoReconnect=true&failOverReadOnly=false");
 
     assertThat(hikariDataSource.isAutoCommit()).isEqualTo(false);
     assertThat(hikariDataSource.getConnectionTimeout()).isEqualTo(30000);
@@ -80,9 +81,11 @@ public class LocDatasourceTest {
   public void testLog4jdbc() {
     assertThat(environment).isNotNull();
 
-    assertThat(this.environment.getProperty("log4jdbc.debug.stack.prefix")).isEqualTo("com.loc.framework.autoconfigure.test.springmvc");
+    assertThat(this.environment.getProperty("log4jdbc.debug.stack.prefix"))
+        .isEqualTo("com.loc.framework.autoconfigure.test.springmvc");
     assertThat(this.environment.getProperty("log4jdbc.sqltiming.warn.threshold")).isEqualTo("300");
-    assertThat(this.environment.getProperty("log4jdbc.sqltiming.error.threshold")).isEqualTo("2000");
+    assertThat(this.environment.getProperty("log4jdbc.sqltiming.error.threshold"))
+        .isEqualTo("2000");
   }
 
   @MinimalWebConfiguration

@@ -54,6 +54,7 @@ public class LocOkHttpTest {
   @RestController
   @Validated
   public static class OkHttpController {
+
     @GetMapping(value = "/okhttp/get")
     public BasicResult<String> okhttpGet() {
       return BasicResult.success();

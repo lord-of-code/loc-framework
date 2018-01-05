@@ -48,7 +48,8 @@ public class Application {
     }
 
     @PostMapping(value = "/addPerson")
-    public BasicResult addPerson(@RequestParam("name") String name, @RequestParam("age") int age) throws SQLException {
+    public BasicResult addPerson(@RequestParam("name") String name, @RequestParam("age") int age)
+        throws SQLException {
       String sql = "INSERT INTO person_table(name,age,address) VALUES (?, ?, ?)";
       firstDsJdbcTemplate.update(sql, name, age, UUID.randomUUID().toString());
       return BasicResult.success();
@@ -56,7 +57,8 @@ public class Application {
 
     private Person firstJdbcTemplate(String name) throws SQLException {
       String sql = "select * from person_table where name=? limit 1;";
-      Person person = firstDsJdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(Person.class), name);
+      Person person = firstDsJdbcTemplate
+          .queryForObject(sql, new BeanPropertyRowMapper<>(Person.class), name);
       log.info("person is {}", person);
       return person;
     }
