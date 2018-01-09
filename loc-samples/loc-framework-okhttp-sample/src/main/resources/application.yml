@@ -1,0 +1,14 @@
+server.port: 8081
+
+loc.okhttp:
+  connectTimeout: 5000
+  readTimeout: 30000
+  writeTimeout: 30000
+  retryOnConnectionFailure: true
+  followRedirects: true
+  followSslRedirects: true
+  Connection:
+    maxIdleConnections: 5
+    keepAliveDurationNs: 5
+  Level:
+    level: BASIC       # 记录请求日志级别

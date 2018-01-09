@@ -29,7 +29,6 @@ public class Application {
   @RestController
   public static class OkHttpController {
 
-
     @Resource
     private OkHttpClient okHttpClient;
 
@@ -39,7 +38,7 @@ public class Application {
           .get().build();
       try {
         Response response = okHttpClient.newCall(request).execute();
-        if(response.isSuccessful()) {
+        if (response.isSuccessful()) {
           log.info(response.body().string());
         } else {
           log.info("response code is " + response.code());
@@ -53,6 +52,7 @@ public class Application {
                 }
               })
               .orElse("body is null");
+          log.warn("response fail result is {}", result);
         }
       } catch (IOException e) {
         log.error(e.getMessage(), e);

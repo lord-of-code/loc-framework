@@ -90,7 +90,7 @@
 - logger
 - shutdown
 - jdbc
-- redis
+- okhttp
 - eureka
 - ...
 
@@ -215,8 +215,24 @@ logging.level.jdbc:
   connection: OFF
 ```
 
-## redis的starter的统一标准
+## okhttp的starter的统一标准
 
+* 加入了okhttp的client的构造，用于发起http请求
+
+```
+loc.okhttp:
+  connectTimeout: 5000
+  readTimeout: 30000
+  writeTimeout: 30000
+  retryOnConnectionFailure: true
+  followRedirects: true
+  followSslRedirects: true
+  Connection:
+    maxIdleConnections: 5
+    keepAliveDurationNs: 5
+  Level:
+    level: BASIC       # 记录请求日志级别
+```
 
 ## eureka的starter的统一标准
 

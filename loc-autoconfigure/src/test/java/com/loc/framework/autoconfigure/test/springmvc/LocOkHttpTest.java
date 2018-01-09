@@ -35,7 +35,7 @@ import org.springframework.web.bind.annotation.RestController;
     "loc.okhttp.connectTimeout = 3000",
     "loc.okhttp.followRedirects = false",
     "loc.okhttp.Connection.maxIdleConnections = 20",
-    "loc.okhttp.level = BODY",
+    "loc.okhttp.Level.level = BODY",
 })
 @DirtiesContext
 public class LocOkHttpTest {
