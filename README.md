@@ -91,7 +91,7 @@
 - shutdown
 - jdbc
 - okhttp
-- eureka
+- redis
 - ...
 
 
@@ -217,7 +217,7 @@ logging.level.jdbc:
 
 ## okhttp的starter的统一标准
 
-* 加入了okhttp的client的构造，用于发起http请求
+* 加入了okhttp的client的构造，用于发起http请求，并且用于记录请求和回应的日志
 
 ```
 loc.okhttp:
@@ -233,6 +233,8 @@ loc.okhttp:
   Level:
     level: BASIC       # 记录请求日志级别
 ```
+
+## redis的starter的统一标准
 
 ## eureka的starter的统一标准
 
