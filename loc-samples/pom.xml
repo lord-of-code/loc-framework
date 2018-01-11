@@ -24,6 +24,7 @@
     <module>loc-framework-logback-sample</module>
     <module>loc-framework-jdbc-sample</module>
     <module>loc-framework-okhttp-sample</module>
+    <module>loc-framework-redis-sample</module>
   </modules>
 
 </project>
