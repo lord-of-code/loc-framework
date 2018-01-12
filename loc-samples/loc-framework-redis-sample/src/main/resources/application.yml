@@ -7,4 +7,9 @@ spring.redis:
 #    - 10.10.3.51:2001
 #    - 10.10.3.51:2002
 #    - 10.10.3.51:2003
+  lettuce:
+    pool:
+      max-active: 10
+      max-idle: 10
+      max-wait: "1000"
 
