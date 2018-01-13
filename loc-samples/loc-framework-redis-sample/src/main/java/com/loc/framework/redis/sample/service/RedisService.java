@@ -6,7 +6,6 @@ import java.util.List;
 import lombok.Builder;
 import lombok.Data;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.stereotype.Service;
 
 /**
@@ -40,6 +39,7 @@ public class RedisService {
   @Data
   @Builder
   static class UserDemoInfo {
+
     private Date date;
     private String name;
   }

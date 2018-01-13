@@ -39,8 +39,9 @@ public class Application {
 
     @GetMapping(value = "/getRedisCluster")
     public BasicResult getRedisCluster() {
-      byte[] bytes = redisConnectionFactory.getClusterConnection().stringCommands().get("key".getBytes());
-      if(bytes != null) {
+      byte[] bytes = redisConnectionFactory.getClusterConnection().stringCommands()
+          .get("key".getBytes());
+      if (bytes != null) {
         String value = new String(bytes, StandardCharsets.UTF_8);
         String stringValue = stringRedisTemplate.opsForValue().get("stringKey");
         return BasicResult.success(value + "_" + stringValue);
@@ -51,7 +52,8 @@ public class Application {
 
     @PostMapping(value = "/setRedisCluster")
     public BasicResult setRedisCluster() {
-      redisConnectionFactory.getClusterConnection().stringCommands().set("key".getBytes(), "value".getBytes());
+      redisConnectionFactory.getClusterConnection().stringCommands()
+          .set("key".getBytes(), "value".getBytes());
       stringRedisTemplate.opsForValue().set("stringKey", "stringValue");
       return BasicResult.success();
     }
@@ -60,7 +62,7 @@ public class Application {
     public BasicResult getRedis() {
       redisConnectionFactory.getConnection().getNativeConnection();
       byte[] bytes = redisConnectionFactory.getConnection().stringCommands().get("key".getBytes());
-      if(bytes != null) {
+      if (bytes != null) {
         String value = new String(bytes, StandardCharsets.UTF_8);
         String stringValue = stringRedisTemplate.opsForValue().get("stringKey");
         return BasicResult.success(value + "_" + stringValue);
@@ -71,7 +73,8 @@ public class Application {
 
     @PostMapping(value = "/setRedis")
     public BasicResult setRedis() {
-      redisConnectionFactory.getConnection().stringCommands().set("key".getBytes(), "value".getBytes());
+      redisConnectionFactory.getConnection().stringCommands()
+          .set("key".getBytes(), "value".getBytes());
       stringRedisTemplate.opsForValue().set("stringKey", "stringValue");
       return BasicResult.success();
     }
