@@ -26,6 +26,6 @@ public class OkHttpClientProperties {
   public static class Connection {
 
     private int maxIdleConnections = 5;
-    private long keepAliveDurationNs = 5;
+    private long keepAliveDuration = 60_000;
   }
 }

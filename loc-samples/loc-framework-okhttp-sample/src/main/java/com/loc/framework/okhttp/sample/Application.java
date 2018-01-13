@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.util.Optional;
 import javax.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
-import okhttp3.Call;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -34,7 +33,7 @@ public class Application {
 
     @GetMapping(value = "/baidu")
     public BasicResult getBaidu() {
-      Request request = new Request.Builder().url("http://www.baidu.com")
+      Request request = new Request.Builder().url("https://www.baidu.com")
           .get().build();
       try {
         Response response = okHttpClient.newCall(request).execute();

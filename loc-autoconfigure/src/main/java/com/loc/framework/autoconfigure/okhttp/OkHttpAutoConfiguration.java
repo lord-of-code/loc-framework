@@ -1,14 +1,11 @@
 package com.loc.framework.autoconfigure.okhttp;
 
-import static java.util.concurrent.TimeUnit.MINUTES;
-
 import com.loc.framework.autoconfigure.okhttp.OkHttpClientProperties.Connection;
 import java.util.concurrent.TimeUnit;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.ConnectionPool;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -24,8 +21,11 @@ import org.springframework.context.annotation.Configuration;
 @Slf4j
 public class OkHttpAutoConfiguration {
 
-  @Autowired
-  private HttpLoggingInterceptor httpLoggingInterceptor;
+  private final HttpLoggingInterceptor httpLoggingInterceptor;
+
+  public OkHttpAutoConfiguration(HttpLoggingInterceptor httpLoggingInterceptor) {
+    this.httpLoggingInterceptor = httpLoggingInterceptor;
+  }
 
   private OkHttpClient.Builder createBuilder(OkHttpClientProperties okHttpClientProperties,
       ConnectionPool connectionPool) {
@@ -44,7 +44,7 @@ public class OkHttpAutoConfiguration {
   public ConnectionPool connectionPool(OkHttpClientProperties okHttpClientProperties) {
     Connection connection = okHttpClientProperties.getConnection();
     return new ConnectionPool(connection.getMaxIdleConnections(),
-        connection.getKeepAliveDurationNs(), MINUTES);
+        connection.getKeepAliveDuration(), TimeUnit.MILLISECONDS);
   }
 
   @Bean

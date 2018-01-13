@@ -7,8 +7,7 @@ loc.okhttp:
   retryOnConnectionFailure: true
   followRedirects: true
   followSslRedirects: true
-  Connection:
-    maxIdleConnections: 5
-    keepAliveDurationNs: 5
-  Level:
-    level: BASIC       # 记录请求日志级别
+  connection:
+    maxIdleConnections: 10
+    keepAliveDuration: 30000
+  level: BASIC # 记录请求日志级别

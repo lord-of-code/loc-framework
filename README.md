@@ -227,11 +227,10 @@ loc.okhttp:
   retryOnConnectionFailure: true
   followRedirects: true
   followSslRedirects: true
-  Connection:
+  connection:
     maxIdleConnections: 5
-    keepAliveDurationNs: 5
-  Level:
-    level: BASIC       # 记录请求日志级别
+    keepAliveDuration: 60000
+  level: BASIC       # 记录请求日志级别
 ```
 
 ## redis的starter的统一标准

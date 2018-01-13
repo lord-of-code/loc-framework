@@ -34,8 +34,8 @@ import org.springframework.web.bind.annotation.RestController;
 @TestPropertySource(properties = {
     "loc.okhttp.connectTimeout = 3000",
     "loc.okhttp.followRedirects = false",
-    "loc.okhttp.Connection.maxIdleConnections = 20",
-    "loc.okhttp.Level.level = BODY",
+    "loc.okhttp.connection.maxIdleConnections = 20",
+    "loc.okhttp.level = BODY",
 })
 @DirtiesContext
 public class LocOkHttpTest {
@@ -47,6 +47,8 @@ public class LocOkHttpTest {
   @Test
   public void testOkHttp() throws Exception {
     assertThat(okHttpClient).isNotNull();
+    assertThat(okHttpClient.connectTimeoutMillis()).isEqualTo(3000);
+    assertThat(okHttpClient.followRedirects()).isEqualTo(false);
   }
 
 
