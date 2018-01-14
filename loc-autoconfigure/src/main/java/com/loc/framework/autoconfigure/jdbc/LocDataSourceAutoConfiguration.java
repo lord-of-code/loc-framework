@@ -4,6 +4,7 @@ import static com.google.common.base.Preconditions.checkArgument;
 
 import com.google.common.base.Strings;
 import com.loc.framework.autoconfigure.ConditionalOnPrefixProperty;
+import com.loc.framework.autoconfigure.LocBaseAutoConfiguration;
 import com.loc.framework.autoconfigure.mybatis.LocMybatisAutoConfiguration;
 import com.zaxxer.hikari.HikariDataSource;
 import java.util.Optional;
@@ -38,8 +39,8 @@ import org.springframework.transaction.aspectj.AnnotationTransactionAspect;
 @ConditionalOnClass({
     DataSource.class, HikariDataSource.class, DataSourceSpy.class
 })
-public class LocDataSourceAutoConfiguration implements BeanFactoryPostProcessor, EnvironmentAware,
-    Ordered {
+public class LocDataSourceAutoConfiguration extends LocBaseAutoConfiguration implements
+    BeanFactoryPostProcessor, EnvironmentAware, Ordered {
 
   private ConfigurableEnvironment environment;
 
@@ -66,16 +67,13 @@ public class LocDataSourceAutoConfiguration implements BeanFactoryPostProcessor,
   @Override
   public void postProcessBeanFactory(
       ConfigurableListableBeanFactory configurableListableBeanFactory) throws BeansException {
-    LocDsProperties locDsProperties = resolverSetting(LocDsProperties.class);
+    LocDsProperties locDsProperties = resolverSetting(LocDsProperties.class,
+        this.environment.getPropertySources());
     initLog4Jdbc();
     locDsProperties.getDataSource().forEach(
         (name, properties) -> createBean(configurableListableBeanFactory, name, properties));
   }
 
-  @Override
-  public void setEnvironment(Environment environment) {
-    this.environment = (ConfigurableEnvironment) environment;
-  }
 
   private void createBean(ConfigurableListableBeanFactory configurableListableBeanFactory,
       String prefixName, JdbcProperties jdbcProperties) {
@@ -99,13 +97,6 @@ public class LocDataSourceAutoConfiguration implements BeanFactoryPostProcessor,
         prefixName + "Tx");
   }
 
-  private void register(ConfigurableListableBeanFactory beanFactory, Object bean, String name,
-      String alias) {
-    beanFactory.registerSingleton(name, bean);
-    if (!beanFactory.containsSingleton(alias)) {
-      beanFactory.registerAlias(name, alias);
-    }
-  }
 
   private HikariDataSource createHikariDataSource(JdbcProperties jdbcProperties) {
     HikariDataSource hikariDataSource = new HikariDataSource();
@@ -132,13 +123,6 @@ public class LocDataSourceAutoConfiguration implements BeanFactoryPostProcessor,
     return hikariDataSource;
   }
 
-  // 读取配置并转换成对象
-  private <T> T resolverSetting(Class<T> clazz) {
-    return new Binder(ConfigurationPropertySources.from(environment.getPropertySources()))
-        .bind("loc", Bindable.of(clazz))
-        .orElseThrow(() -> new FatalBeanException("Could not bind DataSourceSettings properties"));
-
-  }
 
   private void initLog4Jdbc() {
     for (final String property : PROPERTIES_TO_COPY) {
@@ -148,6 +132,11 @@ public class LocDataSourceAutoConfiguration implements BeanFactoryPostProcessor,
     }
     System.setProperty("log4jdbc.spylogdelegator.name", this.environment
         .getProperty("log4jdbc.spylogdelegator.name", Slf4jSpyLogDelegator.class.getName()));
+  }
+
+  @Override
+  public void setEnvironment(Environment environment) {
+    this.environment = (ConfigurableEnvironment) environment;
   }
 
   @Override

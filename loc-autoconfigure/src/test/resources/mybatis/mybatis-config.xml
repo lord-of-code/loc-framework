@@ -9,7 +9,7 @@
     <setting name="mapUnderscoreToCamelCase" value="true"/>
   </settings>
   <typeAliases>
-    <package name="com.loc.framework.autoconfiguration.mybatis"/>
+    <package name="com.loc.framework.autoconfigure.test.mybatis"/>
   </typeAliases>
   <mappers>
     <mapper resource="mybatis/CityMapper.xml"/>

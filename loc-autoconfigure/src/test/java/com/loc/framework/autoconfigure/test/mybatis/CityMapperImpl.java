@@ -1,4 +1,4 @@
-package com.loc.framework.autoconfiguration.mybatis;
+package com.loc.framework.autoconfigure.test.mybatis;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;

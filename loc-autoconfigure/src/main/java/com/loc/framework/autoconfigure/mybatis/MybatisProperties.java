@@ -29,6 +29,8 @@ public class MybatisProperties {
 
   private String typeHandlersPackage;
 
+  private String basePackage;
+
   private ExecutorType executorType;
 
   private Properties configurationProperties;

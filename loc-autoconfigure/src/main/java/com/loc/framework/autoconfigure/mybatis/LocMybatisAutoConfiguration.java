@@ -1,23 +1,29 @@
 package com.loc.framework.autoconfigure.mybatis;
 
+import com.google.common.base.Strings;
 import com.loc.framework.autoconfigure.ConditionalOnPrefixProperty;
+import com.loc.framework.autoconfigure.LocBaseAutoConfiguration;
 import com.loc.framework.autoconfigure.jdbc.LocDataSourceAutoConfiguration;
+import java.util.List;
 import java.util.Optional;
 import javax.sql.DataSource;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
+import org.mybatis.spring.mapper.ClassPathMapperScanner;
+import org.mybatis.spring.mapper.MapperScannerConfigurer;
 import org.springframework.beans.BeansException;
-import org.springframework.beans.FatalBeanException;
+import org.springframework.beans.factory.BeanFactory;
+import org.springframework.beans.factory.BeanFactoryAware;
 import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
+import org.springframework.beans.factory.support.BeanDefinitionRegistry;
+import org.springframework.boot.autoconfigure.AutoConfigurationPackages;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
-import org.springframework.boot.context.properties.bind.Bindable;
-import org.springframework.boot.context.properties.bind.Binder;
-import org.springframework.boot.context.properties.source.ConfigurationPropertySources;
 import org.springframework.context.EnvironmentAware;
 import org.springframework.context.ResourceLoaderAware;
 import org.springframework.context.annotation.Configuration;
@@ -37,29 +43,27 @@ import org.springframework.util.StringUtils;
 @ConditionalOnClass({SqlSessionFactory.class, SqlSessionFactoryBean.class})
 @ConditionalOnPrefixProperty(prefix = "loc", value = LocMybatisProperties.class)
 @AutoConfigureAfter(LocDataSourceAutoConfiguration.class)
-public class LocMybatisAutoConfiguration implements BeanFactoryPostProcessor, EnvironmentAware,
-    ResourceLoaderAware, Ordered {
+public class LocMybatisAutoConfiguration extends LocBaseAutoConfiguration implements
+    BeanFactoryPostProcessor,
+    ResourceLoaderAware, BeanFactoryAware, EnvironmentAware, Ordered {
 
   private ConfigurableEnvironment environment;
 
   private ResourceLoader resourceLoader;
 
+  private BeanFactory beanFactory;
+
   @Override
   public void postProcessBeanFactory(
       ConfigurableListableBeanFactory configurableListableBeanFactory) throws BeansException {
-    LocMybatisProperties locMybatisProperties = resolverSetting(LocMybatisProperties.class);
+    LocMybatisProperties locMybatisProperties = resolverSetting(LocMybatisProperties.class,
+        this.environment.getPropertySources());
     locMybatisProperties.getDataSource().forEach(
         (name, properties) -> createBean(configurableListableBeanFactory, name, properties));
   }
 
-  @Override
-  public void setEnvironment(Environment environment) {
-    this.environment = (ConfigurableEnvironment) environment;
-  }
-
   private void createBean(ConfigurableListableBeanFactory configurableListableBeanFactory,
       String prefixName, MybatisProperties mybatisProperties) {
-
     SqlSessionFactory sqlSessionFactory = createSqlSessionFactory(configurableListableBeanFactory,
         prefixName, mybatisProperties);
     if (sqlSessionFactory == null) {
@@ -112,6 +116,13 @@ public class LocMybatisAutoConfiguration implements BeanFactoryPostProcessor, En
       }
       register(configurableListableBeanFactory, sqlSessionFactory, prefixName + "SessionFactory",
           prefixName + "Sf");
+
+      if (!Strings.isNullOrEmpty(mybatisProperties.getBasePackage())) {
+        createBasePackageScanner((BeanDefinitionRegistry) configurableListableBeanFactory,
+            mybatisProperties.getBasePackage(), prefixName);
+      } else {
+        createClassPathMapperScanner((BeanDefinitionRegistry) configurableListableBeanFactory);
+      }
       return sqlSessionFactory;
     } catch (Exception e) {
       log.error(e.getMessage(), e);
@@ -133,19 +144,36 @@ public class LocMybatisAutoConfiguration implements BeanFactoryPostProcessor, En
         prefixName + "St");
   }
 
-  // 读取配置并转换成对象
-  private <T> T resolverSetting(Class<T> clazz) {
-    return new Binder(ConfigurationPropertySources.from(environment.getPropertySources()))
-        .bind("loc", Bindable.of(clazz))
-        .orElseThrow(() -> new FatalBeanException("Could not bind DataSourceSettings properties"));
+  private void createBasePackageScanner(BeanDefinitionRegistry registry, String basePackage,
+      String prefixName) {
+    MapperScannerConfigurer scannerConfigurer = new MapperScannerConfigurer();
+    scannerConfigurer.setBasePackage(basePackage);
+    scannerConfigurer.setSqlSessionFactoryBeanName(prefixName + "SessionFactory");
+    scannerConfigurer.postProcessBeanDefinitionRegistry(registry);
   }
 
-  private void register(ConfigurableListableBeanFactory beanFactory, Object bean, String name,
-      String alias) {
-    beanFactory.registerSingleton(name, bean);
-    if (!beanFactory.containsSingleton(alias)) {
-      beanFactory.registerAlias(name, alias);
+  private void createClassPathMapperScanner(BeanDefinitionRegistry registry) {
+    ClassPathMapperScanner scanner = new ClassPathMapperScanner(registry);
+
+    try {
+      if (this.resourceLoader != null) {
+        scanner.setResourceLoader(this.resourceLoader);
+      }
+
+      List<String> packages = AutoConfigurationPackages.get(beanFactory);
+      packages.forEach(pkg -> log.info("Using auto-configuration base package '{}'", pkg));
+
+      scanner.setAnnotationClass(Mapper.class);
+      scanner.registerFilters();
+      scanner.doScan(StringUtils.toStringArray(packages));
+    } catch (IllegalStateException ex) {
+      log.info("Could not determine auto-configuration package", ex);
     }
+  }
+
+  @Override
+  public void setEnvironment(Environment environment) {
+    this.environment = (ConfigurableEnvironment) environment;
   }
 
   @Override
@@ -158,4 +186,8 @@ public class LocMybatisAutoConfiguration implements BeanFactoryPostProcessor, En
     return Integer.MAX_VALUE;
   }
 
+  @Override
+  public void setBeanFactory(BeanFactory beanFactory) throws BeansException {
+    this.beanFactory = beanFactory;
+  }
 }

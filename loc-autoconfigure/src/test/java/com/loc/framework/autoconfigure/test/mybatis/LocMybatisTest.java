@@ -1,4 +1,4 @@
-package com.loc.framework.autoconfiguration.mybatis;
+package com.loc.framework.autoconfigure.test.mybatis;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -12,12 +12,12 @@ import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
-import javax.sql.DataSource;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.AutoConfigurationPackage;
 import org.springframework.boot.autoconfigure.jackson.JacksonAutoConfiguration;
 import org.springframework.boot.autoconfigure.web.servlet.ServletWebServerFactoryAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -50,7 +50,6 @@ import org.springframework.web.bind.annotation.RestController;
 @DirtiesContext
 public class LocMybatisTest {
 
-
   @Autowired
   private SqlSessionFactory sqlSessionFactory;
 
@@ -66,13 +65,13 @@ public class LocMybatisTest {
     assertThat(sqlSessionFactory.getConfiguration().getInterceptors().size()).isEqualTo(1);
     assertThat(sqlSessionFactory.getConfiguration().getInterceptors().get(0).getClass()).isEqualTo(
         PageInterceptor.class);
-
   }
 
 
   @MinimalWebConfiguration
   @RestController
   @Validated
+  @AutoConfigurationPackage
   public static class MybatisController {
 
 
