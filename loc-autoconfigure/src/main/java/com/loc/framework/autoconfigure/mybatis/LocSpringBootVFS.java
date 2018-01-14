@@ -14,11 +14,11 @@ import org.springframework.core.io.support.ResourcePatternResolver;
 /**
  * Created on 2018/1/13.
  */
-public class SpringBootVFS extends VFS {
+public class LocSpringBootVFS extends VFS {
 
   private final ResourcePatternResolver resourceResolver;
 
-  public SpringBootVFS() {
+  public LocSpringBootVFS() {
     this.resourceResolver = new PathMatchingResourcePatternResolver(getClass().getClassLoader());
   }
 
@@ -30,8 +30,7 @@ public class SpringBootVFS extends VFS {
   @Override
   protected List<String> list(URL url, String path) throws IOException {
     Resource[] resources = resourceResolver.getResources("classpath*:" + path + "/**/*.class");
-    return Stream.of(resources)
-        .map(resource -> preserveSubpackageName(resource, path))
+    return Stream.of(resources).map(resource -> preserveSubpackageName(resource, path))
         .collect(Collectors.toList());
   }
 

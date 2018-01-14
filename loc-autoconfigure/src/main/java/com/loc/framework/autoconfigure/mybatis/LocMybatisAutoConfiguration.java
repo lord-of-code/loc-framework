@@ -88,7 +88,7 @@ public class LocMybatisAutoConfiguration extends LocBaseAutoConfiguration implem
 
     SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
     sqlSessionFactoryBean.setDataSource(dataSource);
-    sqlSessionFactoryBean.setVfs(SpringBootVFS.class);
+    sqlSessionFactoryBean.setVfs(LocSpringBootVFS.class);
     Optional.ofNullable(mybatisProperties.getConfigLocation()).map(this.resourceLoader::getResource)
         .ifPresent(sqlSessionFactoryBean::setConfigLocation);
 
