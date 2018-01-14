@@ -21,7 +21,7 @@ public abstract class LocBaseAutoConfiguration {
   }
 
   // 读取配置并转换成对象
-  protected  <T> T resolverSetting(Class<T> clazz, MutablePropertySources propertySources) {
+  protected <T> T resolverSetting(Class<T> clazz, MutablePropertySources propertySources) {
     return new Binder(ConfigurationPropertySources.from(propertySources))
         .bind("loc", Bindable.of(clazz))
         .orElseThrow(() -> new FatalBeanException("Could not bind DataSourceSettings properties"));

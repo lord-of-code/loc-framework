@@ -10,6 +10,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @Data
 @ConfigurationProperties(prefix = "loc.pagehelper")
 public class PageHelperProperties {
+
   private String helperDialect = "mysql";
   private boolean offsetAsPageNum = false;
   private boolean rowBoundsWithCount = false;

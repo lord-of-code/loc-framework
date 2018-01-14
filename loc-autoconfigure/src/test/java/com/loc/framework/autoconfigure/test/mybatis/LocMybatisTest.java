@@ -61,7 +61,8 @@ public class LocMybatisTest {
     assertThat(sqlSessionFactory).isNotNull();
     assertThat(sqlSessionTemplate).isNotNull();
 
-    assertThat(sqlSessionFactory.getConfiguration().getDefaultExecutorType().name()).isEqualTo("BATCH");
+    assertThat(sqlSessionFactory.getConfiguration().getDefaultExecutorType().name())
+        .isEqualTo("BATCH");
     assertThat(sqlSessionFactory.getConfiguration().getInterceptors().size()).isEqualTo(1);
     assertThat(sqlSessionFactory.getConfiguration().getInterceptors().get(0).getClass()).isEqualTo(
         PageInterceptor.class);

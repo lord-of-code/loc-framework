@@ -19,7 +19,7 @@
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <java.version>1.8</java.version>
     <spring.boot.version>2.0.0.M7</spring.boot.version>
-    <spring.cloud.version>Finchley.M3</spring.cloud.version>
+    <spring.cloud.version>Finchley.M5</spring.cloud.version>
 
     <springfox-swagger2.version>2.7.0</springfox-swagger2.version>
     <log4jdbc.version>1.16</log4jdbc.version>

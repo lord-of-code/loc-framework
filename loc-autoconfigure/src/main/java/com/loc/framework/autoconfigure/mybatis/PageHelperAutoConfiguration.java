@@ -24,7 +24,8 @@ public class PageHelperAutoConfiguration {
 
   private final PageHelperProperties pageHelperProperties;
 
-  public PageHelperAutoConfiguration(ObjectProvider<List<SqlSessionFactory>> sqlSessionFactoryList, PageHelperProperties pageHelperProperties) {
+  public PageHelperAutoConfiguration(ObjectProvider<List<SqlSessionFactory>> sqlSessionFactoryList,
+      PageHelperProperties pageHelperProperties) {
     this.sqlSessionFactoryList = sqlSessionFactoryList.getIfAvailable();
     this.pageHelperProperties = pageHelperProperties;
   }
