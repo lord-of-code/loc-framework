@@ -37,8 +37,8 @@ public class Application {
   @RestController
   public static class GetController {
 
-    @Resource(name = "firstDsJdbcTemplate")
-    private JdbcTemplate firstDsJdbcTemplate;
+    @Resource(name = "firstJdbcTemplate")
+    private JdbcTemplate firstJdbcTemplate;
 
     @GetMapping(value = "/person")
     public List<Person> getPerson(@RequestParam("name") String name) throws SQLException {
@@ -51,13 +51,13 @@ public class Application {
     public BasicResult addPerson(@RequestParam("name") String name, @RequestParam("age") int age)
         throws SQLException {
       String sql = "INSERT INTO person_table(name,age,address) VALUES (?, ?, ?)";
-      firstDsJdbcTemplate.update(sql, name, age, UUID.randomUUID().toString());
+      firstJdbcTemplate.update(sql, name, age, UUID.randomUUID().toString());
       return BasicResult.success();
     }
 
     private Person firstJdbcTemplate(String name) throws SQLException {
       String sql = "select * from person_table where name=? limit 1;";
-      Person person = firstDsJdbcTemplate
+      Person person = firstJdbcTemplate
           .queryForObject(sql, new BeanPropertyRowMapper<>(Person.class), name);
       log.info("person is {}", person);
       return person;

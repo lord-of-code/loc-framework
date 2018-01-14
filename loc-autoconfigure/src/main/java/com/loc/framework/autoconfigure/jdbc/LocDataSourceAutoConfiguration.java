@@ -4,6 +4,7 @@ import static com.google.common.base.Preconditions.checkArgument;
 
 import com.google.common.base.Strings;
 import com.loc.framework.autoconfigure.ConditionalOnPrefixProperty;
+import com.loc.framework.autoconfigure.mybatis.LocMybatisAutoConfiguration;
 import com.zaxxer.hikari.HikariDataSource;
 import java.util.Optional;
 import javax.sql.DataSource;
@@ -14,12 +15,14 @@ import org.springframework.beans.BeansException;
 import org.springframework.beans.FatalBeanException;
 import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
+import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.context.properties.bind.Bindable;
 import org.springframework.boot.context.properties.bind.Binder;
 import org.springframework.boot.context.properties.source.ConfigurationPropertySources;
 import org.springframework.context.EnvironmentAware;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.Ordered;
 import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.core.env.Environment;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -35,7 +38,8 @@ import org.springframework.transaction.aspectj.AnnotationTransactionAspect;
 @ConditionalOnClass({
     DataSource.class, HikariDataSource.class, DataSourceSpy.class
 })
-public class LocDataSourceAutoConfiguration implements BeanFactoryPostProcessor, EnvironmentAware {
+public class LocDataSourceAutoConfiguration implements BeanFactoryPostProcessor, EnvironmentAware,
+    Ordered {
 
   private ConfigurableEnvironment environment;
 
@@ -72,7 +76,6 @@ public class LocDataSourceAutoConfiguration implements BeanFactoryPostProcessor,
   public void setEnvironment(Environment environment) {
     this.environment = (ConfigurableEnvironment) environment;
   }
-
 
   private void createBean(ConfigurableListableBeanFactory configurableListableBeanFactory,
       String prefixName, JdbcProperties jdbcProperties) {
@@ -145,5 +148,10 @@ public class LocDataSourceAutoConfiguration implements BeanFactoryPostProcessor,
     }
     System.setProperty("log4jdbc.spylogdelegator.name", this.environment
         .getProperty("log4jdbc.spylogdelegator.name", Slf4jSpyLogDelegator.class.getName()));
+  }
+
+  @Override
+  public int getOrder() {
+    return Integer.MAX_VALUE - 1;
   }
 }

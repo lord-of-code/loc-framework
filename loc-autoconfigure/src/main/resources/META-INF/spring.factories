@@ -4,5 +4,7 @@ com.loc.framework.autoconfigure.springmvc.LocAdviceErrorAutoConfiguration,\
 com.loc.framework.autoconfigure.swagger.Swagger2AutoConfiguration,\
 com.loc.framework.autoconfigure.shutdown.TomcatGracefulShutdownAutoConfiguration,\
 com.loc.framework.autoconfigure.jdbc.LocDataSourceAutoConfiguration,\
+com.loc.framework.autoconfigure.mybatis.LocMybatisAutoConfiguration,\
+com.loc.framework.autoconfigure.mybatis.PageHelperAutoConfiguration,\
 com.loc.framework.autoconfigure.okhttp.OkHttpAutoConfiguration,\
 com.loc.framework.autoconfigure.okhttp.OkHttpLoggingAutoConfiguration

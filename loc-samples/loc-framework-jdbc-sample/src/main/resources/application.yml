@@ -3,7 +3,7 @@ server.port: 8081
 spring.h2.console.enabled: true
 
 loc.dataSource:
-  firstDs:
+  first:
     username: root
     password:
     jdbcUrl: jdbc:mysql://127.0.0.1:3306/test

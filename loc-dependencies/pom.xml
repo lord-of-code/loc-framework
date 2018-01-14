@@ -23,6 +23,10 @@
 
     <springfox-swagger2.version>2.7.0</springfox-swagger2.version>
     <log4jdbc.version>1.16</log4jdbc.version>
+
+    <mybatis.version>3.4.5</mybatis.version>
+    <mybatis.spring.version>1.3.1</mybatis.spring.version>
+    <mybatis.pagehelper.version>5.1.2</mybatis.pagehelper.version>
   </properties>
 
   <dependencyManagement>
@@ -97,6 +101,23 @@
         <groupId>org.bgee.log4jdbc-log4j2</groupId>
         <artifactId>log4jdbc-log4j2-jdbc4.1</artifactId>
         <version>${log4jdbc.version}</version>
+      </dependency>
+
+      <!--mybatis-->
+      <dependency>
+        <groupId>org.mybatis</groupId>
+        <artifactId>mybatis</artifactId>
+        <version>${mybatis.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.mybatis</groupId>
+        <artifactId>mybatis-spring</artifactId>
+        <version>${mybatis.spring.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.github.pagehelper</groupId>
+        <artifactId>pagehelper</artifactId>
+        <version>${mybatis.pagehelper.version}</version>
       </dependency>
 
 
