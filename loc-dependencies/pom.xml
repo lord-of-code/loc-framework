@@ -63,6 +63,11 @@
       </dependency>
       <dependency>
         <groupId>com.github.lord-of-code</groupId>
+        <artifactId>loc-framework-mybatis-starter</artifactId>
+        <version>${revision}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.github.lord-of-code</groupId>
         <artifactId>loc-framework-redis-starter</artifactId>
         <version>${revision}</version>
       </dependency>
