@@ -9,7 +9,7 @@
     <version>${revision}</version>
   </parent>
 
-  <artifactId>loc-framework-mybatis-sample</artifactId>
+  <artifactId>loc-framework-mybatis-annotation-sample</artifactId>
 
   <properties>
     <main.basedir>${basedir}/../..</main.basedir>

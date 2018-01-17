@@ -90,6 +90,7 @@
 - logger
 - shutdown
 - jdbc
+- mybatis
 - okhttp
 - redis
 - ...
@@ -213,6 +214,41 @@ logging.level.jdbc:
   resultset: OFF
   resultsettable: OFF
   connection: OFF
+```
+
+## mybatis的starter的统一标准
+
+* mybatis的starter依赖了jdbc的starter, 所以一些配置是使用jdbc的配置
+
+* mybatis的starter同样支持多数据源的配置
+
+* mybatis的starter支持xml配置文件和注解的两种配置方式
+
+* myabtis的starter新增了和数据源相关的配置, 默认值都为null
+```
+loc.dataSource:
+  firstDs:
+    configLocation:            # datasource对应的mybatis-config.xml文件
+    mapperLocations:           #
+    typeAliasesPackage:        #
+    basePackage:               #
+    executorType:              #
+    configurationProperties:   #
+    configuration:             #
+```
+
+* mybatis的starter新增了分页插件的相关的全局配置
+```
+loc.pagehelper:
+  helperDialect = "mysql";
+  offsetAsPageNum = false;
+  rowBoundsWithCount = false;
+  pageSizeZero = false;
+  reasonable = false;
+  params = "pageNum=pageNum;pageSize=pageSize;count=countSql;reasonable=reasonable;pageSizeZero=pageSizeZero";
+  supportMethodsArguments = false;
+  autoRuntimeDialect = false;
+  closeConn = true;
 ```
 
 ## okhttp的starter的统一标准

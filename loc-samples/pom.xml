@@ -23,7 +23,8 @@
     <module>loc-framework-springmvc-sample</module>
     <module>loc-framework-logback-sample</module>
     <module>loc-framework-jdbc-sample</module>
-    <module>loc-framework-mybatis-sample</module>
+    <module>loc-framework-mybatis-xml-sample</module>
+    <module>loc-framework-mybatis-annotation-sample</module>
     <module>loc-framework-okhttp-sample</module>
     <module>loc-framework-redis-sample</module>
   </modules>
