@@ -1,9 +1,9 @@
-drop table `person_table` if exists;
+drop table `demo_table` if exists;
 
-CREATE TABLE `person_table` (
+CREATE TABLE `demo_table` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `name` varchar(20) NOT NULL,
   `age` int(11) NOT NULL,
-  `address` int(11) NOT NULL,
+  `score` varchar(100) NOT NULL,
   PRIMARY KEY (`id`)
 );

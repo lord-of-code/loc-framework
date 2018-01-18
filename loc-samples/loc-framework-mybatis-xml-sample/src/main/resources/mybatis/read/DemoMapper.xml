@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.loc.framework.mybatis.xml.sample.dao.read.DemoInfoRead">
+  <select id="getInfoByName" resultMap="DemoInfo" parameterType="String">
+    select `id`, `name`, `age`, `score` from demo_table where name = #{name}
+  </select>
+
+  <select id="getAllDemoInfo" resultMap="DemoInfo">
+    select `id`, `name`, `age`, `score` from demo_table
+  </select>
+</mapper>
