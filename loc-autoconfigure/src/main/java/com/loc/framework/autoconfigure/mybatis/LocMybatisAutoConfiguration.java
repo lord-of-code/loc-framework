@@ -121,7 +121,8 @@ public class LocMybatisAutoConfiguration extends LocBaseAutoConfiguration implem
         createBasePackageScanner((BeanDefinitionRegistry) configurableListableBeanFactory,
             mybatisProperties.getBasePackage(), prefixName);
       } else {
-        createClassPathMapperScanner((BeanDefinitionRegistry) configurableListableBeanFactory);
+        createClassPathMapperScanner((BeanDefinitionRegistry) configurableListableBeanFactory,
+            prefixName);
       }
       return sqlSessionFactory;
     } catch (Exception e) {
@@ -152,7 +153,7 @@ public class LocMybatisAutoConfiguration extends LocBaseAutoConfiguration implem
     scannerConfigurer.postProcessBeanDefinitionRegistry(registry);
   }
 
-  private void createClassPathMapperScanner(BeanDefinitionRegistry registry) {
+  private void createClassPathMapperScanner(BeanDefinitionRegistry registry, String prefixName) {
     ClassPathMapperScanner scanner = new ClassPathMapperScanner(registry);
 
     try {
@@ -164,6 +165,7 @@ public class LocMybatisAutoConfiguration extends LocBaseAutoConfiguration implem
       packages.forEach(pkg -> log.info("Using auto-configuration base package '{}'", pkg));
 
       scanner.setAnnotationClass(Mapper.class);
+      scanner.setSqlSessionFactoryBeanName(prefixName + "SessionFactory");
       scanner.registerFilters();
       scanner.doScan(StringUtils.toStringArray(packages));
     } catch (IllegalStateException ex) {
