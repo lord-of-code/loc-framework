@@ -3,11 +3,17 @@
 [![codecov](https://codecov.io/gh/lord-of-code/loc-framework/branch/master/graph/badge.svg)](https://codecov.io/gh/lord-of-code/loc-framework)
 
 # loc-framework
-本项目是完全基于Spring Boot2和Springcloud Finchley所进行了开发的，目的是简化和统一公司内部使用微服务框架的使用方法
+本项目是完全基于Spring Boot 2.0版本和Spring Cloud Finchley所进行了开发的
+目的是简化和统一微服务框架Spring Boot 2和Spring Cloud的使用方法
 
 ## 目的
-通过一定的规则来统一编写各种starter，方便在企业内部进行规则的统一，配置的统一，用法的统一，监控的统一，部署的统一
-方便再进一步的简化springboot和springcloud的使用
+通过一定的规则来统一编写各种依赖的Starter，方便在企业内部进行规则的统一，配置的统一，用法的统一，监控的统一，部署的统一
+方便再进一步的简化Spring Boot和Spring Cloud的使用，进一步分离通用框架代码和业务代码的耦合
+
+## 原因
+Spring Boot 2目前版本是m7版本, 很快rc1版本就要发布， 大概2018年3月左右会发布RELEASE版本
+对于之前使用Spring Boot 1.x的同学如果要进行升级到Spring Boot 2的话，需要改动的地方还是很多的
+
 
 ## 使用方式
 - pom.xml中加入parent
@@ -20,7 +26,7 @@
   </parent>
 ```
 
-- pom.xml中指定仓库地址(因为springboot2在中央仓库还没有，所以需要指定仓库)
+- pom.xml中指定仓库地址(因为Spring Boot 2在中央仓库还没有，所以需要指定仓库)
 ```
 <repositories>
   <repository>
@@ -222,16 +228,19 @@ logging.level.jdbc:
 
 * mybatis的starter同样支持多数据源的配置
 
-* mybatis的starter支持xml配置文件和注解的两种配置方式
+* mybatis的starter支持xml配置文件和注解的两种配置方式具体使用方式可以参考samples里面的:
+
+1. [mybatis-xml例子](https://github.com/lord-of-code/loc-framework/tree/master/loc-samples/loc-framework-mybatis-xml-sample)
+2. [mybatis-annotation例子](https://github.com/lord-of-code/loc-framework/tree/master/loc-samples/loc-framework-mybatis-annotation-sample)
 
 * myabtis的starter新增了和数据源相关的配置, 默认值都为null
 ```
 loc.dataSource:
   firstDs:
     configLocation:            # datasource对应的mybatis-config.xml文件
+    basePackage:               # 接口所在的项目包
     mapperLocations:           #
     typeAliasesPackage:        #
-    basePackage:               #
     executorType:              #
     configurationProperties:   #
     configuration:             #
