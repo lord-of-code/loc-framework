@@ -52,6 +52,9 @@
     </profile>
     <profile>
       <id>samples</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
       <modules>
         <module>loc-samples</module>
       </modules>
