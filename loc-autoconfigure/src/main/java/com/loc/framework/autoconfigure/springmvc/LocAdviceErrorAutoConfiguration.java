@@ -1,5 +1,7 @@
 package com.loc.framework.autoconfigure.springmvc;
 
+import io.lettuce.core.RedisException;
+import java.sql.SQLException;
 import java.util.Set;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
@@ -146,6 +148,37 @@ public class LocAdviceErrorAutoConfiguration {
       return BasicResult.fail(e.getCode(), e.getMsg(), e.getDetailMsg());
     }
   }
+
+  @ConditionalOnClass(SQLException.class)
+  @Configuration
+  @RestControllerAdvice
+  static class SqlExceptionConfiguration {
+
+    @ResponseStatus(value = HttpStatus.SERVICE_UNAVAILABLE)
+    @ExceptionHandler(SQLException.class)
+    public BasicResult handleSqlException(SQLException e) {
+      logError("SQLException", e.getMessage(), e);
+      return BasicResult
+          .fail(BasicResultCode.SQL_ERROR.getCode(), BasicResultCode.SQL_ERROR.getMsg(),
+              e.getMessage());
+    }
+  }
+
+  @ConditionalOnClass(RedisException.class)
+  @Configuration
+  @RestControllerAdvice
+  static class redisExceptionConfiguration {
+
+    @ResponseStatus(value = HttpStatus.SERVICE_UNAVAILABLE)
+    @ExceptionHandler(RedisException.class)
+    public BasicResult handleRedisException(RedisException e) {
+      logError("RedisException", e.getMessage(), e);
+      return BasicResult
+          .fail(BasicResultCode.REDIS_ERROR.getCode(), BasicResultCode.REDIS_ERROR.getMsg(),
+              e.getMessage());
+    }
+  }
+
 
   @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
   @ExceptionHandler(RuntimeException.class)

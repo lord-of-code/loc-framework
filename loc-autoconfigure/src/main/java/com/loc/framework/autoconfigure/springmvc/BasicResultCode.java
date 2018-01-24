@@ -12,6 +12,8 @@ public enum BasicResultCode {
 
   THROWABLE_ERROR(500_000, "throwable error"),
   RUNTIME_ERROR(500_001, "runtime exception"),
+  SQL_ERROR(500_002, "sql exception"),
+  REDIS_ERROR(500_003, "redis exception"),
 
   METHOD_ARGUMENT_MISS_ERROR(400_000, "method argument miss error"),
   METHOD_ARGUMENT_VALIDATE_ERROR(400_001, "method argument validate error"),
