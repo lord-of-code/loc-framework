@@ -49,9 +49,8 @@ public class MybatisXmlController {
 
 
   @RequestMapping(value = "/mybatisPageNO", method = RequestMethod.GET)
-  public PageInfo mybatisPageNO(int pageNo) throws SQLException {
-    PageInfo page = new PageInfo();
-    PageHelper.startPage(pageNo, page.getPageSize());
+  public PageInfo mybatisPageNO(int pageNo, int pageSize) throws SQLException {
+    PageHelper.startPage(pageNo, pageSize);
     List<DemoInfo> demoInfoList = demoInfoRead.getAllDemoInfo();
     log.info("demo info list are {}", demoInfoList.stream().map(DemoInfo::toString)
         .collect(Collectors.joining(",")));
