@@ -7,4 +7,5 @@ com.loc.framework.autoconfigure.jdbc.LocDataSourceAutoConfiguration,\
 com.loc.framework.autoconfigure.mybatis.LocMybatisAutoConfiguration,\
 com.loc.framework.autoconfigure.mybatis.PageHelperAutoConfiguration,\
 com.loc.framework.autoconfigure.okhttp.OkHttpAutoConfiguration,\
-com.loc.framework.autoconfigure.okhttp.OkHttpLoggingAutoConfiguration
+com.loc.framework.autoconfigure.okhttp.OkHttpLoggingAutoConfiguration,\
+com.loc.framework.autoconfigure.keycloak.LocKeycloakAutoConfiguration

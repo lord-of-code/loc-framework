@@ -107,6 +107,7 @@ Spring Boot 2目前版本是m7版本, 很快rc1版本就要发布， 大概2018�
 - mybatis
 - okhttp
 - redis
+- keycloak
 - ...
 
 
@@ -287,6 +288,10 @@ loc.okhttp:
 ```
 
 ## redis的starter的统一标准
+
+## keycloak的starter的统一标准
+
+* keycloak是一个开源的统一认证的安全框架
 
 ## eureka的starter的统一标准
 
