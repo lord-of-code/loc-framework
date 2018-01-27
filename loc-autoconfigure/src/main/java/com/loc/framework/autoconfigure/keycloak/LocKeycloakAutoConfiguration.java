@@ -40,7 +40,7 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
 @ConditionalOnWebApplication
 @ConditionalOnPrefixProperty(prefix = "loc", value = BaseRealmConfig.class)
 @ConditionalOnProperty(value = "loc.keycloak.enabled", matchIfMissing = true)
-@ConditionalOnClass(KeycloakWebSecurityConfigurerAdapter.class)
+@ConditionalOnClass({KeycloakWebSecurityConfigurerAdapter.class, BaseRealmConfig.class})
 @KeycloakConfiguration
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @Slf4j
@@ -52,7 +52,8 @@ public class LocKeycloakAutoConfiguration extends KeycloakWebSecurityConfigurerA
 
   private final RequestMappingHandlerMapping requestMappingHandlerMapping;
 
-  public LocKeycloakAutoConfiguration(KeycloakClientRequestFactory keycloakClientRequestFactory,
+  public LocKeycloakAutoConfiguration(
+      KeycloakClientRequestFactory keycloakClientRequestFactory,
       MethodSecurityMetadataSource methodSecurityMetadataSource,
       RequestMappingHandlerMapping requestMappingHandlerMapping) {
     this.keycloakClientRequestFactory = keycloakClientRequestFactory;
