@@ -26,7 +26,7 @@ class LocKeycloakLog {
   @Builder
   @NoArgsConstructor
   @AllArgsConstructor
-  class LocKeycloakLogDomain {
+  static class LocKeycloakLogDomain {
 
     private String userName;
     private String url;

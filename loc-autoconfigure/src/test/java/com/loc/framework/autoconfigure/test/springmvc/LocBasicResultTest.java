@@ -8,6 +8,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.Lists;
+import com.loc.framework.autoconfigure.keycloak.LocNoSecurityAutoConfiguration;
 import com.loc.framework.autoconfigure.shutdown.TomcatGracefulShutdownAutoConfiguration;
 import com.loc.framework.autoconfigure.springmvc.BasicResult;
 import com.loc.framework.autoconfigure.springmvc.LocAdviceErrorAutoConfiguration;
@@ -339,7 +340,8 @@ public class LocBasicResultTest {
       JacksonAutoConfiguration.class,
       LocAdviceErrorAutoConfiguration.class,
       LocSpringMvcAutoConfiguration.class,
-      TomcatGracefulShutdownAutoConfiguration.class
+      TomcatGracefulShutdownAutoConfiguration.class,
+      LocNoSecurityAutoConfiguration.class
   })
   protected @interface MinimalWebConfiguration {
 
