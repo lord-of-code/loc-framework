@@ -1,6 +1,5 @@
 package com.loc.framework.autoconfigure.keycloak;
 
-import com.loc.framework.autoconfigure.ConditionalOnPrefixProperty;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Map;
@@ -38,8 +37,7 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
  * Created on 2018/1/27.
  */
 @ConditionalOnWebApplication
-@ConditionalOnPrefixProperty(prefix = "loc", value = BaseRealmConfig.class)
-@ConditionalOnProperty(value = "loc.keycloak.enabled", matchIfMissing = true)
+@ConditionalOnProperty(value = "keycloak.enabled", matchIfMissing = true)
 @ConditionalOnClass({KeycloakWebSecurityConfigurerAdapter.class, BaseRealmConfig.class})
 @KeycloakConfiguration
 @EnableGlobalMethodSecurity(prePostEnabled = true)
