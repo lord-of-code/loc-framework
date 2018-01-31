@@ -19,8 +19,12 @@ public enum BasicResultCode {
   METHOD_ARGUMENT_VALIDATE_ERROR(400_001, "method argument validate error"),
   METHOD_NOT_ALLOW_ERROR(405_000, "method not allow error"),
 
+  UNSUPPORTED_MEDIA_TYPE_ERROR(415_000, "unsupported media type error"),
 
-  UNSUPPORTED_MEDIA_TYPE_ERROR(415_000, "unsupported media type error"),;
+  SECURITY_ACCESS_DENIED(401_000, "未授权访问!"),
+  SECURITY_AUTHENTICATION(401_001, "身份验证失败,请输入正确信息!"),
+  SECURITY_TOKEN_NOT_ACTIVE(401_002, "TOKEN 已失效，刷新token或者重新获取!"),
+  ;
 
   private int code;
   private String msg;
