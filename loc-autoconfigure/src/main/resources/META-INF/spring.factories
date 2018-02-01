@@ -9,4 +9,5 @@ com.loc.framework.autoconfigure.mybatis.PageHelperAutoConfiguration,\
 com.loc.framework.autoconfigure.okhttp.OkHttpAutoConfiguration,\
 com.loc.framework.autoconfigure.okhttp.OkHttpLoggingAutoConfiguration,\
 com.loc.framework.autoconfigure.keycloak.LocKeycloakAutoConfiguration,\
-com.loc.framework.autoconfigure.keycloak.LocNoSecurityAutoConfiguration
+com.loc.framework.autoconfigure.keycloak.LocNoSecurityAutoConfiguration,\
+com.loc.framework.autoconfigure.redis.RedisCacheAutoConfiguration
