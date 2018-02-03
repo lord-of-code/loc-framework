@@ -289,6 +289,9 @@ loc.okhttp:
 
 ## redis的starter的统一标准
 
+* 修改了一下cache manager的序列化方式, 把默认的value的序列化方式从jdk的序列化方式改成了json的序列化方式, 主要是为了方便redis存储数据的可读性
+
+
 ## keycloak的starter的统一标准
 
 * keycloak是一个开源的统一认证的安全框架

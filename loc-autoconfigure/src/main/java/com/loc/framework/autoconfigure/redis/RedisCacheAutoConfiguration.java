@@ -8,6 +8,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.cache.CacheProperties.Redis;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
@@ -19,11 +21,13 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
  * Created on 2018/2/1.
  */
 @Slf4j
+@EnableCaching
 @Configuration
 @ConditionalOnClass(Redis.class)
 public class RedisCacheAutoConfiguration {
 
   @Bean
+  @ConditionalOnMissingBean
   public RedisCacheConfiguration redisCacheConfiguration() {
     Jackson2JsonRedisSerializer<Object> jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer<>(
         Object.class);
