@@ -294,7 +294,8 @@ loc.okhttp:
 
 ## keycloak的starter的统一标准
 
-* keycloak是一个开源的统一认证的安全框架
+* keycloak是一个开源的统一认证的安全框架, 现在由于框架是基于springboot2进行开发的，keycloak-springboot-adapter的是基于springboot 1.x的版本来做的，所以出现了无法使用的情况，这个问题已经上报给keycloak官方了
+* 等待keycloak针对springboot2提供了adapter后会继续进行跟进此模块
 
 ## eureka的starter的统一标准
 
