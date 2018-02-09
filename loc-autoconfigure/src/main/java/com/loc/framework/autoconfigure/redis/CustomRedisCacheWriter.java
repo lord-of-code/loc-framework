@@ -6,6 +6,7 @@ import org.springframework.data.redis.cache.RedisCacheWriter;
 import org.springframework.lang.Nullable;
 
 /**
+ * 自定义的redis cache writer的类， 如果连不上redis或者命令 超时 会直接进行后续逻辑
  * Created on 2018/2/1.
  */
 @Slf4j

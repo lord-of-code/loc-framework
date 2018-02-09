@@ -83,7 +83,7 @@ public class Application {
     public BasicResult getRedisCache() {
       RedisDemoInfo redisDemoInfo = redisService.getDemoInfoLocKey("loc", 30);
       log.info("redis demo info is {}", redisDemoInfo);
-      return BasicResult.success();
+      return BasicResult.success(redisDemoInfo);
     }
   }
 
