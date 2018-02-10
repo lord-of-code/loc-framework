@@ -290,7 +290,28 @@ loc.okhttp:
 ## redis的starter的统一标准
 
 * 修改了一下cache manager的序列化方式, 把默认的value的序列化方式从jdk的序列化方式改成了json的序列化方式, 主要是为了方便redis存储数据的可读性
+* 重新封装了cache manager的使用方式，对于redis不可用的时候，还可以继续进行后续操作，认为缓存是可能出问题的，但是不会影响具体的业务逻辑操作
 
+* 下列事例配置参数
+```
+spring:
+  cache:
+    redis:
+      time-to-live: 100s
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    timeout: 2s   #操作超时的情况，默认60s
+#  cluster.nodes:
+#    - 10.10.3.51:2001
+#    - 10.10.3.51:2002
+#    - 10.10.3.51:2003
+    lettuce:
+      pool:
+        max-active: 10
+        max-idle: 10
+        max-wait: "1000"
+```
 
 ## keycloak的starter的统一标准
 
@@ -311,6 +332,11 @@ $ ./mvnw clean install
 * 如果使用mvn来进行编译，你需要确保使用的mvn为Apache Maven v3.5.0 +
 ```
 $ mvn clean install
+```
+
+* 如果使用windows系统，编译的时候需要跳过测试
+```
+$ mvn clean install -Dmaven.test.skip=true
 ```
 
 
