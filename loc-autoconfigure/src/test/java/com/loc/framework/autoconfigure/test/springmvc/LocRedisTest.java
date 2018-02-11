@@ -13,12 +13,14 @@ import java.lang.annotation.Target;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration;
 import org.springframework.boot.autoconfigure.jackson.JacksonAutoConfiguration;
 import org.springframework.boot.autoconfigure.web.servlet.ServletWebServerFactoryAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
+import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -36,13 +38,11 @@ import org.springframework.web.filter.CorsFilter;
 public class LocRedisTest {
 
   @Autowired
-  private RedisCacheConfiguration redisCacheConfiguration;
-
-
+  private RedisCacheManager redisCacheManager;
+  
   @Test
   public void testRedisCacheConfiguration() {
-    assertThat(redisCacheConfiguration).isNotNull();
-    assertThat(redisCacheConfiguration.getValueSerializationPair()).isNotNull();
+    assertThat(redisCacheManager).isNotNull();
   }
 
 
@@ -53,6 +53,7 @@ public class LocRedisTest {
   @Import({
       ServletWebServerFactoryAutoConfiguration.class,
       JacksonAutoConfiguration.class,
+      RedisAutoConfiguration.class,
       RedisCacheAutoConfiguration.class
   })
   protected @interface MinimalWebConfiguration {
