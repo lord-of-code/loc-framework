@@ -1,9 +1,5 @@
 package com.loc.framework.autoconfigure.test.springmvc;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 import com.google.common.collect.Lists;
 import com.loc.framework.autoconfigure.keycloak.LocKeycloakAutoConfiguration;
 import com.loc.framework.autoconfigure.shutdown.TomcatGracefulShutdownAutoConfiguration;
@@ -24,7 +20,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.keycloak.adapters.springboot.KeycloakAutoConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.jackson.JacksonAutoConfiguration;
 import org.springframework.boot.autoconfigure.web.servlet.ServletWebServerFactoryAutoConfiguration;

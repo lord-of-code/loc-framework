@@ -3,8 +3,6 @@ package com.loc.framework.autoconfigure.test.springmvc;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.loc.framework.autoconfigure.redis.RedisCacheAutoConfiguration;
-import com.loc.framework.autoconfigure.springmvc.BasicResult;
-import com.loc.framework.autoconfigure.springmvc.LocSpringMvcAutoConfiguration;
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -19,15 +17,9 @@ import org.springframework.boot.autoconfigure.web.servlet.ServletWebServerFactor
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
-import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.filter.CorsFilter;
 
 /**
  * Created on 2017/12/19.
@@ -39,7 +31,7 @@ public class LocRedisTest {
 
   @Autowired
   private RedisCacheManager redisCacheManager;
-  
+
   @Test
   public void testRedisCacheConfiguration() {
     assertThat(redisCacheManager).isNotNull();
