@@ -1,0 +1,24 @@
+version: "3"
+services:
+  mysql:
+    image: mysql:5.7.21
+    container_name: mysql
+    hostname: mysql
+    restart: always
+    ports:
+      - 3306:3306
+    volumes:
+      - /tmp/data/mysql:/var/lib/mysql
+    environment:
+      - MYSQL_DATABASE=loc_db
+      - MYSQL_ROOT_PASSWORD=password
+  redis:
+    image: redis:4.0.5-alpine
+    container_name: redis
+    command: ["redis-server", "--appendonly", "yes"]
+    hostname: redis
+    restart: always
+    ports:
+      - 6379:6379
+    volumes:
+      - /tmp/data/redis:/var/lib/redis

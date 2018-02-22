@@ -97,7 +97,16 @@ Spring Boot 2目前版本是m7版本, 很快rc1版本就要发布， 大概2018�
 
 - [具体的demo](https://github.com/lord-of-code/loc-framework-demo)
 
+## 利用docker-compose启动基础依赖
 
+### 全部启动
+docker-compose up -d
+
+#### mysql
+docker-compose run -d --service-ports mysql
+
+#### redis
+docker-compose run -d --service-ports redis
 
 ## 计划主要的starter
 - springmvc
