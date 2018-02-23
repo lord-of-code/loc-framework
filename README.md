@@ -90,6 +90,15 @@ Spring Boot 2目前版本是m7版本, 很快rc1版本就要发布， 大概2018�
 </build>
 ```
 
+## 提供的核心依赖(SpringBoot和SpringCloud)和辅助依赖
+
+- SpringBoot 2.0 RC2
+- SpringCloud Release Finchley.M6
+- springfox-swagger2  2.7.0
+- log4jdbc 1.16
+- mybatis 3.4.5
+- mybatis-spring 1.3.1
+- mybatis-pagehelper 5.1.2
 
 ## demo程序
 
