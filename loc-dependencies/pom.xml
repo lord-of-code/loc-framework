@@ -80,6 +80,11 @@
       </dependency>
       <dependency>
         <groupId>com.github.lord-of-code</groupId>
+        <artifactId>loc-framework-kafka-starter</artifactId>
+        <version>${revision}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.github.lord-of-code</groupId>
         <artifactId>loc-framework-logback-starter</artifactId>
         <version>${revision}</version>
       </dependency>

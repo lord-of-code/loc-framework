@@ -10,4 +10,5 @@ com.loc.framework.autoconfigure.okhttp.OkHttpAutoConfiguration,\
 com.loc.framework.autoconfigure.okhttp.OkHttpLoggingAutoConfiguration,\
 com.loc.framework.autoconfigure.keycloak.LocKeycloakAutoConfiguration,\
 com.loc.framework.autoconfigure.keycloak.LocNoSecurityAutoConfiguration,\
-com.loc.framework.autoconfigure.redis.RedisCacheAutoConfiguration
+com.loc.framework.autoconfigure.redis.RedisCacheAutoConfiguration,\
+com.loc.framework.autoconfigure.kafka.LocKafkaAutoConfiguration

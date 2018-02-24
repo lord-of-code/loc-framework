@@ -26,6 +26,7 @@
     <module>loc-framework-mybatis-xml-sample</module>
     <module>loc-framework-mybatis-annotation-sample</module>
     <module>loc-framework-okhttp-sample</module>
+    <module>loc-framework-kafka-sample</module>
     <module>loc-framework-redis-sample</module>
   </modules>
 

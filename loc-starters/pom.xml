@@ -27,6 +27,7 @@
     <module>loc-framework-mybatis-starter</module>
     <module>loc-framework-okhttp-starter</module>
     <module>loc-framework-redis-starter</module>
+    <module>loc-framework-kafka-starter</module>
     <module>loc-framework-logback-starter</module>
     <module>loc-framework-shutdown-starter</module>
   </modules>
