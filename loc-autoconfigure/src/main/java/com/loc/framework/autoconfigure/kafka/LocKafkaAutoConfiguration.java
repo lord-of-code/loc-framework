@@ -25,7 +25,7 @@ import org.springframework.kafka.support.converter.StringJsonMessageConverter;
  */
 @Slf4j
 @Configuration
-@ConditionalOnPrefixProperty(prefix = "spring.kafka.", value = KafkaProperties.class)
+@ConditionalOnPrefixProperty(prefix = "spring.kafka", value = KafkaProperties.class)
 @ConditionalOnClass({KafkaTemplate.class, EnableKafka.class})
 @AutoConfigureAfter({KafkaAutoConfiguration.class})
 public class LocKafkaAutoConfiguration {
@@ -39,7 +39,7 @@ public class LocKafkaAutoConfiguration {
   @Bean
   @ConditionalOnMissingBean
   public LocKafkaProducer locKafkaProducer(KafkaTemplate<byte[], byte[]> kafkaTemplate) {
-    return new LocKafkaProducer(kafkaTemplate, objectMapper);
+    return new LocKafkaProducer(kafkaTemplate);
   }
 
   @Bean

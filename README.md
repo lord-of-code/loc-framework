@@ -335,6 +335,9 @@ spring:
 ## kafka的starter的统一标准
 
 * 用kafka来作为主要的的消息队列
+* 统一定义k,v 使用 byte[] 数组来定义消息的key和value，方便统一处理
+* 给producer在发送的时候头里面加上了messageid、trace相关的信息、记录发送的日志和进行json转换，
+* 给consumer在处理消息错误的时候记录日志，处理完消息的时候记录日志，接受到消息的时候记录日志、处理trace的信息，对消息进行json转换等功能
 
 ## keycloak的starter的统一标准
 

@@ -1,4 +1,4 @@
-package com.loc.framework.autoconfigure.test.springmvc;
+package com.loc.framework.autoconfigure.test.okhttp;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

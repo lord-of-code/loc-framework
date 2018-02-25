@@ -21,8 +21,6 @@ public class LocKafkaProducer {
 
   private KafkaTemplate<byte[], byte[]> kafkaTemplate;
 
-  private ObjectMapper objectMapper;
-
   public ListenableFuture<SendResult<byte[], byte[]>> send(String topic, String message) {
     try {
       log.info("send message, topic is {}, message is {}", topic, message);

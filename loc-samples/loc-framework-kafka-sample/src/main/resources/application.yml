@@ -1,1 +1,11 @@
 server.port: 8081
+spring:
+  kafka:
+    producer:
+      bootstrap-servers: 127.0.0.1:9092
+    consumer:
+      bootstrap-servers: 127.0.0.1:9092
+      enable-auto-commit: false
+    listener:
+      ack-mode: record
+      concurrency: 3

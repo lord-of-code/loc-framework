@@ -1,4 +1,4 @@
-package com.loc.framework.okhttp.sample;
+package com.loc.framework.kafka.sample;
 
 import com.loc.framework.autoconfigure.springmvc.BasicResult;
 import lombok.extern.slf4j.Slf4j;
