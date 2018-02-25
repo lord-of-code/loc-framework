@@ -117,6 +117,14 @@ docker-compose run -d --service-ports mysql
 #### redis
 docker-compose run -d --service-ports redis
 
+#### zk
+docker-compose run -d --service-ports zoo1
+docker-compose run -d --service-ports zoo2
+docker-compose run -d --service-ports zoo3
+
+#### kafka
+docker-compose run -d --service-ports kafka (启动的时候会自动启动zk集群)
+
 ## 计划主要的starter
 - springmvc
 - logger
