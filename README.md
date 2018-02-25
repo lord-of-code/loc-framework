@@ -125,6 +125,7 @@ docker-compose run -d --service-ports redis
 - mybatis
 - okhttp
 - redis
+- kafka
 - keycloak
 - ...
 
@@ -330,6 +331,10 @@ spring:
         max-idle: 10
         max-wait: "1000"
 ```
+
+## kafka的starter的统一标准
+
+* 用kafka来作为主要的的消息队列
 
 ## keycloak的starter的统一标准
 
