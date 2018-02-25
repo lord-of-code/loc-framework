@@ -39,7 +39,7 @@ public class LocKafkaAutoConfiguration {
   @Bean
   @ConditionalOnMissingBean
   public LocKafkaProducer locKafkaProducer(KafkaTemplate<byte[], byte[]> kafkaTemplate) {
-    return new LocKafkaProducer(kafkaTemplate);
+    return new LocKafkaProducer(kafkaTemplate, objectMapper);
   }
 
   @Bean

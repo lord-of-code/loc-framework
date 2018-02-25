@@ -27,7 +27,7 @@ public interface KafkaUtils {
     sb.append("; partition is ").append(record.partition());
     sb.append("; offset is ").append(record.offset());
     if (record.headers() != null) {
-      sb.append(" header is ");
+      sb.append("; header is ");
       Arrays.stream(record.headers().toArray()).forEach(h -> sb.append(h.key()).append("=")
           .append(new String(h.value(), StandardCharsets.UTF_8)));
     }

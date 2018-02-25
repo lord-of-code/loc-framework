@@ -6,6 +6,6 @@ spring:
     consumer:
       bootstrap-servers: 127.0.0.1:9092
       enable-auto-commit: false
+      group-id: loc-kafka-sample
     listener:
       ack-mode: record
-      concurrency: 3

@@ -21,10 +21,12 @@ public class LocKafkaProducer {
 
   private KafkaTemplate<byte[], byte[]> kafkaTemplate;
 
-  public ListenableFuture<SendResult<byte[], byte[]>> send(String topic, String message) {
+  private ObjectMapper objectMapper;
+
+  public ListenableFuture<SendResult<byte[], byte[]>> send(String topic, Object message) {
     try {
-      log.info("send message, topic is {}, message is {}", topic, message);
-      ProducerRecord<byte[], byte[]> producerRecord = createRecord(topic, message);
+      log.info("send message, topic is {}, message is {}", topic, objectMapper.writeValueAsString(message));
+      ProducerRecord<byte[], byte[]> producerRecord = createRecord(topic, objectMapper.writeValueAsString(message));
       return kafkaTemplate.send(producerRecord);
     } catch (Exception e) {
       throw new LocKafkaProducerException(e.getMessage(), e);
