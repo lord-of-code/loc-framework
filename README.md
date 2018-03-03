@@ -11,7 +11,7 @@
 方便再进一步的简化Spring Boot和Spring Cloud的使用，进一步分离通用框架代码和业务代码的耦合
 
 ## 原因
-Spring Boot 2目前版本是m7版本, 很快rc1版本就要发布， 大概2018年3月左右会发布RELEASE版本
+Spring Boot 2目前版本是RELEASE版本
 对于之前使用Spring Boot 1.x的同学如果要进行升级到Spring Boot 2的话，需要改动的地方还是很多的
 
 ## Spring Boot 2主要改动
@@ -92,9 +92,9 @@ Spring Boot 2目前版本是m7版本, 很快rc1版本就要发布， 大概2018�
 
 ## 提供的核心依赖(SpringBoot和SpringCloud)和辅助依赖
 
-- SpringBoot 2.0 RC2
-- SpringCloud Release Finchley.M6
-- springfox-swagger2  2.7.0
+- SpringBoot 2.0.0.RELEASE
+- SpringCloud Release Finchley.M7
+- springfox-swagger2  2.8.0
 - log4jdbc 1.16
 - mybatis 3.4.5
 - mybatis-spring 1.3.1
