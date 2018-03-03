@@ -66,3 +66,17 @@ services:
       KAFKA_ZOOKEEPER_CONNECT: zoo1:2181,zoo2:2182,zoo3:2183
     volumes:
       - /tmp/data/kafka:/var/lib/kafka
+  elasticsearch:
+    image: elasticsearch:5.6.8
+    restart: always
+    container_name: elasticsearch
+    hostname: elasticsearch
+    environment:
+      - 'http.host=0.0.0.0'
+      - 'transport.host=127.0.0.1'
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    volumes:
+      - /tmp/data/elasticsearch:/var/lib/elasticsearch
