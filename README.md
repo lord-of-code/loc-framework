@@ -125,6 +125,9 @@ docker-compose run -d --service-ports zoo3
 #### kafka
 docker-compose run -d --service-ports kafka (启动的时候会自动启动zk集群)
 
+#### elasticsearch
+docker-compose run -d --service-ports elasticsearch
+
 ## 计划主要的starter
 - springmvc
 - logger
