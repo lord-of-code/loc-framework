@@ -99,6 +99,7 @@ Spring Boot 2目前版本是RELEASE版本
 - mybatis 3.4.5
 - mybatis-spring 1.3.1
 - mybatis-pagehelper 5.1.2
+- elasticjob 2.1.5
 
 ## demo程序
 
@@ -113,20 +114,29 @@ docker-compose up -d
 
 #### mysql
 docker-compose run -d --service-ports mysql
+端口为 3306
 
 #### redis
 docker-compose run -d --service-ports redis
+端口为 6379
 
 #### zk
 docker-compose run -d --service-ports zoo1
 docker-compose run -d --service-ports zoo2
 docker-compose run -d --service-ports zoo3
+端口为 2181, 2182, 2183
 
 #### kafka
 docker-compose run -d --service-ports kafka (启动的时候会自动启动zk集群)
+端口为 9092
 
 #### elasticsearch
 docker-compose run -d --service-ports elasticsearch
+端口为 9200
+
+#### elasticjob
+docker-compose run -d --service-ports elasticjob
+端口为 8899 用户名 root 密码 root123
 
 ## 计划主要的starter
 - springmvc
@@ -331,6 +341,11 @@ spring:
 * 统一定义k,v 使用 byte[] 数组来定义消息的key和value，方便统一处理
 * 给producer在发送的时候头里面加上了messageid、trace相关的信息、记录发送的日志和进行json转换，
 * 给consumer在处理消息错误的时候记录日志，处理完消息的时候记录日志，接受到消息的时候记录日志、处理trace的信息，对消息进行json转换等功能
+
+## elasticjob的starter的统一标准
+
+* 利用elasticjob组件完成分布式的调度
+* 提供注解来进行任务的配置
 
 ## keycloak的starter的统一标准
 

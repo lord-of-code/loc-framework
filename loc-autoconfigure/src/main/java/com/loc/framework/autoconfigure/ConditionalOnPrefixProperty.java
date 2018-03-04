@@ -14,7 +14,7 @@ import org.springframework.context.annotation.Conditional;
 @Conditional(PrefixPropertyCondition.class)
 public @interface ConditionalOnPrefixProperty {
 
-  String prefix();
+  String prefix() default "";
 
   Class<?> value();
 
