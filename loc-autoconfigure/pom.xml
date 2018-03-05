@@ -146,6 +146,11 @@
       <artifactId>elastic-job-lite-spring</artifactId>
       <optional>true</optional>
     </dependency>
+    <dependency>
+      <groupId>org.apache.curator</groupId>
+      <artifactId>curator-client</artifactId>
+      <optional>true</optional>
+    </dependency>
 
     <!--for test-->
     <dependency>

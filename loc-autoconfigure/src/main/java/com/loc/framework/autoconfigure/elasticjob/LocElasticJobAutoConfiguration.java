@@ -31,6 +31,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.FatalBeanException;
+import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
+import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
@@ -55,7 +57,7 @@ import org.springframework.lang.Nullable;
 @AutoConfigureAfter(LocDataSourceAutoConfiguration.class)
 @Slf4j
 public class LocElasticJobAutoConfiguration implements
-    ApplicationContextAware, EnvironmentAware {
+    ApplicationContextAware, EnvironmentAware, BeanFactoryPostProcessor {
 
   private ApplicationContext applicationContext;
 
@@ -64,7 +66,15 @@ public class LocElasticJobAutoConfiguration implements
   @Override
   public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
     this.applicationContext = applicationContext;
+  }
 
+  @Override
+  public void postProcessBeanFactory(
+      ConfigurableListableBeanFactory configurableListableBeanFactory) throws BeansException {
+    init();
+  }
+
+  private void init() {
     LocElasticJobProperties elasticJobProperties = resolverJobProperties();
 
     String[] jobs = this.applicationContext.getBeanNamesForAnnotation(LocElasticJob.class);
@@ -107,7 +117,7 @@ public class LocElasticJobAutoConfiguration implements
           argList.add(liteJobConfiguration);
           Optional.ofNullable(jobEventConfiguration).ifPresent(argList::add);
           argList.add(elasticJobListeners);
-          createSpringJobScheduler(elasticJob.getClass().getSimpleName() + "jobScheduler", argList);
+          createSpringJobScheduler(elasticJob.getClass().getSimpleName() + "JobScheduler", argList);
         } catch (Exception e) {
           throw Throwables.propagate(e);
         }
@@ -126,7 +136,6 @@ public class LocElasticJobAutoConfiguration implements
       builder.addConstructorArgValue(arg);
     }
     beanDefinitionRegistry.registerBeanDefinition(name, builder.getBeanDefinition());
-    this.applicationContext.getBean(name, SpringJobScheduler.class);
     log.info("spring bean name {} register success ", name);
   }
 
@@ -218,4 +227,5 @@ public class LocElasticJobAutoConfiguration implements
       throw new FatalBeanException("Could not bind job properties", e);
     }
   }
+
 }

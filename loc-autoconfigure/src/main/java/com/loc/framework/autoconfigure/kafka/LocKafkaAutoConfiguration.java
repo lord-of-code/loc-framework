@@ -38,7 +38,9 @@ public class LocKafkaAutoConfiguration {
 
   @Bean
   @ConditionalOnMissingBean
-  public LocKafkaProducer locKafkaProducer(KafkaTemplate<byte[], byte[]> kafkaTemplate) {
+  public LocKafkaProducer locKafkaProducer(KafkaTemplate<byte[], byte[]> kafkaTemplate,
+      LocLoggingProducerListener<byte[], byte[]> locLoggingProducerListener) {
+    kafkaTemplate.setProducerListener(locLoggingProducerListener);
     return new LocKafkaProducer(kafkaTemplate, objectMapper);
   }
 
@@ -72,7 +74,7 @@ public class LocKafkaAutoConfiguration {
       Object value = consumerRecord.value();
       String message;
       if (value instanceof byte[]) {
-        message = KafkaUtils.getMessage((byte[])value, "consumer filter", consumerRecord);
+        message = KafkaUtils.getMessage((byte[]) value, "consumer filter", consumerRecord);
         log.info(message);
         return false;
       } else {
