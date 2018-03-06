@@ -62,8 +62,7 @@ services:
       - zoo2
       - zoo3
     environment:
-#      KAFKA_ADVERTISED_HOST_NAME: 192.168.1.106   #根据不同的情况进行修改成本机地址
-      KAFKA_ADVERTISED_HOST_NAME: 10.10.21.147   #根据不同的情况进行修改成本机地址
+      KAFKA_ADVERTISED_HOST_NAME: 192.168.1.106   #根据不同的情况进行修改成本机地址
       KAFKA_ZOOKEEPER_CONNECT: zoo1:2181,zoo2:2182,zoo3:2183
     volumes:
       - /tmp/data/kafka:/var/lib/kafka
@@ -81,6 +80,19 @@ services:
       - "9300:9300"
     volumes:
       - /tmp/data/elasticsearch:/var/lib/elasticsearch
+  zipkin:
+    image: openzipkin/zipkin
+    restart: always
+    container_name: zipkin
+    hostname: zipkin
+    environment:
+      - STORAGE_TYPE=elasticsearch
+      - ES_HOSTS=elasticsearch
+    ports:
+      - "9411:9411"
+    depends_on:
+      - elasticsearch
+      - kafka
   elasticjob:
     image: registry.cn-hangzhou.aliyuncs.com/szss/elastic-job-lite-console:2.1.5
     restart: always

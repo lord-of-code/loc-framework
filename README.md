@@ -138,6 +138,10 @@ docker-compose run -d --service-ports elasticsearch
 docker-compose run -d --service-ports elasticjob
 端口为 8899 用户名 root 密码 root123
 
+#### zipkin-server
+docker-compose run -d --service-ports zipkin
+端口为 9411
+
 ## 计划主要的starter
 - springmvc
 - logger
