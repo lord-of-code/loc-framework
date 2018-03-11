@@ -92,6 +92,24 @@
       "type": "java.lang.Boolean",
       "description": "Set this to false to not trim extra blank lines in the logged SQL (by default, when more than one blank line in a row occurs, the contiguous lines are collapsed to just one blank line.)",
       "defaultValue": true
+    },
+    {
+      "name": "loc.web.springmvc.log.enabled",
+      "type": "java.lang.Boolean",
+      "description": "spring mvc log enabled",
+      "defaultValue": true
+    },
+    {
+      "name": "loc.web.springmvc.swagger2.enabled",
+      "type": "java.lang.Boolean",
+      "description": "swagger doc enabled",
+      "defaultValue": true
+    },
+    {
+      "name": "loc.tomcat.shutdown.enabled",
+      "type": "java.lang.Boolean",
+      "description": "tomcat graceful shutdown enabled",
+      "defaultValue": true
     }
   ]
 }

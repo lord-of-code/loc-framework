@@ -185,6 +185,16 @@ docker-compose run -d --service-ports zipkin
 5xx  服务端错误，如Runtime Exception错误 等
 ```
 
+* 请求日志的相关配置
+```
+loc.web.springmvc.log:
+  enabled: true     # 是否启用access log
+  includeRequest: true    # 记录请求
+  includeResponse: false  # 记录返回
+  requestBodyLength: 8192  # 记录日志请求长度
+  responseBodyLength: 8192 # 记录日志返回长度
+```
+
 * 加入了swagger的相关配置
 ```
 loc.web.springmvc.swagger2.enabled: true  #默认为true, 表示是否开启swagger功能
