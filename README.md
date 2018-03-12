@@ -93,7 +93,7 @@ Spring Boot 2目前版本是RELEASE版本
 ## 提供的核心依赖(SpringBoot和SpringCloud)和辅助依赖
 
 - SpringBoot 2.0.0.RELEASE
-- SpringCloud Release Finchley.M7
+- SpringCloud Release Finchley.M8
 - springfox-swagger2  2.8.0
 - log4jdbc 1.16
 - mybatis 3.4.5
@@ -141,6 +141,10 @@ docker-compose run -d --service-ports elasticjob
 #### zipkin-server
 docker-compose run -d --service-ports zipkin
 端口为 9411
+
+#### spring-cloud的基础环境搭建步骤
+[loc-cloud-component](https://github.com/lord-of-code/loc-cloud-component)
+里面主要包括了`eureka`、`config`、`sleuth`、`zuul`等基础组件的docker部署
 
 ## 计划主要的starter
 - springmvc
@@ -259,12 +263,12 @@ loc.dataSource:
 * 可以通过logging级别来控制数据库日志的输出
 ```
 logging.level.jdbc:
-  sqlonly: OFF
+  sqlonly: 'OFF'
   sqltiming: INFO
-  audit: OFF
-  resultset: OFF
-  resultsettable: OFF
-  connection: OFF
+  audit: 'OFF'
+  resultset: 'OFF'
+  resultsettable: 'OFF'
+  connection: 'OFF'
 ```
 
 ## mybatis的starter的统一标准
