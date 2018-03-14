@@ -11,8 +11,8 @@ services:
     volumes:
       - /tmp/data/mysql:/var/lib/mysql
     environment:
-      - MYSQL_DATABASE=loc_db
-      - MYSQL_ROOT_PASSWORD=password
+      - 'MYSQL_DATABASE=loc_db'
+      - 'MYSQL_ROOT_PASSWORD=password'
   redis:
     image: redis:4.0.5-alpine
     container_name: redis
@@ -105,3 +105,21 @@ services:
       - 'GUEST_PASSWORD=guest123'
     ports:
       - "8899:8899"
+  keycloak:
+    image: jboss/keycloak:3.4.3.Final
+    restart: always
+    container_name: keycloak
+    environment:
+        - 'DB_VENDOR=MYSQL'
+        - 'MYSQL_PORT_3306_TCP_ADDR=mysql'
+        - 'MYSQL_PORT_3306_TCP_PORT=3306'
+        - 'MYSQL_DATABASE=loc_db'             #mysql数据库
+        - 'MYSQL_USER=root'                   #mysql用户名
+        - 'MYSQL_PASSWORD=password'           #mysql密码
+        - 'KEYCLOAK_USER=loc'                 #keycloak用户名
+        - 'KEYCLOAK_PASSWORD=loc_password'    #keycloak密码
+        - 'TZ=Asia/Shanghai'
+    ports:
+        - "7777:8080"
+    depends_on:
+        - mysql

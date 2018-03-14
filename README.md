@@ -142,6 +142,10 @@ docker-compose run -d --service-ports elasticjob
 docker-compose run -d --service-ports zipkin
 端口为 9411
 
+#### keycloak
+docker-compose run -d --service-ports keycloak
+端口为 7777
+
 #### spring-cloud的基础环境搭建步骤
 [loc-cloud-component](https://github.com/lord-of-code/loc-cloud-component)
 里面主要包括了`eureka`、`config`、`sleuth`、`zuul`等基础组件的docker部署
