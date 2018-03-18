@@ -1,0 +1,15 @@
+version: "3"
+
+services:
+  mysql:
+    image: mysql:5.7.21
+    container_name: mysql
+    hostname: mysql
+    restart: always
+    ports:
+      - 3306:3306
+    volumes:
+      - /tmp/data/mysql:/var/lib/mysql
+    environment:
+      - 'MYSQL_DATABASE=loc_db'
+      - 'MYSQL_ROOT_PASSWORD=password'

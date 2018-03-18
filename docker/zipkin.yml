@@ -1,0 +1,73 @@
+version: "3"
+
+services:
+  zipkin:
+    image: openzipkin/zipkin
+    restart: always
+    container_name: zipkin
+    hostname: zipkin
+    environment:
+      - STORAGE_TYPE=elasticsearch
+      - ES_HOSTS=elasticsearch
+    ports:
+      - "9411:9411"
+    depends_on:
+      - elasticsearch
+      - kafka
+  elasticsearch:
+    image: elasticsearch:5.6.8
+    restart: always
+    container_name: elasticsearch
+    hostname: elasticsearch
+    environment:
+      - 'http.host=0.0.0.0'
+      - 'transport.host=127.0.0.1'
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    volumes:
+      - /tmp/data/elasticsearch:/var/lib/elasticsearch
+  kafka:
+    image: wurstmeister/kafka:1.0.0
+    restart: always
+    container_name: kafka
+    hostname: kafka
+    ports:
+      - "9092:9092"
+    depends_on:
+      - zoo1
+      - zoo2
+      - zoo3
+    environment:
+      KAFKA_ADVERTISED_HOST_NAME: 192.168.1.106   #根据不同的情况进行修改成本机地址
+      KAFKA_ZOOKEEPER_CONNECT: zoo1:2181,zoo2:2182,zoo3:2183
+    volumes:
+      - /tmp/data/kafka:/var/lib/kafka
+  zoo1:
+    image: zookeeper
+    restart: always
+    hostname: zoo1
+    ports:
+      - 2181:2181
+    environment:
+      ZOO_MY_ID: 1
+      ZOO_SERVERS: server.1=0.0.0.0:2888:3888 server.2=zoo2:2888:3888 server.3=zoo3:2888:3888
+  zoo2:
+    image: zookeeper
+    restart: always
+    hostname: zoo2
+    ports:
+      - 2182:2181
+    environment:
+      ZOO_MY_ID: 2
+      ZOO_SERVERS: server.1=zoo1:2888:3888 server.2=0.0.0.0:2888:3888 server.3=zoo3:2888:3888
+  zoo3:
+    image: zookeeper
+    restart: always
+    hostname: zoo3
+    ports:
+      - 2183:2181
+    environment:
+      ZOO_MY_ID: 3
+      ZOO_SERVERS: server.1=zoo1:2888:3888 server.2=zoo2:2888:3888 server.3=0.0.0.0:2888:3888

@@ -109,41 +109,36 @@ Spring Boot 2目前版本是RELEASE版本
 
 ## 利用docker-compose启动基础依赖
 
-### 全部启动
-docker-compose up -d
-
 #### mysql
-docker-compose run -d --service-ports mysql
+docker-compose -f docker/mysql.yml up -d
 端口为 3306
 
 #### redis
-docker-compose run -d --service-ports redis
+docker-compose -f docker/redis.yml up -d
 端口为 6379
 
 #### zk
-docker-compose run -d --service-ports zoo1
-docker-compose run -d --service-ports zoo2
-docker-compose run -d --service-ports zoo3
+docker-compose -f docker/zk.yml up -d
 端口为 2181, 2182, 2183
 
 #### kafka
-docker-compose run -d --service-ports kafka (启动的时候会自动启动zk集群)
+docker-compose -f docker/kafka.yml up -d
 端口为 9092
 
 #### elasticsearch
-docker-compose run -d --service-ports elasticsearch
+docker-compose -f docker/es.yml up -d
 端口为 9200
 
 #### elasticjob
-docker-compose run -d --service-ports elasticjob
+docker-compose -f docker/job.yml up -d
 端口为 8899 用户名 root 密码 root123
 
 #### zipkin-server
-docker-compose run -d --service-ports zipkin
+docker-compose -f docker/zipkin.yml up -d
 端口为 9411
 
 #### keycloak
-docker-compose run -d --service-ports keycloak
+docker-compose -f docker/keycloak.yml up -d
 端口为 7777
 
 #### spring-cloud的基础环境搭建步骤
