@@ -19,6 +19,11 @@
       <groupId>com.github.lord-of-code</groupId>
       <artifactId>loc-framework-autoconfigure</artifactId>
     </dependency>
+
+    <dependency>
+      <groupId>io.sentry</groupId>
+      <artifactId>sentry-logback</artifactId>
+    </dependency>
   </dependencies>
 
 </project>

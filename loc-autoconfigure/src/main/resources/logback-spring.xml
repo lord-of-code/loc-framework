@@ -27,9 +27,16 @@
     </rollingPolicy>
   </appender>
 
+  <appender name="SENTRY" class="io.sentry.logback.SentryAppender">
+    <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+      <level>ERROR</level>
+    </filter>
+  </appender>
+
   <root level="INFO">
     <appender-ref ref="CONSOLE"/>
     <appender-ref ref="FILE"/>
+    <appender-ref ref="SENTRY" />
   </root>
 
 </configuration>

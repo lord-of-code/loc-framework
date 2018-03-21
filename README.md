@@ -364,6 +364,14 @@ spring:
 * 利用elasticjob组件完成分布式的调度
 * 提供注解来进行任务的配置
 
+## sentry的配置
+* 利用sentry来发送error日志
+* 通过配置sentry.dsn来指定dsn的地址，然后对于error日志会直接发送到sentry的服务端
+
+```
+sentry.dsn: http://public:private@host:port/1
+```
+
 ## keycloak的starter的统一标准
 
 * keycloak是一个开源的统一认证的安全框架, 现在由于框架是基于springboot2进行开发的，keycloak-springboot-adapter的是基于springboot 1.x的版本来做的，所以出现了无法使用的情况，这个问题已经上报给keycloak官方了

@@ -9,5 +9,8 @@ loc.web.springmvc.swagger2:
     base-package: com.loc.framework.springmvc.sample
 #  enabled: false
 
-
 loc.tomcat.shutdown.wait-time: 20
+
+#sentry:
+#  dsn: https://public:private@host:port/1
+

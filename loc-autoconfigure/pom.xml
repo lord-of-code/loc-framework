@@ -152,6 +152,13 @@
       <optional>true</optional>
     </dependency>
 
+    <!--sentry-->
+    <dependency>
+      <groupId>io.sentry</groupId>
+      <artifactId>sentry-logback</artifactId>
+      <optional>true</optional>
+    </dependency>
+
     <!--for test-->
     <dependency>
       <groupId>org.springframework.boot</groupId>

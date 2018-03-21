@@ -110,6 +110,11 @@
       "type": "java.lang.Boolean",
       "description": "tomcat graceful shutdown enabled",
       "defaultValue": true
+    },
+    {
+      "name": "sentry.dsn",
+      "type": "java.lang.String",
+      "description": "Sentry server project dsn"
     }
   ]
 }

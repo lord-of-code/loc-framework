@@ -13,3 +13,7 @@ com.loc.framework.autoconfigure.keycloak.LocNoSecurityAutoConfiguration,\
 com.loc.framework.autoconfigure.redis.RedisCacheAutoConfiguration,\
 com.loc.framework.autoconfigure.kafka.LocKafkaAutoConfiguration,\
 com.loc.framework.autoconfigure.elasticjob.LocElasticJobAutoConfiguration
+
+
+org.springframework.context.ApplicationListener=\
+com.loc.framework.autoconfigure.logback.SentryInitListener
