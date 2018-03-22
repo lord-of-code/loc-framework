@@ -1,0 +1,79 @@
+version: '3'
+
+services:
+  redis:
+    image: redis:4.0.5-alpine
+    container_name: redis
+    command: ["redis-server", "--appendonly", "yes"]
+    hostname: redis
+    restart: always
+    ports:
+      - 6379:6379
+    volumes:
+      - /tmp/data/redis:/data
+
+  postgres:
+    image: postgres
+    container_name: postgres
+    hostname: postgres
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: sentry
+      POSTGRES_PASSWORD: sentry
+      POSTGRES_DB: sentry
+    volumes:
+     - /tmp/data/postgresql:/var/lib/postgresql/data
+
+  sentry:
+    image: sentry:8.22
+    container_name: sentry
+    hostname: sentry
+    restart: always
+    links:
+     - redis
+     - postgres
+    ports:
+     - 9000:9000
+    environment:
+      SENTRY_SECRET_KEY: 'l6v90b=9+rnom!9=^zvodafzj)(dh4ze^z9(4*y3&1xa^efc^#'
+      SENTRY_POSTGRES_HOST: postgres
+      SENTRY_POSTGRES_PORT: 5432
+      SENTRY_DB_USER: sentry
+      SENTRY_DB_PASSWORD: sentry
+      SENTRY_REDIS_HOST: redis
+
+  cron:
+    image: sentry:8.22
+    container_name: sentry-cron
+    hostname: sentry-cron
+    restart: always
+    links:
+     - redis
+     - postgres
+    command: "sentry run cron"
+    environment:
+      SENTRY_SECRET_KEY: 'l6v90b=9+rnom!9=^zvodafzj)(dh4ze^z9(4*y3&1xa^efc^#'
+      SENTRY_POSTGRES_HOST: postgres
+      SENTRY_POSTGRES_PORT: 5432
+      SENTRY_DB_USER: sentry
+      SENTRY_DB_PASSWORD: sentry
+      SENTRY_REDIS_HOST: redis
+
+  worker:
+    image: sentry:8.22
+    container_name: sentry-work
+    hostname: sentry-work
+    restart: always
+    links:
+     - redis
+     - postgres
+    command: "sentry run worker"
+    environment:
+      SENTRY_SECRET_KEY: 'l6v90b=9+rnom!9=^zvodafzj)(dh4ze^z9(4*y3&1xa^efc^#'
+      SENTRY_POSTGRES_HOST: postgres
+      SENTRY_POSTGRES_PORT: 5432
+      SENTRY_DB_USER: sentry
+      SENTRY_DB_PASSWORD: sentry
+      SENTRY_REDIS_HOST: redis

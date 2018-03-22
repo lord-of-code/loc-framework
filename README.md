@@ -141,6 +141,11 @@ docker-compose -f docker/zipkin.yml up -d
 docker-compose -f docker/keycloak.yml up -d
 端口为 7777
 
+#### sentry
+docker-compose -f docker/sentry.yml run --rm web upgrade #升级数据库
+docker-compose -f docker/sentry.yml up -d   #启动sentry服务
+端口为 9000
+
 #### spring-cloud的基础环境搭建步骤
 [loc-cloud-component](https://github.com/lord-of-code/loc-cloud-component)
 里面主要包括了`eureka`、`config`、`sleuth`、`zuul`等基础组件的docker部署

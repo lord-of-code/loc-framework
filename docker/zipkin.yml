@@ -27,7 +27,7 @@ services:
       - "9200:9200"
       - "9300:9300"
     volumes:
-      - /tmp/data/elasticsearch:/var/lib/elasticsearch
+      - /tmp/data/elasticsearch:/usr/share/elasticsearch/data
   kafka:
     image: wurstmeister/kafka:1.0.0
     restart: always
