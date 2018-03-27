@@ -203,6 +203,24 @@ loc.web.springmvc.log:
   responseBodyLength: 8192 # 记录日志返回长度
 ```
 
+* 加入了cors跨域相关的Filter的配置
+```
+loc.web.springmvc.cors.enabled: false   #默认为false，默认不开启cors跨域的配置, 如果要开启，改成true
+loc.web.springmvc.cors.allowOrigins:    #默认为*, 可以通过数组进行添加
+  - ...
+  - ...
+loc.web.springmvc.cors.allowHeaders:    #默认为*, 可以通过数组进行添加
+  - ...
+  - ...
+loc.web.springmvc.cors.allowMethods:    #默认为*, 可以通过数组进行添加
+  - GET
+  - POST
+  - ...
+loc.web.springmvc.cors.allowExposeHeaders:   #默认没有，可以通过数组进行添加
+  - ...
+  - ...
+```
+
 * 加入了swagger的相关配置
 ```
 loc.web.springmvc.swagger2.enabled: true  #默认为true, 表示是否开启swagger功能
