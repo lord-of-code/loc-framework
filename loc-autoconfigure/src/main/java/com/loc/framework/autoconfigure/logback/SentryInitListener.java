@@ -1,6 +1,8 @@
 package com.loc.framework.autoconfigure.logback;
 
 import com.google.common.base.Strings;
+import com.loc.framework.autoconfigure.utils.HostUtil;
+import com.loc.framework.autoconfigure.utils.LocConstants;
 import io.sentry.Sentry;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
@@ -19,22 +21,28 @@ public class SentryInitListener implements ApplicationListener<ApplicationPrepar
 
   @Override
   public void onApplicationEvent(ApplicationPreparedEvent event) {
-    if(SENTRY_DSN != null) {
-      return ;
+    if (SENTRY_DSN != null) {
+      return;
     }
-    ConfigurableEnvironment configurableEnvironment = event.getApplicationContext().getEnvironment();
+    ConfigurableEnvironment configurableEnvironment = event.getApplicationContext()
+        .getEnvironment();
     SENTRY_DSN = configurableEnvironment.getProperty("sentry.dsn");
-    if(Strings.isNullOrEmpty(SENTRY_DSN)) {
-      return ;
+    if (Strings.isNullOrEmpty(SENTRY_DSN)) {
+      return;
     }
     String activeProfile = configurableEnvironment.getProperty("spring.profiles.active", "local");
-    if(activeProfile.equals("test") || activeProfile.equals("pro")) {
+    if (activeProfile.equals(LocConstants.TEST_PROFILE) || activeProfile
+        .equals(LocConstants.PRO_PROFILE)) {
       String appName = configurableEnvironment.getProperty("spring.application.name", "unknown");
-      SENTRY_DSN = SENTRY_DSN + "?environment=" + activeProfile + "&servername=" + appName;
+      SENTRY_DSN =
+          SENTRY_DSN + "?environment=" + activeProfile + "&servername=" + appName + "&extra=hostIp:"
+              + HostUtil.HOST_IP;
       Sentry.init(SENTRY_DSN);
-      log.info("active profile is pro, init sentry success, sentry dsn is {}", SENTRY_DSN);
+      log.info("hostIp is {}, active profile is {}, init sentry success, sentry dsn is {}",
+          HostUtil.HOST_IP, activeProfile, SENTRY_DSN);
     } else {
-      log.info("active profile is {}, not init sentry", activeProfile);
+      log.info("hostIp is {}, active profile is {}, not init sentry", HostUtil.HOST_IP,
+          activeProfile);
     }
   }
 }
