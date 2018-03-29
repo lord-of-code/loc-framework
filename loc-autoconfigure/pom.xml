@@ -159,6 +159,20 @@
       <optional>true</optional>
     </dependency>
 
+    <!-- actuator -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-actuator</artifactId>
+      <optional>true</optional>
+    </dependency>
+
+    <!-- micrometer -->
+    <dependency>
+      <groupId>io.micrometer</groupId>
+      <artifactId>micrometer-registry-influx</artifactId>
+      <optional>true</optional>
+    </dependency>
+
     <!--for test-->
     <dependency>
       <groupId>org.springframework.boot</groupId>
