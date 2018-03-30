@@ -163,6 +163,7 @@ docker-compose -f docker/influxdb.yml up -d   #启动influxdb和grafana
 - redis
 - kafka
 - keycloak
+- metrics
 - ...
 
 
@@ -402,6 +403,52 @@ sentry.dsn: http://public:private@host:port/1
 
 * keycloak是一个开源的统一认证的安全框架, 现在由于框架是基于springboot2进行开发的，keycloak-springboot-adapter的是基于springboot 1.x的版本来做的，所以出现了无法使用的情况，这个问题已经上报给keycloak官方了
 * 等待keycloak针对springboot2提供了adapter后会继续进行跟进此模块
+
+
+## metrics的starter的统一标准
+
+* SpringBoot2使用micro meter来作为连接底层的facade
+* 屏蔽掉了一些额外的没有意义的request path
+* 相关配置
+
+```
+management:
+  endpoints.web.exposure.include:
+    - metrics
+  metrics:
+    export:                               #上报配置
+      influx:
+        uri: http://127.0.0.1:8086
+        step: 5s  //5秒上报一次
+        db: locMetrics
+    web:
+      server:
+        auto-time-requests: true
+        requests-metric-name: loc_http_requests
+      client:
+        max-uri-tags: 1000
+    binders:
+      logback:
+        enabled: false     #暂时关闭logback的metrics
+      uptime:
+        enabled: false     #暂时关闭uptime的metrics
+      files:
+        enabled: false     #暂时关闭files的metrics
+      integration:
+        enabled: false
+    enable:
+      tomcat: false        #暂时关闭tomcat的metrics
+      hikaricp: false      #暂时关闭hikaricp的metrics (SpringBoot2.0.0版本, 目前这个上报有bug，)
+      jdbc: false          #暂时关闭jdbc的metrics
+    distribution:
+      percentiles:
+        loc_http_requests:   #上报的分位数
+          - 0.5
+          - 0.75
+          - 0.9
+          - 0.95
+          - 0.99
+```
 
 ## eureka的starter的统一标准
 
