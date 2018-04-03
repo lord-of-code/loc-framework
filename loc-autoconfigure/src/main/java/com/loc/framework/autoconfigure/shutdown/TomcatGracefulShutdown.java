@@ -55,6 +55,7 @@ public class TomcatGracefulShutdown implements TomcatConnectorCustomizer,
             log.warn("Tomcat thread pool did not shut down gracefully within "
                 + tomcatGracefulShutdownProperties
                 .getWaitTime() + " second(s). Proceeding with force shutdown");
+            threadPoolExecutor.shutdownNow();
           } else {
             log.info("Tomcat thread pool is empty, we stop now");
           }
