@@ -4,6 +4,8 @@ spring:
   cache:
     redis:
       time-to-live: 100s
+    cache-names:
+      - redis-demo-1
   redis:
     host: 127.0.0.1
     port: 6379
@@ -17,4 +19,6 @@ spring:
 #      max-idle: 10
 
 
-
+#loc.customCache:
+#  redis-demo-1:
+#    time-to-live: 200s

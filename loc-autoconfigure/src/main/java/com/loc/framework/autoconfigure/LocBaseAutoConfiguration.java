@@ -24,6 +24,6 @@ public abstract class LocBaseAutoConfiguration {
   protected <T> T resolverSetting(Class<T> clazz, MutablePropertySources propertySources) {
     return new Binder(ConfigurationPropertySources.from(propertySources))
         .bind("loc", Bindable.of(clazz))
-        .orElseThrow(() -> new FatalBeanException("Could not bind DataSourceSettings properties"));
+        .orElseThrow(() -> new FatalBeanException("Could not bind properties"));
   }
 }

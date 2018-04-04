@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class RedisService {
 
-  @Cacheable(value = "redis_demo_1", key = "'loc'")
+  @Cacheable(value = "redis-demo-1", key = "'loc'")
   public RedisDemoInfo getDemoInfoLocKey(String name, int age) {
     return getRedisDemoInfo(name, age);
   }
