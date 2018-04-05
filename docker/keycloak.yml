@@ -1,10 +1,22 @@
 version: "3"
 
 services:
+  nginx:
+      image: loc/loc-nginx:latest
+      container_name: nginx
+      hostname: nginx
+      restart: always
+      ports:
+        - 8090:80
+      environment:
+        TARGET: http://keycloak:8080
+      depends_on:
+        - keycloak
   keycloak:
-    image: jboss/keycloak:3.4.3.Final
+    image: jboss/keycloak:4.0.0.Beta1
     restart: always
     container_name: keycloak
+    hostname: keycloak
     environment:
         - 'DB_VENDOR=MYSQL'
         - 'MYSQL_PORT_3306_TCP_ADDR=mysql'
