@@ -363,7 +363,10 @@ loc.okhttp:
 spring:
   cache:
     redis:
-      time-to-live: 100s
+      time-to-live: 100s  #默认的超时ttl时间
+      cache-names:
+        - redis-demo-1   #需要自定义的value的name
+        - redis-demo-2   #需要自定义的value的name
   redis:
     host: 127.0.0.1
     port: 6379
@@ -377,6 +380,12 @@ spring:
         max-active: 10
         max-idle: 10
         max-wait: "1000"
+
+loc.customCache:
+  redis-demo-1:         #对应上面 cache-names
+    time-to-live: 200s  #针对特殊的cache-name来进行自定义参数
+  redis-demo2-:
+    time-to-live: 300s  #针对特殊的cache-name来进行自定义参数
 ```
 
 ## kafka的starter的统一标准
