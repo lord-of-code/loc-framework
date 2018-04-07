@@ -12,7 +12,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 public class LocSpringMvcLogProperties {
 
   private boolean includeRequest = true;
-  private boolean includeResponse = false;
+  private boolean includeResponse = true;
 
   private int requestBodyLength = 8192;
   private int responseBodyLength = 8192;

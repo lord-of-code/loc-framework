@@ -202,7 +202,7 @@ docker-compose -f docker/influxdb.yml up -d   #启动influxdb和grafana
 loc.web.springmvc.log:
   enabled: true     # 是否启用access log
   includeRequest: true    # 记录请求
-  includeResponse: false  # 记录返回
+  includeResponse: true  # 记录返回
   requestBodyLength: 8192  # 记录日志请求长度
   responseBodyLength: 8192 # 记录日志返回长度
 ```
