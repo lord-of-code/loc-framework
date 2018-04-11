@@ -24,6 +24,7 @@
     <module>loc-framework-starter-parent</module>
     <module>loc-framework-springmvc-starter</module>
     <module>loc-framework-jdbc-starter</module>
+    <module>loc-framework-cloud-starter</module>
     <module>loc-framework-job-starter</module>
     <module>loc-framework-mybatis-starter</module>
     <module>loc-framework-okhttp-starter</module>

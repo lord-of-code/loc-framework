@@ -103,6 +103,11 @@
         <artifactId>loc-framework-shutdown-starter</artifactId>
         <version>${revision}</version>
       </dependency>
+      <dependency>
+        <groupId>com.github.lord-of-code</groupId>
+        <artifactId>loc-framework-cloud-starter</artifactId>
+        <version>${revision}</version>
+      </dependency>
 
 
       <!--swagger2-->

@@ -24,6 +24,12 @@ public enum BasicResultCode {
   SECURITY_ACCESS_DENIED(401_000, "未授权访问!"),
   SECURITY_AUTHENTICATION(401_001, "身份验证失败,请输入正确信息!"),
   SECURITY_TOKEN_NOT_ACTIVE(401_002, "TOKEN 已失效，刷新token或者重新获取!"),
+
+  HTTP_CONNECTION_TIME_OUT(402_000, "http请求连接超时"),
+  HTTP_HYSTRIX_TIME_OUT(402_001, "http读超时"),
+  HTTP_READ_TIME_OUT(402_002, "http读超时"),
+  HTTP_SERVICE_NOT_AVAILABLE(402_003, "内部系统调用服务不可用"),
+  HTTP_ERROR(402_004, "http内部调用服务错误"),
   ;
 
   private int code;

@@ -1,0 +1,1 @@
+provides: spring-cloud-starter-netflix-eureka-server, spring-cloud-starter-netflix-eureka-client, spring-cloud-starter-netflix-hystrix, spring-cloud-starter-openfeign, loc-framework-okhttp-starter
