@@ -29,6 +29,8 @@
     <module>loc-framework-okhttp-sample</module>
     <module>loc-framework-kafka-sample</module>
     <module>loc-framework-redis-sample</module>
+    <module>loc-framework-cloud-server-sample</module>
+    <module>loc-framework-cloud-client-sample</module>
   </modules>
 
 </project>
