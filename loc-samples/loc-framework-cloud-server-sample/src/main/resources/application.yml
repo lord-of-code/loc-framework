@@ -1,0 +1,16 @@
+server.port: 8881
+
+spring:
+  application:
+    name: cloud-server-sample
+
+eureka:
+  client:
+    registry-fetch-interval-seconds: 30
+    serviceUrl:
+      defaultZone: http://localhost:1314/eureka/,http://localhost:1315/eureka/
+  instance:
+    status-page-url-path: /swagger-ui.html
+    prefer-ip-address: true
+    lease-expiration-duration-in-seconds: 30
+    lease-renewal-interval-in-seconds: 10
