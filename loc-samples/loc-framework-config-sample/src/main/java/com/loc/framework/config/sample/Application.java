@@ -1,6 +1,7 @@
 package com.loc.framework.config.sample;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,9 +22,12 @@ public class Application {
   @RestController
   public static class GetController {
 
+    @Value("${loc.env}")
+    private String env;
+
     @GetMapping(value = "/hello")
     public String helloWorld() {
-      return "hello world";
+      return "hello world, env is {} " + env;
     }
   }
 }
