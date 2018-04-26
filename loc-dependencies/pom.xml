@@ -21,7 +21,7 @@
     <spring.boot.version>2.0.1.RELEASE</spring.boot.version>
     <spring.cloud.version>Finchley.RC1</spring.cloud.version>
 
-    <springfox-swagger2.version>2.8.0</springfox-swagger2.version>
+    <springfox-swagger2.version>2.9.0</springfox-swagger2.version>
     <log4jdbc.version>1.16</log4jdbc.version>
 
     <mybatis.version>3.4.6</mybatis.version>
