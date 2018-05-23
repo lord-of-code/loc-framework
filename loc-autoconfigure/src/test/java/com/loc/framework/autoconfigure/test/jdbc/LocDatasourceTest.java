@@ -3,7 +3,6 @@ package com.loc.framework.autoconfigure.test.jdbc;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.loc.framework.autoconfigure.jdbc.LocDataSourceAutoConfiguration;
-import com.loc.framework.autoconfigure.springmvc.BasicResult;
 import com.zaxxer.hikari.HikariDataSource;
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;

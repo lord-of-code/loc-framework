@@ -6,7 +6,6 @@ import com.loc.framework.autoconfigure.kafka.KafkaUtils;
 import com.loc.framework.autoconfigure.kafka.LocKafkaAutoConfiguration;
 import com.loc.framework.autoconfigure.kafka.LocKafkaProducer;
 import com.loc.framework.autoconfigure.kafka.LocLoggingProducerListener;
-import com.loc.framework.autoconfigure.springmvc.BasicResult;
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

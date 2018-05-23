@@ -1,9 +1,9 @@
 package com.loc.framework.cloud.client.sample.feign;
 
-import com.loc.framework.autoconfigure.springmvc.BasicResult;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.zalando.problem.Problem;
 
 
 /**
@@ -13,5 +13,5 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public interface FeignClientSample {
 
   @RequestMapping(value = "/server", method = RequestMethod.GET)
-  BasicResult<String> server();
+  Problem server();
 }

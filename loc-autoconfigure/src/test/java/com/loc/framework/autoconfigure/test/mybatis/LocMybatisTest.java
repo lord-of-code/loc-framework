@@ -6,7 +6,6 @@ import com.github.pagehelper.PageInterceptor;
 import com.loc.framework.autoconfigure.jdbc.LocDataSourceAutoConfiguration;
 import com.loc.framework.autoconfigure.mybatis.LocMybatisAutoConfiguration;
 import com.loc.framework.autoconfigure.mybatis.PageHelperAutoConfiguration;
-import com.loc.framework.autoconfigure.springmvc.BasicResult;
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

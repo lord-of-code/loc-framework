@@ -34,6 +34,8 @@
     <keycloak.version>3.4.3.Final</keycloak.version>
 
     <sentry.version>1.7.2</sentry.version>
+
+    <problem-spring-web.version>0.22.5</problem-spring-web.version>
   </properties>
 
   <dependencyManagement>
@@ -186,6 +188,13 @@
         <groupId>io.sentry</groupId>
         <artifactId>sentry-logback</artifactId>
         <version>${sentry.version}</version>
+      </dependency>
+
+      <!--problem-->
+      <dependency>
+        <groupId>org.zalando</groupId>
+        <artifactId>problem-spring-web</artifactId>
+        <version>${problem-spring-web.version}</version>
       </dependency>
 
       <!--keycloak-->

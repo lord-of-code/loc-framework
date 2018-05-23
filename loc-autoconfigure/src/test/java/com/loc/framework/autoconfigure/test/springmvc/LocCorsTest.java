@@ -2,7 +2,6 @@ package com.loc.framework.autoconfigure.test.springmvc;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.loc.framework.autoconfigure.springmvc.BasicResult;
 import com.loc.framework.autoconfigure.springmvc.LocSpringMvcAutoConfiguration;
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -24,6 +23,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.filter.CorsFilter;
+import org.zalando.problem.Problem;
 
 /**
  * Created on 2017/12/19.
@@ -60,8 +60,8 @@ public class LocCorsTest {
 
 
     @GetMapping(value = "/cors/get")
-    public BasicResult<String> corsGet() {
-      return BasicResult.fail(200_001, "显示的错误", "详细的错误");
+    public Problem corsGet() {
+      return Problem.builder().with("data", "ok").build();
     }
   }
 

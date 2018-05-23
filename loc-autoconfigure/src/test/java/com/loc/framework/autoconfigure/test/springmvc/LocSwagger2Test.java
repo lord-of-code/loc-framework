@@ -2,7 +2,6 @@ package com.loc.framework.autoconfigure.test.springmvc;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.loc.framework.autoconfigure.springmvc.BasicResult;
 import com.loc.framework.autoconfigure.swagger.Swagger2AutoConfiguration;
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;

@@ -1,7 +1,6 @@
 package com.loc.framework.jdbc.sample;
 
 import com.google.common.collect.Lists;
-import com.loc.framework.autoconfigure.springmvc.BasicResult;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.UUID;
@@ -20,6 +19,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.zalando.problem.Problem;
 
 /**
  * Created on 2017/12/29.
@@ -48,11 +48,11 @@ public class Application {
     }
 
     @PostMapping(value = "/addPerson")
-    public BasicResult addPerson(@RequestParam("name") String name, @RequestParam("age") int age)
+    public Problem addPerson(@RequestParam("name") String name, @RequestParam("age") int age)
         throws SQLException {
       String sql = "INSERT INTO person_table(name,age,address) VALUES (?, ?, ?)";
       firstJdbcTemplate.update(sql, name, age, UUID.randomUUID().toString());
-      return BasicResult.success();
+      return Problem.builder().build();
     }
 
     private Person firstJdbcTemplate(String name) throws SQLException {

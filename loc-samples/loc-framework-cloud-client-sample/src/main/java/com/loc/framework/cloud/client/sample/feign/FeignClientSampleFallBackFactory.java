@@ -1,9 +1,10 @@
 package com.loc.framework.cloud.client.sample.feign;
 
-import com.loc.framework.autoconfigure.springmvc.BasicResult;
 import feign.hystrix.FallbackFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+import org.zalando.problem.Problem;
+import org.zalando.problem.Status;
 
 /**
  * Created on 2018/4/17.
@@ -16,7 +17,7 @@ public class FeignClientSampleFallBackFactory implements FallbackFactory<FeignCl
   public FeignClientSample create(Throwable throwable) {
     return () -> {
       log.error("错误：{}", throwable.getMessage(), throwable);
-      return BasicResult.fail(500_100, "请求失败");
+      return Problem.valueOf(Status.BAD_REQUEST);
     };
   }
 }

@@ -4,7 +4,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import com.loc.framework.autoconfigure.okhttp.OkHttpAutoConfiguration;
 import com.loc.framework.autoconfigure.okhttp.OkHttpLoggingAutoConfiguration;
-import com.loc.framework.autoconfigure.springmvc.BasicResult;
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

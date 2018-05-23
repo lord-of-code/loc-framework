@@ -1,7 +1,6 @@
 package com.loc.framework.kafka.sample;
 
 import com.loc.framework.autoconfigure.kafka.LocKafkaProducer;
-import com.loc.framework.autoconfigure.springmvc.BasicResult;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,6 +13,7 @@ import org.springframework.kafka.support.SendResult;
 import org.springframework.util.concurrent.ListenableFuture;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.zalando.problem.Problem;
 
 /**
  * Created on 2017/12/29.
@@ -35,14 +35,14 @@ public class Application {
     private LocKafkaProducer kafkaProducer;
 
     @PostMapping(value = "/send")
-    public BasicResult send() {
+    public Problem send() {
       ListenableFuture<SendResult<byte[], byte[]>> future = kafkaProducer
           .send(TEST_TOPIC, DemoInfo.builder().name("loc").age(123).id(1000).score(100).build());
       future.addCallback(
           (result) -> log.info("send message success"),
           (e) -> log.error(e.getMessage(), e)
       );
-      return BasicResult.success("send message success");
+      return Problem.builder().with("data", "success").build();
     }
   }
 

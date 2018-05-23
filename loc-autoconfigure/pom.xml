@@ -173,6 +173,12 @@
       <optional>true</optional>
     </dependency>
 
+    <dependency>
+      <groupId>org.zalando</groupId>
+      <artifactId>problem-spring-web</artifactId>
+      <optional>true</optional>
+    </dependency>
+
     <!--cloud-->
     <dependency>
       <groupId>org.springframework.cloud</groupId>

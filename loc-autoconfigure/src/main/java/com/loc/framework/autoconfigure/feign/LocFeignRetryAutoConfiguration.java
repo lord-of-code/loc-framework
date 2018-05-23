@@ -1,7 +1,5 @@
 package com.loc.framework.autoconfigure.feign;
 
-import com.loc.framework.autoconfigure.springmvc.BasicResult;
-import com.loc.framework.autoconfigure.springmvc.BasicResultCode;
 import com.netflix.hystrix.exception.HystrixTimeoutException;
 import feign.Feign;
 import feign.Retryer;

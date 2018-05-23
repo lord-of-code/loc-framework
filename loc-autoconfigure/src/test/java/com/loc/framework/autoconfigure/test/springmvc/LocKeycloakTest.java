@@ -3,7 +3,6 @@ package com.loc.framework.autoconfigure.test.springmvc;
 import com.google.common.collect.Lists;
 import com.loc.framework.autoconfigure.keycloak.LocKeycloakAutoConfiguration;
 import com.loc.framework.autoconfigure.shutdown.TomcatGracefulShutdownAutoConfiguration;
-import com.loc.framework.autoconfigure.springmvc.BasicResult;
 import com.loc.framework.autoconfigure.springmvc.LocAdviceErrorAutoConfiguration;
 import com.loc.framework.autoconfigure.springmvc.LocSpringMvcAutoConfiguration;
 import com.loc.framework.autoconfigure.test.springmvc.LocKeycloakTest.KeycloakRequestController;
@@ -33,6 +32,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.zalando.problem.Problem;
 
 /**
  * Created on 2018/1/29.
@@ -76,12 +76,12 @@ public class LocKeycloakTest {
   public static class KeycloakRequestController {
 
     @GetMapping(value = "/keycloak/success")
-    public BasicResult<Demo> responseKeycloakSuccess() {
+    public Problem responseKeycloakSuccess() {
       Demo demo = new Demo();
       demo.setName("thomas");
       demo.setAge(30);
       demo.setAddress(Lists.newArrayList("a1", "a2"));
-      return BasicResult.success(demo);
+      return Problem.builder().with("data", demo).build();
     }
   }
 

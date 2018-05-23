@@ -1,7 +1,6 @@
 package com.loc.framework.okhttp.sample;
 
 import com.google.common.base.Strings;
-import com.loc.framework.autoconfigure.springmvc.BasicResult;
 import java.io.IOException;
 import java.util.Optional;
 import javax.annotation.Resource;
@@ -13,6 +12,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.zalando.problem.Problem;
 
 /**
  * Created on 2017/12/29.
@@ -32,7 +32,7 @@ public class Application {
     private OkHttpClient okHttpClient;
 
     @GetMapping(value = "/baidu")
-    public BasicResult getBaidu() {
+    public Problem getBaidu() {
       Request request = new Request.Builder().url("https://www.baidu.com")
           .get().build();
       try {
@@ -56,7 +56,7 @@ public class Application {
       } catch (IOException e) {
         log.error(e.getMessage(), e);
       }
-      return BasicResult.success();
+      return return Problem.builder().with("data", "success").build();;
     }
   }
 

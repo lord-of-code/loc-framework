@@ -10,9 +10,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.Lists;
 import com.loc.framework.autoconfigure.keycloak.LocNoSecurityAutoConfiguration;
 import com.loc.framework.autoconfigure.shutdown.TomcatGracefulShutdownAutoConfiguration;
-import com.loc.framework.autoconfigure.springmvc.BasicResult;
 import com.loc.framework.autoconfigure.springmvc.LocAdviceErrorAutoConfiguration;
-import com.loc.framework.autoconfigure.springmvc.LocCommonException;
 import com.loc.framework.autoconfigure.springmvc.LocSpringMvcAutoConfiguration;
 import com.loc.framework.autoconfigure.test.springmvc.LocBasicResultTest.BasicRequestController;
 import java.lang.annotation.Documented;
@@ -46,6 +44,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.zalando.problem.Problem;
 
 /**
  * Created on 2017/12/6.
@@ -245,76 +244,12 @@ public class LocBasicResultTest {
   public static class BasicRequestController {
 
     @GetMapping(value = "/basic/success")
-    public BasicResult<Demo> responseBasicSuccess() {
+    public Problem responseBasicSuccess() {
       Demo demo = new Demo();
       demo.setName("thomas");
       demo.setAge(29);
       demo.setAddress(Lists.newArrayList("a1", "a2"));
-      return BasicResult.success(demo);
-    }
-
-    @GetMapping(value = "/basic/fail")
-    public BasicResult<Demo> responseBasicFail() {
-      return BasicResult.fail(200_001, "显示的错误", "详细的错误");
-    }
-
-    @PostMapping(value = "/formParam/fail")
-    public BasicResult<Demo> responseParamFail(
-        @RequestParam @Size(min = 1, max = 10, message = "字符串长度在1~10之间") String name,
-        @NotNull(message = "age不能为空") @RequestParam int age,
-        @NotNull(message = "address不能为空") @Size(min = 1, max = 3, message = "数组长度范围在1～3之间") @RequestParam(required = false) List<String> address) {
-      Demo demo = new Demo();
-      demo.setName(name);
-      demo.setAge(age);
-      demo.setAddress(address);
-      return BasicResult.success(demo);
-    }
-
-    @PostMapping(value = "/bodyParam/fail")
-    public BasicResult<Demo> responseFormFail(
-        @Valid @RequestBody Demo demo) {
-      return BasicResult.success(demo);
-    }
-
-    @GetMapping(value = "/runtime/exception")
-    public BasicResult<Demo> runtimeException() {
-      throw new RuntimeException("运行时错误");
-    }
-
-    @GetMapping(value = "/runtime/outofsize")
-    public BasicResult<Demo> outOfSizeException() {
-      List<String> lists = Lists.newArrayList();
-      lists.get(10);
-      Demo demo = new Demo();
-      return BasicResult.success(demo);
-    }
-
-    @GetMapping(value = "/loc/exception1")
-    public BasicResult<Demo> locException1() {
-      throw new LocCommonException(200_001, "loc exception");
-    }
-
-    @GetMapping(value = "/loc/exception2")
-    public BasicResult<Demo> locException2() {
-      throw new LocCommonException(200_002, "loc exception",
-          new IllegalArgumentException("illegal argument"));
-    }
-
-    @GetMapping(value = "/loc/exception3")
-    public BasicResult<Demo> locException3() {
-      throw new LocCommonException(200_003, "loc exception", "detail exception msg");
-    }
-
-    @GetMapping(value = "/loc/exception4")
-    public BasicResult<Demo> locException4() {
-      throw new LocCommonException(200_004, "loc exception", "detail exception msg",
-          new IllegalArgumentException("illegal argument"));
-    }
-
-    @PostMapping(value = "/mediatype/exception", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    public BasicResult<Demo> mediaTypeException() {
-      Demo demo = new Demo();
-      return BasicResult.success(demo);
+      return Problem.builder().with("data", demo).build();
     }
   }
 
