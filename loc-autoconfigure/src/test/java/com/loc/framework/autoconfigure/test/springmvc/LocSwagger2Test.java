@@ -32,6 +32,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.zalando.problem.Problem;
 import springfox.documentation.service.ApiInfo;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
@@ -85,12 +86,12 @@ public class LocSwagger2Test {
 
 
     @GetMapping(value = "/swagger/get")
-    public BasicResult<Demo> swaggerGet() {
-      return BasicResult.fail(200_001, "显示的错误", "详细的错误");
+    public Problem swaggerGet() {
+      return Problem.builder().build();
     }
 
     @PostMapping(value = "/swagger/post1")
-    public BasicResult<Demo> swaggerPost1(
+    public Problem swaggerPost1(
         @RequestParam @Size(min = 1, max = 10, message = "字符串长度在1~10之间") String name,
         @NotNull(message = "age不能为空") @RequestParam int age,
         @NotNull(message = "address不能为空") @Size(min = 1, max = 3, message = "数组长度范围在1～3之间") @RequestParam(required = false) List<String> address) {
@@ -98,13 +99,13 @@ public class LocSwagger2Test {
       demo.setName(name);
       demo.setAge(age);
       demo.setAddress(address);
-      return BasicResult.success(demo);
+      return Problem.builder().with("data", demo).build();
     }
 
     @PostMapping(value = "/swagger/post2")
-    public BasicResult<Demo> swaggerPost2(
+    public Problem swaggerPost2(
         @Valid @RequestBody Demo demo) {
-      return BasicResult.success(demo);
+      return Problem.builder().with("data", demo).build();
     }
   }
 

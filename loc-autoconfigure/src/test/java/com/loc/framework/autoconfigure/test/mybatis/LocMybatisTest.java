@@ -28,6 +28,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.zalando.problem.Problem;
 
 /**
  * Created on 2017/12/26.
@@ -76,8 +77,8 @@ public class LocMybatisTest {
 
 
     @GetMapping(value = "/mybatis/get")
-    public BasicResult<String> mybatisGet() {
-      return BasicResult.success();
+    public Problem mybatisGet() {
+      return Problem.builder().build();
     }
   }
 

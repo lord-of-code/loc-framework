@@ -32,6 +32,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.zalando.problem.Problem;
 
 /**
  * Created on 2018/1/4.
@@ -119,8 +120,8 @@ public class LocKafkaTest {
   public static class KafkaController {
 
     @GetMapping(value = "/kafka/send")
-    public BasicResult<String> send() {
-      return BasicResult.success();
+    public Problem send() {
+      return Problem.builder().build();
     }
   }
 

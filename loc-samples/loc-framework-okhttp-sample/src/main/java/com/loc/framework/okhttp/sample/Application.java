@@ -56,7 +56,7 @@ public class Application {
       } catch (IOException e) {
         log.error(e.getMessage(), e);
       }
-      return return Problem.builder().with("data", "success").build();;
+      return Problem.builder().with("data", "success").build();
     }
   }
 

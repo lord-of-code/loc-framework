@@ -46,7 +46,6 @@ public class Application {
         String value = new String(bytes, StandardCharsets.UTF_8);
         String stringValue = stringRedisTemplate.opsForValue().get("stringKey");
         return Problem.builder().with("data", value + "_" + stringValue).build();
-        ;
       } else {
         return Problem.valueOf(Status.BAD_REQUEST);
       }

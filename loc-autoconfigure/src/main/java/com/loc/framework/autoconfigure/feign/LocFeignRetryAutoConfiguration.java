@@ -13,6 +13,8 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.cloud.openfeign.FeignClientsConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.zalando.problem.Problem;
+import org.zalando.problem.Status;
 
 /**
  * Created on 2018/4/11.
@@ -42,32 +44,27 @@ public class LocFeignRetryAutoConfiguration {
 
     private static final String LOAD_BALANCER_NOT_AVAILABLE = "not have available server";
 
-    public BasicResult handleException(Throwable e) {
+    public Problem handleException(Throwable e) {
       log.error("feign error: {}", e.getMessage(), e);
       if (e instanceof HystrixTimeoutException) {
-        return BasicResult.fail(BasicResultCode.HTTP_HYSTRIX_TIME_OUT.getCode(),
-            BasicResultCode.HTTP_HYSTRIX_TIME_OUT.getMsg());
+        return Problem.valueOf(Status.BAD_REQUEST, "Hystrix time out");
       } else if (e instanceof feign.RetryableException) {
         if (StringUtils.isNotBlank(e.getLocalizedMessage())) {
           if (e.getLocalizedMessage().contains("Connection refused")) {
-            return BasicResult.fail(BasicResultCode.HTTP_CONNECTION_TIME_OUT.getCode(),
-                BasicResultCode.HTTP_CONNECTION_TIME_OUT.getMsg());
+            return Problem.valueOf(Status.REQUEST_TIMEOUT, "Connect timed out");
           } else if (e.getLocalizedMessage().contains("Read timed out")) {
-            return BasicResult.fail(BasicResultCode.HTTP_HYSTRIX_TIME_OUT.getCode(),
-                BasicResultCode.HTTP_HYSTRIX_TIME_OUT.getMsg());
+            return Problem.valueOf(Status.REQUEST_TIMEOUT, "Read timed out");
           }
         }
       } else if (e instanceof RuntimeException) {
         if (e.getCause() != null) {
           String message = e.getCause().getLocalizedMessage();
           if (StringUtils.isNotBlank(message) && message.contains(LOAD_BALANCER_NOT_AVAILABLE)) {
-            return BasicResult.fail(BasicResultCode.HTTP_SERVICE_NOT_AVAILABLE.getCode(),
-                BasicResultCode.HTTP_SERVICE_NOT_AVAILABLE.getMsg());
+            return Problem.valueOf(Status.SERVICE_UNAVAILABLE, "Service not available");
           }
         }
       }
-      return BasicResult
-          .fail(BasicResultCode.HTTP_ERROR.getCode(), BasicResultCode.HTTP_ERROR.getMsg());
+      return Problem.valueOf(Status.BAD_REQUEST, "Http bad request");
     }
   }
 }

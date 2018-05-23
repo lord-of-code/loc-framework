@@ -24,6 +24,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.zalando.problem.Problem;
 
 /**
  * Created on 2018/1/4.
@@ -57,8 +58,8 @@ public class LocOkHttpTest {
   public static class OkHttpController {
 
     @GetMapping(value = "/okhttp/get")
-    public BasicResult<String> okhttpGet() {
-      return BasicResult.success();
+    public Problem okhttpGet() {
+      return Problem.builder().build();
     }
   }
 

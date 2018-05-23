@@ -25,6 +25,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.zalando.problem.Problem;
 
 /**
  * Created on 2017/12/26.
@@ -94,8 +95,8 @@ public class LocDatasourceTest {
 
 
     @GetMapping(value = "/jdbc/get")
-    public BasicResult<String> jdbcGet() {
-      return BasicResult.success();
+    public Problem jdbcGet() {
+      return Problem.builder().build();
     }
   }
 
