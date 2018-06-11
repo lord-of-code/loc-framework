@@ -1,7 +1,8 @@
 version: "3"
 
 services:
-  image: registry.cn-hangzhou.aliyuncs.com/szss/elastic-job-lite-console:2.1.5
+  job:
+    image: registry.cn-hangzhou.aliyuncs.com/szss/elastic-job-lite-console:2.1.5
     restart: always
     container_name: elasticjob
     hostname: elasticjob
