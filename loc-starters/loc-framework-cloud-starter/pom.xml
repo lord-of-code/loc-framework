@@ -36,6 +36,14 @@
       <artifactId>spring-cloud-starter-openfeign</artifactId>
     </dependency>
     <dependency>
+      <groupId>io.github.openfeign.form</groupId>
+      <artifactId>feign-form</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.github.openfeign.form</groupId>
+      <artifactId>feign-form-spring</artifactId>
+    </dependency>
+    <dependency>
       <groupId>com.github.lord-of-code</groupId>
       <artifactId>loc-framework-okhttp-starter</artifactId>
     </dependency>

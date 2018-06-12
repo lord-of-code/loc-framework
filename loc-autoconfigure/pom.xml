@@ -179,6 +179,18 @@
       <optional>true</optional>
     </dependency>
 
+    <!--feign form -->
+    <dependency>
+      <groupId>io.github.openfeign.form</groupId>
+      <artifactId>feign-form</artifactId>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>io.github.openfeign.form</groupId>
+      <artifactId>feign-form-spring</artifactId>
+      <optional>true</optional>
+    </dependency>
+
     <!--cloud-->
     <dependency>
       <groupId>org.springframework.cloud</groupId>

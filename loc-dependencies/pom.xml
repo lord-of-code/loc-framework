@@ -36,6 +36,8 @@
     <sentry.version>1.7.2</sentry.version>
 
     <problem-spring-web.version>0.22.5</problem-spring-web.version>
+
+    <feign-form.version>3.0.0</feign-form.version>
   </properties>
 
   <dependencyManagement>
@@ -195,6 +197,18 @@
         <groupId>org.zalando</groupId>
         <artifactId>problem-spring-web</artifactId>
         <version>${problem-spring-web.version}</version>
+      </dependency>
+
+      <!--feign form -->
+      <dependency>
+        <groupId>io.github.openfeign.form</groupId>
+        <artifactId>feign-form</artifactId>
+        <version>${feign-form.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.github.openfeign.form</groupId>
+        <artifactId>feign-form-spring</artifactId>
+        <version>${feign-form.version}</version>
       </dependency>
 
       <!--keycloak-->
