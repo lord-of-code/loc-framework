@@ -9,5 +9,5 @@ ${AnsiColor.BRIGHT_YELLOW}
 ${AnsiColor.BRIGHT_RED}
 Spring Boot Version: ${spring-boot.version}${spring-boot.formatted-version}
 Spring Cloud Release Version : Finchley.RC2
-Loc Framework Version: 0.2.0-SNAPSHOT
+Loc Framework Version: 1.0.0-SNAPSHOT
 ${AnsiColor.WHITE}
