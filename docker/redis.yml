@@ -10,4 +10,4 @@ services:
     ports:
       - 6379:6379
     volumes:
-      - /tmp/data/redis:/data
+      - /tmp/data/loc-redis:/data

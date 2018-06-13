@@ -11,7 +11,7 @@ services:
       - ES_HOSTS=elasticsearch
     ports:
       - "9411:9411"
-    depends_on:
+    depends_on:   #启动需要依赖的基础服务
       - elasticsearch
       - kafka
   elasticsearch:
@@ -35,7 +35,7 @@ services:
     hostname: kafka
     ports:
       - "9092:9092"
-    depends_on:
+    depends_on:  #kafka需要依赖于zk集群
       - zoo1
       - zoo2
       - zoo3

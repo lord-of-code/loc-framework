@@ -1,15 +1,18 @@
-version: "3"
+version: "3"  #docker-composer执行的语法版本
 
 services:
-  mysql:
-    image: mysql:5.7.21
-    container_name: mysql
-    hostname: mysql
-    restart: always
+  mysql:   #一个具体的服务名称
+    image: mysql:5.7.21   #image的具体版本号
+    container_name: mysql  #启动之后容器的名称 
+    hostname: mysql   #启动所在的linux机器的hostname
+    restart: always   #如果docker容器由于一些问题挂掉的化，docker-composer会自动把容器给启动起来
     ports:
-      - 3306:3306
+      - 3306:3306    #端口映射，在linux容器里面3306， 我们要在本地进行访问，要映射到本地机器的端口
     volumes:
-      - /tmp/data/mysql:/var/lib/mysql
-    environment:
+      - /tmp/data/mysql:/var/lib/mysql   #硬盘的挂载，相当于把容器里面的linux路径(/var/lib/mysql)映射到本机的磁盘(/tmp/data/mysql)
+    environment:    #java程序启动命令里面的参数
       - 'MYSQL_DATABASE=loc_db'
       - 'MYSQL_ROOT_PASSWORD=password'
+
+
+#  通过docker，所有的基础环境都进行了统一(linux,mysql,端口,用户名,密码,保存的路径)
