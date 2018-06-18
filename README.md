@@ -9,6 +9,7 @@
 ## 目的
 通过一定的规则来统一编写各种依赖的Starter，方便在企业内部进行规则的统一，配置的统一，用法的统一，监控的统一，部署的统一
 方便再进一步的简化Spring Boot和Spring Cloud的使用，进一步分离通用框架代码和业务代码的耦合
+屏蔽一部分的基础内容，减少业务开发对底层基建处技术的了解， 更加专注于业务的开发
 
 ## 原因
 Spring Boot 2目前版本是RELEASE版本
@@ -23,13 +24,18 @@ Spring Boot 2目前版本是RELEASE版本
 6. metrics方面，Spring Boot 2引入了Micrometer，来统一metrics的规范，使得开发人员更好的理解和使用metrics的模块，而不需要关心对接的具体存储是什么东西。
 7. Spring Boot 2 同时也加入了 对于OAuth 2.0的支持， 使得开发人员更加友好的和方面的使用spring-security来完成权限模块的开发
 
+## 通过统一变量来管理框架版本
+1. Maven 版本必须是 3.5.2 +
+2. pom.xml里面的properties的变量名称必须是revision
+3. 必须配合使用`flatten-maven-plugin`插件
+
 ## 使用方式
 - pom.xml中加入parent
 ```
 <parent>
     <groupId>com.github.lord-of-code</groupId>
     <artifactId>loc-framework-starter-parent</artifactId>
-    <version>0.1.1.RELEASE</version>
+    <version>1.0.0-SNAPSHOT</version>
     <relativePath/>
   </parent>
 ```

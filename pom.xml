@@ -69,6 +69,7 @@
       </modules>
       <build>
         <plugins>
+          <!--主要用于把整个loc-framework的项目进行deploy到中央仓库-->
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-gpg-plugin</artifactId>
