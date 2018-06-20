@@ -98,8 +98,8 @@ Spring Boot 2目前版本是RELEASE版本
 
 ## 提供的核心依赖(SpringBoot和SpringCloud)和辅助依赖
 
-- SpringBoot 2.0.2.RELEASE
-- SpringCloud Release Finchley.RC2
+- SpringBoot 2.0.3.RELEASE
+- SpringCloud Release Finchley.RELEASE
 - springfox-swagger2  2.8.0
 - log4jdbc 1.16
 - mybatis 3.4.5
