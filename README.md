@@ -106,7 +106,8 @@ Spring Boot 2目前版本是RELEASE版本
 - mybatis-spring 1.3.1
 - mybatis-pagehelper 5.1.2
 - elasticjob 2.1.5
-- problem 0.22.5
+- problem 0.23.0
+- logbook 1.8.1
 
 ## demo程序
 

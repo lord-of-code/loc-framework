@@ -173,11 +173,20 @@
       <optional>true</optional>
     </dependency>
 
+    <!--problem-->
     <dependency>
       <groupId>org.zalando</groupId>
       <artifactId>problem-spring-web</artifactId>
       <optional>true</optional>
     </dependency>
+
+    <!--logbook-->
+    <dependency>
+      <groupId>org.zalando</groupId>
+      <artifactId>logbook-spring-boot-starter</artifactId>
+      <optional>true</optional>
+    </dependency>
+
 
     <!--feign form -->
     <dependency>

@@ -13,6 +13,8 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 import org.springframework.web.filter.OncePerRequestFilter;
+import org.zalando.problem.ProblemModule;
+import org.zalando.problem.validation.ConstraintViolationProblemModule;
 
 
 /**
@@ -20,7 +22,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
  */
 @Configuration
 @ConditionalOnWebApplication(type = Type.SERVLET)
-@EnableConfigurationProperties({LocSpringMvcLogProperties.class, LocSpringMvcCorsProperties.class})
+@EnableConfigurationProperties(LocSpringMvcCorsProperties.class)
 public class LocSpringMvcAutoConfiguration {
 
   @Bean
@@ -48,9 +50,12 @@ public class LocSpringMvcAutoConfiguration {
   }
 
   @Bean
-  @ConditionalOnClass(OncePerRequestFilter.class)
-  @ConditionalOnProperty(value = "loc.web.springmvc.log.enabled", matchIfMissing = true)
-  public Filter accessLogFilter(LocSpringMvcLogProperties locSpringMvcProperties) {
-    return new LocAccessLogFilter(locSpringMvcProperties);
+  public ProblemModule problemModule() {
+    return new ProblemModule();
+  }
+
+  @Bean
+  public ConstraintViolationProblemModule constraintViolationProblemModule() {
+    return new ConstraintViolationProblemModule();
   }
 }

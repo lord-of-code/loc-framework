@@ -10,4 +10,6 @@ public interface LocConstants {
   String TEST_PROFILE = "test";
   String PRO_PROFILE = "pro";
 
+  int SUCCESS_RESPONSE_CODE = 0;
+
 }
