@@ -1,5 +1,7 @@
 package com.loc.framework.autoconfigure.keycloak;
 
+import static org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication.Type.SERVLET;
+
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Map;
@@ -42,7 +44,7 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
 /**
  * Created on 2018/1/27.
  */
-@ConditionalOnWebApplication
+@ConditionalOnWebApplication(type = SERVLET)
 @ConditionalOnProperty(value = "keycloak.enabled", matchIfMissing = true)
 @ConditionalOnClass({KeycloakWebSecurityConfigurerAdapter.class, BaseRealmConfig.class})
 @KeycloakConfiguration
