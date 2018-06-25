@@ -96,6 +96,13 @@
       <optional>true</optional>
     </dependency>
 
+    <!--jpa-->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-data-jpa</artifactId>
+      <optional>true</optional>
+    </dependency>
+
     <!--for okhttp3 starter-->
     <dependency>
       <groupId>com.squareup.okhttp3</groupId>

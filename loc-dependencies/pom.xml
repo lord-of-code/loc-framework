@@ -86,6 +86,11 @@
       </dependency>
       <dependency>
         <groupId>com.github.lord-of-code</groupId>
+        <artifactId>loc-framework-jpa-starter</artifactId>
+        <version>${revision}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.github.lord-of-code</groupId>
         <artifactId>loc-framework-redis-starter</artifactId>
         <version>${revision}</version>
       </dependency>
