@@ -13,12 +13,14 @@ import com.loc.framework.autoconfigure.shutdown.TomcatGracefulShutdownAutoConfig
 import com.loc.framework.autoconfigure.springmvc.LocAdviceErrorAutoConfiguration;
 import com.loc.framework.autoconfigure.springmvc.LocSpringMvcAutoConfiguration;
 import com.loc.framework.autoconfigure.test.springmvc.LocBasicResultTest.BasicRequestController;
+import com.loc.framework.autoconfigure.utils.ProblemUtil;
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 import java.util.List;
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -39,6 +41,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.zalando.problem.Problem;
 
@@ -48,7 +53,8 @@ import org.zalando.problem.Problem;
 @RunWith(SpringRunner.class)
 @WebMvcTest(value = BasicRequestController.class)
 @TestPropertySource(properties = {
-    "loc.tomcat.shutdown.waitTime = 5"
+    "loc.tomcat.shutdown.waitTime = 5",
+    "spring.http.encoding.force = true"
 })
 @DirtiesContext
 public class LocBasicResultTest {
@@ -60,11 +66,11 @@ public class LocBasicResultTest {
   public void getSuccess() throws Exception {
     this.mockMvc
         .perform(get("/basic/success").accept("application/json"))
-        .andExpect(jsonPath("$.code").value("200000"))
-        .andExpect(jsonPath("$.msg").value("success"))
-        .andExpect(jsonPath("$.detailMsg").value("success"))
+        .andExpect(jsonPath("$.code").value("0"))
+        .andExpect(jsonPath("$.detail").value("success"))
         .andExpect(jsonPath("$.data.name").value("thomas"))
         .andExpect(jsonPath("$.data.age").value("29"))
+        .andExpect(jsonPath("$.data.address").value(Lists.newArrayList("a1", "a2")))
         .andExpect(status().isOk()).andReturn();
   }
 
@@ -72,15 +78,15 @@ public class LocBasicResultTest {
   public void getFail() throws Exception {
     this.mockMvc
         .perform(get("/basic/fail").accept("application/json"))
-        .andExpect(jsonPath("$.code").value("200001"))
-        .andExpect(jsonPath("$.msg").value("显示的错误"))
-        .andExpect(jsonPath("$.detailMsg").value("详细的错误"))
+        .andExpect(jsonPath("$.code").value("10000"))
+        .andExpect(jsonPath("$.detail").value("显示的错误"))
+        .andExpect(jsonPath("$.data").doesNotExist())
         .andExpect(status().isOk()).andReturn();
   }
 
   @Test
   public void getBodyFail() throws Exception {
-    LocAccessLogTest.Demo demo = new LocAccessLogTest.Demo();
+    Demo demo = new Demo();
     demo.setName("thomas12141536");
     demo.setAge(29);
     List<String> address = Lists.newArrayList();
@@ -96,9 +102,11 @@ public class LocBasicResultTest {
         .content(content)
         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
         .andDo(print())
-        .andExpect(jsonPath("$.code").value("400000"))
-        .andExpect(jsonPath("$.msg").value("method argument miss error"))
-        .andExpect(jsonPath("$.detailMsg").value("name长度范围是1～10"))
+        .andExpect(jsonPath("$.title").value("Constraint Violation"))
+        .andExpect(jsonPath("$.status").value(400))
+        .andExpect(
+            jsonPath("$.violations[0].message").value("name length must between in 1 and 10"))
+        .andExpect(jsonPath("$.violations[0].field").value("name"))
         .andExpect(status().is4xxClientError()).andReturn();
 
     demo.setName("thomas");
@@ -108,9 +116,10 @@ public class LocBasicResultTest {
         .content(content)
         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
         .andDo(print())
-        .andExpect(jsonPath("$.code").value("400000"))
-        .andExpect(jsonPath("$.msg").value("method argument miss error"))
-        .andExpect(jsonPath("$.detailMsg").value("address不能为空"))
+        .andExpect(jsonPath("$.title").value("Constraint Violation"))
+        .andExpect(jsonPath("$.status").value(400))
+        .andExpect(jsonPath("$.violations[0].message").value("address must not empty"))
+        .andExpect(jsonPath("$.violations[0].field").value("address"))
         .andExpect(status().is4xxClientError()).andReturn();
   }
 
@@ -122,9 +131,9 @@ public class LocBasicResultTest {
             .param("address", "a1", "a2")
             .contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE))
         .andDo(print())
-        .andExpect(jsonPath("$.code").value("400000"))
-        .andExpect(jsonPath("$.msg").value("method argument miss error"))
-        .andExpect(jsonPath("$.detailMsg").value("参数name未传"))
+        .andExpect(jsonPath("$.title").value("Bad Request"))
+        .andExpect(jsonPath("$.status").value(400))
+        .andExpect(jsonPath("$.detail").value("Required String parameter 'name' is not present"))
         .andExpect(status().is4xxClientError()).andReturn();
 
     this.mockMvc
@@ -134,9 +143,11 @@ public class LocBasicResultTest {
             .param("address", "a1", "a2")
             .contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE))
         .andDo(print())
-        .andExpect(jsonPath("$.code").value("400001"))
-        .andExpect(jsonPath("$.msg").value("method argument validate error"))
-        .andExpect(jsonPath("$.detailMsg").value("responseParamFail.name:字符串长度在1~10之间"))
+        .andExpect(jsonPath("$.title").value("Constraint Violation"))
+        .andExpect(jsonPath("$.status").value(400))
+        .andExpect(
+            jsonPath("$.violations[0].message").value("name length must between in 1 and 10"))
+        .andExpect(jsonPath("$.violations[0].field").value("responseParamFail.name"))
         .andExpect(status().is4xxClientError()).andReturn();
 
     this.mockMvc
@@ -146,93 +157,13 @@ public class LocBasicResultTest {
             .param("address", "a1", "a2", "a3", "a4", "a5", "a6")
             .contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE))
         .andDo(print())
-        .andExpect(jsonPath("$.code").value("400001"))
-        .andExpect(jsonPath("$.msg").value("method argument validate error"))
-        .andExpect(jsonPath("$.detailMsg").value("responseParamFail.address:数组长度范围在1～3之间"))
+        .andExpect(jsonPath("$.title").value("Constraint Violation"))
+        .andExpect(jsonPath("$.status").value(400))
+        .andExpect(
+            jsonPath("$.violations[0].message").value("array length must between in 1 and 3"))
+        .andExpect(jsonPath("$.violations[0].field").value("responseParamFail.address"))
         .andExpect(status().is4xxClientError()).andReturn();
   }
-
-  @Test
-  public void methodExceptionTest() throws Exception {
-    this.mockMvc
-        .perform(post("/runtime/exception"))
-        .andDo(print())
-        .andExpect(jsonPath("$.code").value("405000"))
-        .andExpect(jsonPath("$.msg").value("method not allow error"))
-        .andExpect(jsonPath("$.detailMsg").value("Request method 'POST' not supported"))
-        .andExpect(status().is4xxClientError()).andReturn();
-  }
-
-
-  @Test
-  public void runtimeExceptionTest() throws Exception {
-    this.mockMvc
-        .perform(get("/runtime/exception").accept("application/json"))
-        .andDo(print())
-        .andExpect(jsonPath("$.code").value("500001"))
-        .andExpect(jsonPath("$.msg").value("runtime exception"))
-        .andExpect(jsonPath("$.detailMsg").value("运行时错误"))
-        .andExpect(status().is5xxServerError()).andReturn();
-  }
-
-  @Test
-  public void outOfSizeTest() throws Exception {
-    this.mockMvc
-        .perform(get("/runtime/outofsize").accept("application/json"))
-        .andDo(print())
-        .andExpect(jsonPath("$.code").value("500001"))
-        .andExpect(jsonPath("$.msg").value("runtime exception"))
-        .andExpect(jsonPath("$.detailMsg").value("Index: 10, Size: 0"))
-        .andExpect(status().is5xxServerError()).andReturn();
-  }
-
-
-  @Test
-  public void locExceptionTest() throws Exception {
-    this.mockMvc
-        .perform(get("/loc/exception1").accept("application/json"))
-        .andDo(print())
-        .andExpect(jsonPath("$.code").value("200001"))
-        .andExpect(jsonPath("$.msg").value("loc exception"))
-        .andExpect(jsonPath("$.detailMsg").value("loc exception"))
-        .andExpect(status().isOk()).andReturn();
-
-    this.mockMvc
-        .perform(get("/loc/exception2").accept("application/json"))
-        .andDo(print())
-        .andExpect(jsonPath("$.code").value("200002"))
-        .andExpect(jsonPath("$.msg").value("loc exception"))
-        .andExpect(jsonPath("$.detailMsg").value("loc exception"))
-        .andExpect(status().isOk()).andReturn();
-
-    this.mockMvc
-        .perform(get("/loc/exception3").accept("application/json"))
-        .andDo(print())
-        .andExpect(jsonPath("$.code").value("200003"))
-        .andExpect(jsonPath("$.msg").value("loc exception"))
-        .andExpect(jsonPath("$.detailMsg").value("detail exception msg"))
-        .andExpect(status().isOk()).andReturn();
-
-    this.mockMvc
-        .perform(get("/loc/exception4").accept("application/json"))
-        .andDo(print())
-        .andExpect(jsonPath("$.code").value("200004"))
-        .andExpect(jsonPath("$.msg").value("loc exception"))
-        .andExpect(jsonPath("$.detailMsg").value("detail exception msg"))
-        .andExpect(status().isOk()).andReturn();
-  }
-
-  @Test
-  public void mediaTypeExceptionTest() throws Exception {
-    this.mockMvc
-        .perform(post("/mediatype/exception").contentType(MediaType.APPLICATION_JSON_UTF8))
-        .andDo(print())
-        .andExpect(jsonPath("$.code").value("415000"))
-        .andExpect(jsonPath("$.msg").value("unsupported media type error"))
-        .andExpect(jsonPath("$.detailMsg").value("媒体类型application/json;charset=UTF-8错误"))
-        .andExpect(status().is4xxClientError()).andReturn();
-  }
-
 
   @MinimalWebConfiguration
   @RestController
@@ -245,7 +176,30 @@ public class LocBasicResultTest {
       demo.setName("thomas");
       demo.setAge(29);
       demo.setAddress(Lists.newArrayList("a1", "a2"));
-      return Problem.builder().with("data", demo).build();
+      return ProblemUtil.createProblem(demo);
+    }
+
+    @GetMapping(value = "/basic/fail")
+    public Problem responseBasicFail() {
+      return ProblemUtil.createProblem("显示的错误", 10000);
+    }
+
+    @PostMapping(value = "/bodyParam/fail", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public Problem responseFormFail(
+        @Valid @RequestBody Demo demo) {
+      return ProblemUtil.createProblem(demo);
+    }
+
+    @PostMapping(value = "/formParam/fail")
+    public Problem responseParamFail(
+        @RequestParam @Size(min = 1, max = 10, message = "name length must between in 1 and 10") String name,
+        @NotNull(message = "age must not empty") @RequestParam int age,
+        @NotNull(message = "address must not empty") @Size(min = 1, max = 3, message = "array length must between in 1 and 3") @RequestParam(required = false) List<String> address) {
+      Demo demo = new Demo();
+      demo.setName(name);
+      demo.setAge(age);
+      demo.setAddress(address);
+      return ProblemUtil.createProblem(demo);
     }
   }
 
@@ -255,10 +209,10 @@ public class LocBasicResultTest {
   @AllArgsConstructor
   public static class Demo {
 
-    @Size(min = 1, max = 10, message = "name长度范围是1～10")
+    @Size(min = 1, max = 10, message = "name length must between in 1 and 10")
     private String name;
     private int age;
-    @NotNull(message = "address不能为空")
+    @NotNull(message = "address must not empty")
     private List<String> address;
   }
 
