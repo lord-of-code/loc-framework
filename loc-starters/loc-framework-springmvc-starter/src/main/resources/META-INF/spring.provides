@@ -1,1 +1,1 @@
-provides: spring-boot-starter-web, springfox-swagger2, loc-framework-shutdown-starter
+provides: spring-boot-starter-web, springfox-swagger2, loc-framework-shutdown-starter, problem, logbook
