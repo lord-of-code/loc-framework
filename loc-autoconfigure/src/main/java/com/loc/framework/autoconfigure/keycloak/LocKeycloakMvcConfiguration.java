@@ -2,12 +2,14 @@ package com.loc.framework.autoconfigure.keycloak;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
  * Created on 2018/1/27.
  */
+@Configuration
 public class LocKeycloakMvcConfiguration implements WebMvcConfigurer {
 
   private final ObjectMapper objectMapper;
@@ -23,6 +25,6 @@ public class LocKeycloakMvcConfiguration implements WebMvcConfigurer {
 
   @Override
   public void addInterceptors(InterceptorRegistry registry) {
-    registry.addWebRequestInterceptor(locKeycloakLogInterceptor());
+    registry.addInterceptor(locKeycloakLogInterceptor());
   }
 }

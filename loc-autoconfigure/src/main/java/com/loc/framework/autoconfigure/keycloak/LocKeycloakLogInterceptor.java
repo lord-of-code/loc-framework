@@ -1,16 +1,23 @@
 package com.loc.framework.autoconfigure.keycloak;
 
+import com.google.common.collect.Sets;
 import java.time.LocalDateTime;
+import java.util.Set;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
-import org.keycloak.KeycloakPrincipal;
-import org.springframework.lang.Nullable;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.context.request.WebRequest;
-import org.springframework.web.context.request.WebRequestInterceptor;
+import org.keycloak.adapters.springsecurity.facade.SimpleHttpFacade;
+import org.keycloak.representations.AccessToken;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.servlet.HandlerInterceptor;
+import org.springframework.web.servlet.ModelAndView;
 
 @Slf4j
-public class LocKeycloakLogInterceptor implements WebRequestInterceptor {
+public class LocKeycloakLogInterceptor implements HandlerInterceptor {
+
+
+  @Value("${keycloak.resource}")
+  private String keycloakResource;
 
   private final LocKeycloakLog locKeycloakLog;
 
@@ -19,23 +26,36 @@ public class LocKeycloakLogInterceptor implements WebRequestInterceptor {
   }
 
   @Override
-  public void preHandle(WebRequest request) throws Exception {
-    log.info("preHandle: request is {}", request);
+  public boolean preHandle(HttpServletRequest httpServletRequest,
+      HttpServletResponse httpServletResponse, Object handler) {
+    try {
+      SimpleHttpFacade simpleHttpFacade = new SimpleHttpFacade(httpServletRequest,
+          httpServletResponse);
+      AccessToken accessToken = simpleHttpFacade.getSecurityContext().getToken();
+      Set<String> resourceRoles = Sets.newHashSet();
+      AccessToken.Access resourceAccess = accessToken.getResourceAccess()
+          .getOrDefault(keycloakResource, null);
+      if (resourceAccess != null) {
+        resourceRoles = resourceAccess.getRoles();
+      }
+      locKeycloakLog.save(
+          LocKeycloakLog.LocKeycloakLogDomain.builder()
+              .param(httpServletRequest.getParameterMap().toString())
+              .createDateTime(LocalDateTime.now()).url(httpServletRequest.getContextPath())
+              .userName(accessToken.getName()).email(accessToken.getEmail())
+              .realmRoles(accessToken.getRealmAccess().getRoles())
+              .resourceRoles(resourceRoles).build());
+      log.info("keycloak security pre handle {} ({}) in {} access {}", accessToken.getName(),
+          accessToken.getEmail(), accessToken.getAudience()[0], httpServletRequest.getRequestURI());
+    } catch (Exception e) {
+      log.warn(e.getMessage(), e);
+    }
+    return true;
   }
 
   @Override
-  public void postHandle(WebRequest request, @Nullable ModelMap model) throws Exception {
-    log.info("postHanlder: request is {}", request);
-  }
-
-  @Override
-  public void afterCompletion(WebRequest request, @Nullable Exception ex) throws Exception {
-    log.info("afterCompletion: request is {}", request);
-    KeycloakPrincipal keycloakPrincipal = (KeycloakPrincipal) SecurityContextHolder
-        .getContext().getAuthentication().getPrincipal();
-    locKeycloakLog.save(
-        LocKeycloakLog.LocKeycloakLogDomain.builder().param(request.getParameterMap().toString())
-            .createDateTime(LocalDateTime.now()).url(request.getContextPath())
-            .userName(keycloakPrincipal.getName()).build());
+  public void postHandle(HttpServletRequest httpServletRequest,
+      HttpServletResponse httpServletResponse, Object handler, ModelAndView modelAndView) {
+    log.info("keycloak security post handle status {}", httpServletResponse.getStatus());
   }
 }

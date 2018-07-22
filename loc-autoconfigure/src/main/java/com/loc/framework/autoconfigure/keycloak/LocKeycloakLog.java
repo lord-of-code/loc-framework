@@ -3,6 +3,7 @@ package com.loc.framework.autoconfigure.keycloak;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.time.LocalDateTime;
+import java.util.Set;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -29,6 +30,9 @@ class LocKeycloakLog {
   static class LocKeycloakLogDomain {
 
     private String userName;
+    private String email;
+    private Set<String> realmRoles;
+    private Set<String> resourceRoles;
     private String url;
     private String param;
     private LocalDateTime createDateTime;
