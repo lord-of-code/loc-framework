@@ -41,7 +41,7 @@ public class LocSpringMvcAutoConfiguration {
         .ifPresent(origins -> origins.forEach(corsConfiguration::addAllowedOrigin));
     Optional.ofNullable(locSpringMvcCorsProperties.getAllowHeaders())
         .ifPresent(headers -> headers.forEach(corsConfiguration::addAllowedHeader));
-    Optional.ofNullable(locSpringMvcCorsProperties.getAllowOrigins())
+    Optional.ofNullable(locSpringMvcCorsProperties.getAllowMethods())
         .ifPresent(methods -> methods.forEach(corsConfiguration::addAllowedMethod));
     Optional.ofNullable(locSpringMvcCorsProperties.getAllowExposeHeaders())
         .ifPresent(headers -> headers.forEach(corsConfiguration::addExposedHeader));
