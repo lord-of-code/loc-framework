@@ -24,6 +24,7 @@ import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.access.method.MethodSecurityMetadataSource;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -120,12 +121,12 @@ public class LocKeycloakAutoConfiguration extends KeycloakWebSecurityConfigurerA
 
   @Override
   protected void configure(final HttpSecurity http) throws Exception {
-    http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+    http.cors().and().csrf().disable().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
         .sessionAuthenticationStrategy(sessionAuthenticationStrategy()).and()
         .addFilterBefore(keycloakPreAuthActionsFilter(), LogoutFilter.class)
         .addFilterBefore(keycloakAuthenticationProcessingFilter(), X509AuthenticationFilter.class)
         .exceptionHandling().authenticationEntryPoint(authenticationEntryPoint()).and()
-        .authorizeRequests()
+        .authorizeRequests().antMatchers(HttpMethod.OPTIONS).permitAll()
         .requestMatchers(CorsUtils::isCorsRequest).permitAll()
         .antMatchers(urlPath()).authenticated() //允许被登录用户访问
         .anyRequest().permitAll();
