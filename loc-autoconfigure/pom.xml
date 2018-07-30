@@ -95,6 +95,11 @@
       <artifactId>pagehelper</artifactId>
       <optional>true</optional>
     </dependency>
+    <dependency>
+      <groupId>com.baomidou</groupId>
+      <artifactId>mybatis-plus</artifactId>
+      <optional>true</optional>
+    </dependency>
 
     <!--jpa-->
     <dependency>

@@ -1,5 +1,6 @@
 package com.loc.framework.autoconfigure.mybatis;
 
+import com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean;
 import com.google.common.base.Strings;
 import com.loc.framework.autoconfigure.ConditionalOnPrefixProperty;
 import com.loc.framework.autoconfigure.LocBaseAutoConfiguration;
@@ -86,7 +87,7 @@ public class LocMybatisAutoConfiguration extends LocBaseAutoConfiguration implem
     DataSource dataSource = configurableListableBeanFactory
         .getBean(prefixName + "Ds", DataSource.class);
 
-    SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
+    MybatisSqlSessionFactoryBean sqlSessionFactoryBean = new MybatisSqlSessionFactoryBean();
     sqlSessionFactoryBean.setDataSource(dataSource);
     sqlSessionFactoryBean.setVfs(LocSpringBootVFS.class);
     Optional.ofNullable(mybatisProperties.getConfigLocation()).map(this.resourceLoader::getResource)

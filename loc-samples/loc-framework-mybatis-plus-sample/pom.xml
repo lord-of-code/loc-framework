@@ -5,43 +5,32 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>com.github.lord-of-code</groupId>
-    <artifactId>loc-framework-starters</artifactId>
+    <artifactId>loc-framework-samples</artifactId>
     <version>${revision}</version>
   </parent>
 
-  <artifactId>loc-framework-mybatis-starter</artifactId>
+  <artifactId>loc-framework-mybatis-plus-sample</artifactId>
+
   <properties>
     <main.basedir>${basedir}/../..</main.basedir>
   </properties>
-
   <dependencies>
     <dependency>
       <groupId>com.github.lord-of-code</groupId>
-      <artifactId>loc-framework-autoconfigure</artifactId>
+      <artifactId>loc-framework-springmvc-starter</artifactId>
     </dependency>
-
     <dependency>
       <groupId>com.github.lord-of-code</groupId>
-      <artifactId>loc-framework-jdbc-starter</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>org.mybatis</groupId>
-      <artifactId>mybatis</artifactId>
+      <artifactId>loc-framework-mybatis-starter</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.mybatis</groupId>
-      <artifactId>mybatis-spring</artifactId>
+      <groupId>mysql</groupId>
+      <artifactId>mysql-connector-java</artifactId>
     </dependency>
     <dependency>
-      <groupId>com.github.pagehelper</groupId>
-      <artifactId>pagehelper</artifactId>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-test</artifactId>
     </dependency>
-    <dependency>
-      <groupId>com.baomidou</groupId>
-      <artifactId>mybatis-plus</artifactId>
-    </dependency>
-
   </dependencies>
 
 </project>

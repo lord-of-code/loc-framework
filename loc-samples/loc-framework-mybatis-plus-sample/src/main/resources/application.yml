@@ -1,0 +1,48 @@
+server.port: 8081
+
+spring.h2.console.enabled: true
+
+loc:
+  dataSource:
+    readDemo:
+      username: root
+      password:
+      jdbcUrl: jdbc:mysql://127.0.0.1:3306/test
+      jdbcPool:
+        maximumPoolSize: 30
+        driverClassName: com.mysql.jdbc.Driver
+      configLocation: classpath:mybatis/read/mybatis-config.xml
+      basePackage: com.loc.framework.mybatis.xml.sample.dao.read
+    writeDemo:
+      username: root
+      password:
+      jdbcUrl: jdbc:mysql://127.0.0.1:3306/test
+      jdbcPool:
+        maximumPoolSize: 30
+        driverClassName: com.mysql.jdbc.Driver
+      configLocation: classpath:mybatis/write/mybatis-config.xml
+      basePackage: com.loc.framework.mybatis.xml.sample.dao.write
+  pagehelper:
+    pageSizeZero: true
+
+log4jdbc:
+  sqltiming:
+    warn:
+      threshold: 300
+    error:
+      threshold: 2000
+  dump.sql.select: false
+
+logging.level.jdbc:
+  sqlonly: OFF
+  sqltiming: INFO
+  audit: OFF
+  resultset: OFF
+  resultsettable: OFF
+  connection: OFF
+
+
+spring:
+  datasource:
+    schema: classpath:db/schema.sql
+    data: classpath:db/data.sql
