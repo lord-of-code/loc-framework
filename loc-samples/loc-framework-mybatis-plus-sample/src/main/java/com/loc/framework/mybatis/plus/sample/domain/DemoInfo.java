@@ -1,6 +1,6 @@
 package com.loc.framework.mybatis.plus.sample.domain;
 
-import com.baomidou.mybatisplus.annotations.TableName;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

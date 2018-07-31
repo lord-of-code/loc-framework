@@ -41,7 +41,7 @@ import org.springframework.util.StringUtils;
  */
 @Slf4j
 @Configuration
-@ConditionalOnClass({SqlSessionFactory.class, SqlSessionFactoryBean.class})
+@ConditionalOnClass({SqlSessionFactory.class, SqlSessionFactoryBean.class, MybatisSqlSessionFactoryBean.class})
 @ConditionalOnPrefixProperty(prefix = "loc", value = LocMybatisProperties.class)
 @AutoConfigureAfter(LocDataSourceAutoConfiguration.class)
 public class LocMybatisAutoConfiguration extends LocBaseAutoConfiguration implements

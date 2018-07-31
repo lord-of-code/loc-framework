@@ -12,7 +12,7 @@ loc:
         maximumPoolSize: 30
         driverClassName: com.mysql.jdbc.Driver
       configLocation: classpath:mybatis/read/mybatis-config.xml
-      basePackage: com.loc.framework.mybatis.xml.sample.dao.read
+      basePackage: com.loc.framework.mybatis.plus.sample.dao.read
     writeDemo:
       username: root
       password:
@@ -21,7 +21,7 @@ loc:
         maximumPoolSize: 30
         driverClassName: com.mysql.jdbc.Driver
       configLocation: classpath:mybatis/write/mybatis-config.xml
-      basePackage: com.loc.framework.mybatis.xml.sample.dao.write
+      basePackage: com.loc.framework.mybatis.plus.sample.dao.write
   pagehelper:
     pageSizeZero: true
 

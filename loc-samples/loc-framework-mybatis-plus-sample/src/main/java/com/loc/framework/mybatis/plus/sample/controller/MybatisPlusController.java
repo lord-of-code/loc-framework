@@ -40,8 +40,8 @@ public class MybatisPlusController {
   @RequestMapping(value = "/mybatisPlusPage", method = RequestMethod.GET)
   public String mybatisPage() throws SQLException {
     IPage<DemoInfo> demoInfoList = demoInfoRead
-        .selectPage(new Page<>(1, 10), new QueryWrapper<>());
-    log.info("demo info list are {}", demoInfoList.getRecords().stream().map(DemoInfo::toString)
+        .selectPage(new Page<>(1, 10), null);
+    log.info("size is {}, demo info list are {}", demoInfoList.getSize(), demoInfoList.getRecords().stream().map(DemoInfo::toString)
         .collect(Collectors.joining(",")));
     return "OK";
   }
@@ -50,8 +50,8 @@ public class MybatisPlusController {
   @RequestMapping(value = "/mybatisPlusPageNO", method = RequestMethod.GET)
   public IPage<DemoInfo> mybatisPageNO(int pageNo, int pageSize) throws SQLException {
     IPage<DemoInfo> demoInfoList = demoInfoRead
-        .selectPage(new Page<>(pageNo, pageSize), new QueryWrapper<>());
-    log.info("demo info list are {}", demoInfoList.getRecords().stream().map(DemoInfo::toString)
+        .selectPage(new Page<>(pageNo, pageSize), null);
+    log.info("size is {}, demo info list are {}", demoInfoList.getSize(), demoInfoList.getRecords().stream().map(DemoInfo::toString)
         .collect(Collectors.joining(",")));
     return demoInfoList;
   }
