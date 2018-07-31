@@ -1,5 +1,6 @@
 package com.loc.framework.autoconfigure.mybatis;
 
+import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
 import com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean;
 import com.google.common.base.Strings;
 import com.loc.framework.autoconfigure.ConditionalOnPrefixProperty;
@@ -10,6 +11,7 @@ import java.util.Optional;
 import javax.sql.DataSource;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.plugin.Interceptor;
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
@@ -108,6 +110,9 @@ public class LocMybatisAutoConfiguration extends LocBaseAutoConfiguration implem
     if (!ObjectUtils.isEmpty(mybatisProperties.resolveMapperLocations())) {
       sqlSessionFactoryBean.setMapperLocations(mybatisProperties.resolveMapperLocations());
     }
+
+    PaginationInterceptor paginationInterceptor =  new PaginationInterceptor();
+    sqlSessionFactoryBean.setPlugins(new Interceptor[]{paginationInterceptor});
 
     try {
       SqlSessionFactory sqlSessionFactory = sqlSessionFactoryBean.getObject();
