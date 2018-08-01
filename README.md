@@ -40,46 +40,6 @@ Spring Boot 2目前版本是RELEASE版本
   </parent>
 ```
 
-- pom.xml中指定仓库地址(因为Spring Boot 2在中央仓库还没有，所以需要指定仓库)
-```
-<repositories>
-  <repository>
-    <id>spring-snapshots</id>
-    <name>Spring Snapshots</name>
-    <url>https://repo.spring.io/snapshot</url>
-    <snapshots>
-      <enabled>true</enabled>
-    </snapshots>
-  </repository>
-  <repository>
-    <id>spring-milestones</id>
-    <name>Spring Milestones</name>
-    <url>https://repo.spring.io/milestone</url>
-    <snapshots>
-      <enabled>false</enabled>
-    </snapshots>
-  </repository>
-</repositories>
-
-<pluginRepositories>
-  <pluginRepository>
-    <id>spring-snapshots</id>
-    <name>Spring Snapshots</name>
-    <url>https://repo.spring.io/snapshot</url>
-    <snapshots>
-      <enabled>true</enabled>
-    </snapshots>
-  </pluginRepository>
-  <pluginRepository>
-    <id>spring-milestones</id>
-    <name>Spring Milestones</name>
-    <url>https://repo.spring.io/milestone</url>
-    <snapshots>
-      <enabled>false</enabled>
-    </snapshots>
-  </pluginRepository>
-</pluginRepositories>
-```
 - pom.xml加入相关插件(插件打出的uber.jar可以直接通过`java -jar uber.jar`来启动)
 ```
 <build>
@@ -105,6 +65,7 @@ Spring Boot 2目前版本是RELEASE版本
 - mybatis 3.4.5
 - mybatis-spring 1.3.1
 - mybatis-pagehelper 5.1.2
+- mybatis-plus 3.0-RC
 - elasticjob 2.1.5
 - problem 0.23.0
 - logbook 1.8.1
