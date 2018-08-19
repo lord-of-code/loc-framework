@@ -7,6 +7,7 @@ import com.loc.framework.mybatis.plus.sample.dao.read.DemoInfoRead;
 import com.loc.framework.mybatis.plus.sample.dao.write.DemoInfoWrite;
 import com.loc.framework.mybatis.plus.sample.domain.DemoInfo;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
@@ -41,18 +42,40 @@ public class MybatisPlusController {
   public String mybatisPage() throws SQLException {
     IPage<DemoInfo> demoInfoList = demoInfoRead
         .selectPage(new Page<>(1, 10), null);
-    log.info("size is {}, demo info list are {}", demoInfoList.getSize(), demoInfoList.getRecords().stream().map(DemoInfo::toString)
-        .collect(Collectors.joining(",")));
+    log.info("size is {}, demo info list are {}", demoInfoList.getSize(),
+        demoInfoList.getRecords().stream().map(DemoInfo::toString)
+            .collect(Collectors.joining(",")));
     return "OK";
   }
 
+  @RequestMapping(value = "/mybatisPlusPageXml1", method = RequestMethod.GET)
+  public String mybatisPlusPageXml1() throws SQLException {
+    IPage<DemoInfo> demoInfoList = demoInfoRead
+        .getInfoByScore(new Page<>(1, 10), 10);
+    log.info("size is {}, demo info list are {}", demoInfoList.getSize(),
+        demoInfoList.getRecords().stream().map(DemoInfo::toString)
+            .collect(Collectors.joining(",")));
+    return "OK";
+  }
+
+  @RequestMapping(value = "/mybatisPlusPageXml2", method = RequestMethod.GET)
+  public String mybatisPlusPageXml2() throws SQLException {
+    DemoInfo demoInfo = DemoInfo.builder().age(1200).score(10).build();
+    IPage<DemoInfo> demoInfoList2 = demoInfoRead
+        .getInfoByBeanPage(new Page<>(1, 10), demoInfo);
+    log.info("size is {}, demo info list are {}", demoInfoList2.getSize(),
+        demoInfoList2.getRecords().stream().map(DemoInfo::toString)
+            .collect(Collectors.joining(",")));
+    return "OK";
+  }
 
   @RequestMapping(value = "/mybatisPlusPageNO", method = RequestMethod.GET)
   public IPage<DemoInfo> mybatisPageNO(int pageNo, int pageSize) throws SQLException {
     IPage<DemoInfo> demoInfoList = demoInfoRead
         .selectPage(new Page<>(pageNo, pageSize), null);
-    log.info("size is {}, demo info list are {}", demoInfoList.getSize(), demoInfoList.getRecords().stream().map(DemoInfo::toString)
-        .collect(Collectors.joining(",")));
+    log.info("size is {}, demo info list are {}", demoInfoList.getSize(),
+        demoInfoList.getRecords().stream().map(DemoInfo::toString)
+            .collect(Collectors.joining(",")));
     return demoInfoList;
   }
 }
