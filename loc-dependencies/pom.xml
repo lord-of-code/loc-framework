@@ -36,9 +36,9 @@
 
     <sentry.version>1.7.2</sentry.version>
 
-    <problem-spring-web.version>0.23.0</problem-spring-web.version>
+    <problem-spring-web.version>0.24.0-RC.0</problem-spring-web.version>
 
-    <logbook.version>1.8.1</logbook.version>
+    <logbook.version>1.9.0</logbook.version>
 
     <feign-form.version>3.0.0</feign-form.version>
   </properties>
@@ -214,6 +214,11 @@
       </dependency>
 
       <!--logbook-->
+      <dependency>
+        <groupId>org.zalando</groupId>
+        <artifactId>logbook-okhttp</artifactId>
+        <version>${logbook.version}</version>
+      </dependency>
       <dependency>
         <groupId>org.zalando</groupId>
         <artifactId>logbook-spring-boot-starter</artifactId>

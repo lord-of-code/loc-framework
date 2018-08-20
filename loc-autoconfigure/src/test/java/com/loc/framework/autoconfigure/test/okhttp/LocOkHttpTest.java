@@ -3,7 +3,6 @@ package com.loc.framework.autoconfigure.test.okhttp;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.loc.framework.autoconfigure.okhttp.OkHttpAutoConfiguration;
-import com.loc.framework.autoconfigure.okhttp.OkHttpLoggingAutoConfiguration;
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -70,7 +69,6 @@ public class LocOkHttpTest {
   @Import({
       ServletWebServerFactoryAutoConfiguration.class,
       JacksonAutoConfiguration.class,
-      OkHttpLoggingAutoConfiguration.class,
       OkHttpAutoConfiguration.class
   })
   protected @interface MinimalWebConfiguration {

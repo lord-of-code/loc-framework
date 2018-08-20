@@ -25,8 +25,8 @@
       <artifactId>okhttp</artifactId>
     </dependency>
     <dependency>
-      <groupId>com.squareup.okhttp3</groupId>
-      <artifactId>logging-interceptor</artifactId>
+      <groupId>org.zalando</groupId>
+      <artifactId>logbook-okhttp</artifactId>
     </dependency>
   </dependencies>
 

@@ -13,6 +13,6 @@ import org.zalando.problem.spring.web.advice.ProblemHandling;
 @Configuration
 @RestControllerAdvice
 @ConditionalOnWebApplication(type = SERVLET)
-public class LocAdviceErrorAutoConfiguration implements ProblemHandling {
+public class LocAdviceErrorAutoConfiguration implements LocServiceAdviceTrait {
 
 }

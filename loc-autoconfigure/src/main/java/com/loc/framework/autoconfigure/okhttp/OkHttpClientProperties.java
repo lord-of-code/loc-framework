@@ -3,7 +3,6 @@ package com.loc.framework.autoconfigure.okhttp;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.Data;
-import okhttp3.logging.HttpLoggingInterceptor;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 
@@ -20,7 +19,6 @@ public class OkHttpClientProperties {
   private List<String> interceptors = new ArrayList<>();
   private List<String> networkInterceptors = new ArrayList<>();
   private Connection connection = new Connection();
-  private HttpLoggingInterceptor.Level level;
 
   @Data
   public static class Connection {

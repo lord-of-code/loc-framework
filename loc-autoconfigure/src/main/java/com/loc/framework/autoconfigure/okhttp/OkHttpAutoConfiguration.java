@@ -5,12 +5,13 @@ import java.util.concurrent.TimeUnit;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.ConnectionPool;
 import okhttp3.OkHttpClient;
-import okhttp3.logging.HttpLoggingInterceptor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.zalando.logbook.Logbook;
+import org.zalando.logbook.okhttp.LogbookInterceptor;
 
 /**
  * Created on 2018/1/4.
@@ -21,10 +22,10 @@ import org.springframework.context.annotation.Configuration;
 @Slf4j
 public class OkHttpAutoConfiguration {
 
-  private final HttpLoggingInterceptor httpLoggingInterceptor;
+  private final Logbook logbook;
 
-  public OkHttpAutoConfiguration(HttpLoggingInterceptor httpLoggingInterceptor) {
-    this.httpLoggingInterceptor = httpLoggingInterceptor;
+  public OkHttpAutoConfiguration(Logbook logbook) {
+    this.logbook = logbook;
   }
 
   private OkHttpClient.Builder createBuilder(OkHttpClientProperties okHttpClientProperties,
@@ -35,7 +36,7 @@ public class OkHttpAutoConfiguration {
         .writeTimeout(okHttpClientProperties.getWriteTimeout(), TimeUnit.MILLISECONDS)
         .connectionPool(connectionPool).followRedirects(okHttpClientProperties.isFollowRedirects())
         .retryOnConnectionFailure(okHttpClientProperties.isRetryOnConnectionFailure())
-        .addInterceptor(httpLoggingInterceptor);
+        .addNetworkInterceptor(new LogbookInterceptor(logbook));
   }
 
 

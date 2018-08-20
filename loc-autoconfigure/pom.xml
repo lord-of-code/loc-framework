@@ -114,11 +114,6 @@
       <artifactId>okhttp</artifactId>
       <optional>true</optional>
     </dependency>
-    <dependency>
-      <groupId>com.squareup.okhttp3</groupId>
-      <artifactId>logging-interceptor</artifactId>
-      <optional>true</optional>
-    </dependency>
 
     <!--redis-->
     <dependency>
@@ -193,6 +188,11 @@
     </dependency>
 
     <!--logbook-->
+    <dependency>
+      <groupId>org.zalando</groupId>
+      <artifactId>logbook-okhttp</artifactId>
+      <optional>true</optional>
+    </dependency>
     <dependency>
       <groupId>org.zalando</groupId>
       <artifactId>logbook-spring-boot-starter</artifactId>
