@@ -11,5 +11,8 @@ public interface LocConstants {
   String PRO_PROFILE = "pro";
 
   int SUCCESS_RESPONSE_CODE = 0;
+  int CONSTRAINT_VIOLATION_ERROR_CODE = 1000;
+  int BIND_ERROR_CODE = 1001;
+  int METHOD_ARGUMENT_NOT_VALID_ERROR_CODE = 1002;
 
 }
