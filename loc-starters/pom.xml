@@ -35,6 +35,7 @@
     <module>loc-framework-metrics-starter</module>
     <module>loc-framework-logback-starter</module>
     <module>loc-framework-shutdown-starter</module>
+    <module>loc-framework-sleuth-starter</module>
   </modules>
 
 </project>

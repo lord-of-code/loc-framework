@@ -180,6 +180,22 @@
       <optional>true</optional>
     </dependency>
 
+    <!--sleuth-->
+    <dependency>
+      <groupId>org.springframework.cloud</groupId>
+      <artifactId>spring-cloud-starter-sleuth</artifactId>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>io.zipkin.brave</groupId>
+      <artifactId>brave-instrumentation-okhttp3</artifactId>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>io.zipkin.brave</groupId>
+      <artifactId>brave-instrumentation-mysql</artifactId>
+    </dependency>
+
     <!--problem-->
     <dependency>
       <groupId>org.zalando</groupId>
