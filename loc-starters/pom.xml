@@ -36,6 +36,8 @@
     <module>loc-framework-logback-starter</module>
     <module>loc-framework-shutdown-starter</module>
     <module>loc-framework-sleuth-starter</module>
+    <module>loc-framework-wechat-miniapp-starter</module>
+    <module>loc-framework-wechat-mp-starter</module>
   </modules>
 
 </project>

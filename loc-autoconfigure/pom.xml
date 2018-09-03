@@ -221,6 +221,18 @@
       <optional>true</optional>
     </dependency>
 
+    <!--weixin-->
+    <dependency>
+      <groupId>com.github.binarywang</groupId>
+      <artifactId>weixin-java-mp</artifactId>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>com.github.binarywang</groupId>
+      <artifactId>weixin-java-miniapp</artifactId>
+      <optional>true</optional>
+    </dependency>
+
     <!--cloud-->
     <dependency>
       <groupId>org.springframework.cloud</groupId>

@@ -43,6 +43,8 @@
     <logbook.version>1.9.0</logbook.version>
 
     <feign-form.version>3.0.0</feign-form.version>
+
+    <weixin.sdk.version>3.1.0</weixin.sdk.version>
   </properties>
 
   <dependencyManagement>
@@ -145,6 +147,16 @@
       <dependency>
         <groupId>com.github.lord-of-code</groupId>
         <artifactId>loc-framework-sleuth-starter</artifactId>
+        <version>${revision}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.github.lord-of-code</groupId>
+        <artifactId>loc-framework-wechat-miniapp-starter</artifactId>
+        <version>${revision}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.github.lord-of-code</groupId>
+        <artifactId>loc-framework-wechat-mp-starter</artifactId>
         <version>${revision}</version>
       </dependency>
 
@@ -250,6 +262,18 @@
         <groupId>io.github.openfeign.form</groupId>
         <artifactId>feign-form-spring</artifactId>
         <version>${feign-form.version}</version>
+      </dependency>
+
+      <!--weixin-->
+      <dependency>
+        <groupId>com.github.binarywang</groupId>
+        <artifactId>weixin-java-mp</artifactId>
+        <version>${weixin.sdk.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.github.binarywang</groupId>
+        <artifactId>weixin-java-miniapp</artifactId>
+        <version>${weixin.sdk.version}</version>
       </dependency>
 
     </dependencies>
