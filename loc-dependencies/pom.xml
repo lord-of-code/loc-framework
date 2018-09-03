@@ -68,6 +68,14 @@
         <type>pom</type>
         <scope>import</scope>
       </dependency>
+      <!--keycloak-->
+      <dependency>
+        <groupId>org.keycloak.bom</groupId>
+        <artifactId>keycloak-adapter-bom</artifactId>
+        <version>${keycloak.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
 
       <dependency>
         <groupId>com.github.lord-of-code</groupId>
@@ -213,13 +221,6 @@
         <version>${curator.version}</version>
       </dependency>
 
-      <!--sentry-->
-      <dependency>
-        <groupId>io.sentry</groupId>
-        <artifactId>sentry-logback</artifactId>
-        <version>${sentry.version}</version>
-      </dependency>
-
       <!--problem-->
       <dependency>
         <groupId>org.zalando</groupId>
@@ -249,15 +250,6 @@
         <groupId>io.github.openfeign.form</groupId>
         <artifactId>feign-form-spring</artifactId>
         <version>${feign-form.version}</version>
-      </dependency>
-
-      <!--keycloak-->
-      <dependency>
-        <groupId>org.keycloak.bom</groupId>
-        <artifactId>keycloak-adapter-bom</artifactId>
-        <version>${keycloak.version}</version>
-        <type>pom</type>
-        <scope>import</scope>
       </dependency>
 
     </dependencies>

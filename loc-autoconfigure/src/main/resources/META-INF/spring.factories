@@ -15,7 +15,3 @@ com.loc.framework.autoconfigure.elasticjob.LocElasticJobAutoConfiguration,\
 com.loc.framework.autoconfigure.metrics.LocMetricsAutoConfigure,\
 com.loc.framework.autoconfigure.feign.LocFeignRetryAutoConfiguration,\
 com.loc.framework.autoconfigure.sleuth.OkHttp3SleuthConfiguration
-
-
-org.springframework.context.ApplicationListener=\
-com.loc.framework.autoconfigure.logback.SentryInitListener

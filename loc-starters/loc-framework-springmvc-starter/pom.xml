@@ -66,6 +66,11 @@
       <groupId>io.springfox</groupId>
       <artifactId>springfox-swagger-ui</artifactId>
     </dependency>
+
+    <dependency>
+      <groupId>com.github.lord-of-code</groupId>
+      <artifactId>loc-framework-sleuth-starter</artifactId>
+    </dependency>
   </dependencies>
 
 </project>
