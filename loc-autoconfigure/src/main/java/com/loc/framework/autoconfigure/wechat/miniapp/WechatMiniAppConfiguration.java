@@ -25,7 +25,7 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 @Configuration
 @ConditionalOnClass(WxMaService.class)
 @EnableConfigurationProperties(WechatMiniAppProperties.class)
-@ConditionalOnProperty(value = "hn.wechat.miniapp.enabled", matchIfMissing = true)
+@ConditionalOnProperty(value = "loc.wechat.miniapp.enabled", matchIfMissing = true)
 public class WechatMiniAppConfiguration {
 
   @ConditionalOnBean(StringRedisTemplate.class)

@@ -10,7 +10,7 @@ import org.springframework.validation.annotation.Validated;
  */
 @Data
 @Validated
-@ConfigurationProperties(prefix = "hn.wechat.miniapp")
+@ConfigurationProperties(prefix = "loc.wechat.miniapp")
 public class WechatMiniAppProperties {
   /**
    * 设置微信小程序的appId
