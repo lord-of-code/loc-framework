@@ -23,6 +23,7 @@ Spring Boot 2目前版本是RELEASE版本
 5. es方面，默认也从之前的支持es2升级到了es5+, es5也出来了一段时间， 大部分的人应该也是通过自己实现来完成es5的对接， 现在springboot2也是进行了es5的支持。
 6. metrics方面，Spring Boot 2引入了Micrometer，来统一metrics的规范，使得开发人员更好的理解和使用metrics的模块，而不需要关心对接的具体存储是什么东西。
 7. Spring Boot 2 同时也加入了 对于OAuth 2.0的支持， 使得开发人员更加友好的和方面的使用spring-security来完成权限模块的开发
+8. sleuth方面，用户请求的跟踪，目前框架仅仅在日志中输出了traceId，并没有发送到kafka
 
 ## 通过统一变量来管理框架版本
 1. Maven 版本必须是 3.5.2 +
@@ -111,11 +112,6 @@ docker-compose -f docker/zipkin.yml up -d
 docker-compose -f docker/keycloak.yml up -d
 端口为 7777
 
-#### sentry
-docker-compose -f docker/sentry.yml run --rm web upgrade #升级数据库
-docker-compose -f docker/sentry.yml up -d   #启动sentry服务
-端口为 9000
-
 #### influxdb
 docker-compose -f docker/influxdb.yml up -d   #启动influxdb和grafana
 
@@ -134,6 +130,7 @@ docker-compose -f docker/influxdb.yml up -d   #启动influxdb和grafana
 - kafka
 - keycloak
 - metrics
+- sleuth
 - weixin-sdk
 - ...
 
@@ -147,12 +144,16 @@ docker-compose -f docker/influxdb.yml up -d   #启动influxdb和grafana
 
 * 请求日志的相关配置
 ```
-loc.web.springmvc.log:
-  enabled: true     # 是否启用access log
-  includeRequest: true    # 记录请求
-  includeResponse: true  # 记录返回
-  requestBodyLength: 8192  # 记录日志请求长度
-  responseBodyLength: 8192 # 记录日志返回长度
+logbook:
+  filter.enabled: true
+  format.style: json
+  exclude:
+    - /acutotor/**
+    - /admin/**
+  write:
+    category: com.loc.framework.accesslog
+    level: INFO
+    max-body-size: 2048
 ```
 
 * 加入了cors跨域相关的Filter的配置
@@ -195,9 +196,9 @@ loc.web.springmvc.swagger2.restapi.paths         #扫描的paths，默认为all
 
 * 统一了logger的输出格式，主要考虑到后续的日志采集、统计、分析的统一
 ```
-[%d{yyyy-MM-dd HH:mm:ss.SSS}] [%t] %-5level %logger{50} - %msg%n
+[%d{yyyy-MM-dd HH:mm:ss.SSS}] [%t] [%X{traceId}] %-5level %logger{50} - %msg%n
 ```
-* 默认了logger的输出，分为console和file，默认的file存储在`/tmp/loc.log`目录，可以通过配置文件`logging.file`进行修改
+* 默认了logger的输出，分为console和file，默认的file存储在`./logs/loc.log`目录，可以通过配置文件`logging.file`进行修改
 * 日志按小时进行切割，切割后存放目录，默认是`./logs`目录，可以通过`logging.path`进行修改
 * 日志文件备份默认存放720小时(30天)
 
@@ -298,7 +299,6 @@ loc.okhttp:
   connection:
     maxIdleConnections: 5
     keepAliveDuration: 60000
-  level: BASIC       # 记录请求日志级别
 ```
 
 ## redis的starter的统一标准
@@ -347,14 +347,6 @@ loc.customCache:
 
 * 利用elasticjob组件完成分布式的调度
 * 提供注解来进行任务的配置
-
-## sentry的配置
-* 利用sentry来发送error日志
-* 通过配置sentry.dsn来指定dsn的地址，然后对于error日志会直接发送到sentry的服务端
-
-```
-sentry.dsn: http://public:private@host:port/1
-```
 
 ## keycloak的starter的统一标准
 
@@ -406,6 +398,19 @@ management:
           - 0.95
           - 0.99
 ```
+
+## sleuth的starter的统一标准
+
+```
+spring:
+  sleuth:
+    sampler:
+      probability: 0
+    scheduled:
+      enabled: false
+    enabled: true
+```
+
 
 ## eureka的starter的统一标准
 
