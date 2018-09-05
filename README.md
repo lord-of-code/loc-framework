@@ -58,17 +58,18 @@ Spring Boot 2目前版本是RELEASE版本
 
 ## 提供的核心依赖(SpringBoot和SpringCloud)和辅助依赖
 
-- SpringBoot 2.0.3.RELEASE
-- SpringCloud Release Finchley.RELEASE
-- springfox-swagger2  2.8.0
+- SpringBoot 2.0.4.RELEASE
+- SpringCloud Release Finchley.SR1
+- springfox-swagger2  2.9.0
 - log4jdbc 1.16
-- mybatis 3.4.5
-- mybatis-spring 1.3.1
+- mybatis 3.4.6
+- mybatis-spring 1.3.2
 - mybatis-pagehelper 5.1.2
-- mybatis-plus 3.0-RC
+- mybatis-plus 3.0.1
 - elasticjob 2.1.5
-- problem 0.23.0
-- logbook 1.8.1
+- problem 0.24.0-RC.0
+- logbook 1.9.0
+- weixin-sdk 3.1.0
 
 ## demo程序
 
@@ -133,6 +134,7 @@ docker-compose -f docker/influxdb.yml up -d   #启动influxdb和grafana
 - kafka
 - keycloak
 - metrics
+- weixin-sdk
 - ...
 
 
