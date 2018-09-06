@@ -94,12 +94,6 @@
       "defaultValue": true
     },
     {
-      "name": "loc.web.springmvc.log.enabled",
-      "type": "java.lang.Boolean",
-      "description": "spring mvc log enabled",
-      "defaultValue": true
-    },
-    {
       "name": "loc.web.springmvc.swagger2.enabled",
       "type": "java.lang.Boolean",
       "description": "swagger doc enabled",
@@ -110,11 +104,6 @@
       "type": "java.lang.Boolean",
       "description": "tomcat graceful shutdown enabled",
       "defaultValue": true
-    },
-    {
-      "name": "sentry.dsn",
-      "type": "java.lang.String",
-      "description": "Sentry server project dsn"
     }
   ]
 }
