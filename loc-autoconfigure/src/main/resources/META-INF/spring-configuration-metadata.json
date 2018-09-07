@@ -104,6 +104,18 @@
       "type": "java.lang.Boolean",
       "description": "tomcat graceful shutdown enabled",
       "defaultValue": true
+    },
+    {
+      "name": "loc.wechat.miniapp.enabled",
+      "type": "java.lang.Boolean",
+      "description": "wechat miniapp enabled",
+      "defaultValue": true
+    },
+    {
+      "name": "loc.wechat.mp.enabled",
+      "type": "java.lang.Boolean",
+      "description": "wechat mp enabled",
+      "defaultValue": true
     }
   ]
 }
