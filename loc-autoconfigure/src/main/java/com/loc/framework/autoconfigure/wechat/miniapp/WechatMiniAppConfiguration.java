@@ -9,9 +9,9 @@ import com.loc.framework.autoconfigure.wechat.WxMiniAppInRedisTemplateConfig;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -28,10 +28,10 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 @ConditionalOnProperty(value = "loc.wechat.miniapp.enabled", matchIfMissing = true)
 public class WechatMiniAppConfiguration {
 
-  @ConditionalOnBean(StringRedisTemplate.class)
-  @AutoConfigureAfter(RedisCacheAutoConfiguration.class)
   @Configuration
-  static class RedisWechatMiniAppConfiguration {
+  @ConditionalOnClass(StringRedisTemplate.class)
+  @AutoConfigureAfter(RedisCacheAutoConfiguration.class)
+  public class RedisWechatMiniAppConfiguration {
 
     @Autowired
     private StringRedisTemplate redisTemplate;
@@ -60,9 +60,9 @@ public class WechatMiniAppConfiguration {
     }
   }
 
-  @ConditionalOnMissingBean(StringRedisTemplate.class)
   @Configuration
-  static class MemoryWechatMiniAppConfiguration {
+  @ConditionalOnMissingClass("org.springframework.data.redis.core.StringRedisTemplate")
+  public class MemoryWechatMiniAppConfiguration {
 
     @Autowired
     private WechatMiniAppProperties properties;

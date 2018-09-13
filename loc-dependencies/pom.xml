@@ -18,7 +18,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <java.version>1.8</java.version>
-    <spring.boot.version>2.0.4.RELEASE</spring.boot.version>
+    <spring.boot.version>2.0.5.RELEASE</spring.boot.version>
     <spring.cloud.version>Finchley.SR1</spring.cloud.version>
 
     <springfox-swagger2.version>2.9.2</springfox-swagger2.version>

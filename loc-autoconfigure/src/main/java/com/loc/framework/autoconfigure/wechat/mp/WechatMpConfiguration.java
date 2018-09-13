@@ -8,9 +8,9 @@ import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.api.impl.WxMpServiceOkHttpImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -26,10 +26,10 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 @ConditionalOnProperty(value = "loc.wechat.mp.enabled", matchIfMissing = true)
 public class WechatMpConfiguration {
 
-  @ConditionalOnBean(StringRedisTemplate.class)
-  @AutoConfigureAfter(RedisCacheAutoConfiguration.class)
   @Configuration
-  static class RedisWechatMpConfiguration {
+  @ConditionalOnClass(StringRedisTemplate.class)
+  @AutoConfigureAfter(RedisCacheAutoConfiguration.class)
+  public class RedisWechatMpConfiguration {
 
     @Autowired
     private StringRedisTemplate redisTemplate;
@@ -58,9 +58,9 @@ public class WechatMpConfiguration {
     }
   }
 
-  @ConditionalOnMissingBean(StringRedisTemplate.class)
   @Configuration
-  static class MemoryWechatMpConfiguration {
+  @ConditionalOnMissingClass("org.springframework.data.redis.core.StringRedisTemplate")
+  public class MemoryWechatMpConfiguration {
 
     @Autowired
     private WechatMpProperties properties;

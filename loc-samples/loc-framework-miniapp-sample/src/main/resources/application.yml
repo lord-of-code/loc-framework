@@ -1,0 +1,22 @@
+server:
+  port: 8081
+
+logging:
+  file: ./logs/loc.log
+
+loc.web.springmvc.swagger2:
+  restapi:
+    base-package: "com.loc.framework.miniapp.sample.controller"
+
+loc.tomcat.shutdown.wait-time: 20
+
+loc:
+  wechat:
+    miniapp:
+      app-id: fortestappid
+      secret: fortestsecret
+
+spring:
+  redis:
+    host: 127.0.0.1
+    port: 6379
