@@ -2,6 +2,7 @@ package com.loc.framework.autoconfigure.feign;
 
 import com.netflix.hystrix.exception.HystrixTimeoutException;
 import feign.Feign;
+import feign.Logger;
 import feign.Retryer;
 import java.util.concurrent.TimeUnit;
 import lombok.extern.slf4j.Slf4j;
@@ -32,6 +33,11 @@ public class LocFeignRetryAutoConfiguration {
     return new Retryer.Default(locFeignRetryProperties.getPeriod(),
         TimeUnit.MILLISECONDS.toMillis(locFeignRetryProperties.getMaxPeriod()),
         locFeignRetryProperties.getMaxAttempts());
+  }
+
+  @Bean
+  public Logger.Level feignLoggerLevel() {
+    return Logger.Level.FULL;
   }
 
   @Bean
