@@ -15,6 +15,10 @@ import org.zalando.problem.Problem;
  */
 public interface ProblemUtil {
 
+  static Problem success() {
+    return createProblem("success");
+  }
+
   static Problem createProblem(Object data) {
     String traceId = MDC.get("traceId");
     if (traceId != null) {
