@@ -94,6 +94,12 @@
       "defaultValue": true
     },
     {
+      "name": "loc.web.springmvc.cors.enabled",
+      "type": "java.lang.Boolean",
+      "description": "cors enabled",
+      "defaultValue": false
+    },
+    {
       "name": "loc.web.springmvc.swagger2.enabled",
       "type": "java.lang.Boolean",
       "description": "swagger doc enabled",
