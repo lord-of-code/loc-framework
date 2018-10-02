@@ -4,6 +4,7 @@ import static com.loc.framework.autoconfigure.utils.LocConstants.SUCCESS_RESPONS
 
 import org.slf4j.MDC;
 import org.zalando.problem.Problem;
+import org.zalando.problem.Status;
 
 /**
  * Created on 2018/5/24.
@@ -23,10 +24,10 @@ public interface ProblemUtil {
     String traceId = MDC.get("traceId");
     if (traceId != null) {
       return Problem.builder().withDetail("success").with("code", SUCCESS_RESPONSE_CODE)
-          .with("data", data).with("traceId", traceId).build();
+          .with("data", data).with("traceId", traceId).withStatus(Status.OK).build();
     } else {
       return Problem.builder().withDetail("success").with("code", SUCCESS_RESPONSE_CODE)
-          .with("data", data).build();
+          .with("data", data).withStatus(Status.OK).build();
     }
   }
 
@@ -34,10 +35,10 @@ public interface ProblemUtil {
     String traceId = MDC.get("traceId");
     if (traceId != null) {
       return Problem.builder().withDetail(detail).with("code", SUCCESS_RESPONSE_CODE)
-          .with("data", data).with("traceId", traceId).build();
+          .with("data", data).with("traceId", traceId).withStatus(Status.OK).build();
     } else {
       return Problem.builder().withDetail(detail).with("code", SUCCESS_RESPONSE_CODE)
-          .with("data", data).build();
+          .with("data", data).withStatus(Status.OK).build();
     }
   }
 
@@ -45,9 +46,10 @@ public interface ProblemUtil {
     String traceId = MDC.get("traceId");
     if (traceId != null) {
       return Problem.builder().withDetail(detail).with("code", code).with("data", data)
-          .with("traceId", traceId).build();
+          .with("traceId", traceId).withStatus(Status.OK).build();
     } else {
-      return Problem.builder().withDetail(detail).with("code", code).with("data", data).build();
+      return Problem.builder().withDetail(detail).with("code", code).with("data", data)
+          .withStatus(Status.OK).build();
     }
   }
 
@@ -55,9 +57,9 @@ public interface ProblemUtil {
     String traceId = MDC.get("traceId");
     if (traceId != null) {
       return Problem.builder().withDetail(detail).with("code", code).with("traceId", traceId)
-          .build();
+          .withStatus(Status.OK).build();
     } else {
-      return Problem.builder().withDetail(detail).with("code", code).build();
+      return Problem.builder().withDetail(detail).with("code", code).withStatus(Status.OK).build();
     }
   }
 }
