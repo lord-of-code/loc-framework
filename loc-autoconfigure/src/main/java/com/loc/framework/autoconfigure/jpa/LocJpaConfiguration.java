@@ -5,13 +5,17 @@ import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import javax.sql.DataSource;
 import org.hibernate.boot.model.naming.ImplicitNamingStrategy;
 import org.hibernate.boot.model.naming.PhysicalNamingStrategy;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.orm.jpa.HibernateProperties;
 import org.springframework.boot.autoconfigure.orm.jpa.HibernatePropertiesCustomizer;
 import org.springframework.boot.autoconfigure.orm.jpa.HibernateSettings;
+import org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration;
 import org.springframework.boot.autoconfigure.orm.jpa.JpaProperties;
+import org.springframework.boot.autoconfigure.transaction.TransactionManagerCustomizers;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder;
 import org.springframework.context.annotation.Bean;
@@ -20,6 +24,7 @@ import org.springframework.orm.jpa.persistenceunit.PersistenceUnitManager;
 import org.springframework.orm.jpa.vendor.AbstractJpaVendorAdapter;
 import org.springframework.orm.jpa.vendor.Database;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
+import org.springframework.transaction.jta.JtaTransactionManager;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
@@ -41,6 +46,9 @@ public abstract class LocJpaConfiguration {
 
   @Autowired
   private JpaProperties jpaProperties;
+
+  @Autowired
+  private HibernateProperties hibernateProperties;
 
   @Bean
   public EntityManagerFactoryBuilder entityManagerFactoryBuilder(
@@ -64,13 +72,15 @@ public abstract class LocJpaConfiguration {
   protected Map<String, Object> getVendorProperties() {
     String defaultDdlMode = "none";
     LinkedList<HibernatePropertiesCustomizer> customizers = new LinkedList<>();
-    if(hibernatePropertiesCustomizers != null) {
+    if (hibernatePropertiesCustomizers != null) {
       customizers.addAll(hibernatePropertiesCustomizers);
     }
-    customizers.addFirst(new LocJpaConfiguration.NamingStrategiesHibernatePropertiesCustomizer(physicalNamingStrategy, implicitNamingStrategy));
-    return new LinkedHashMap<>(jpaProperties
-        .getHibernateProperties(new HibernateSettings().ddlAuto(() -> defaultDdlMode)
-            .hibernatePropertiesCustomizers(customizers)));
+    customizers.addFirst(new LocJpaConfiguration.NamingStrategiesHibernatePropertiesCustomizer(
+        physicalNamingStrategy, implicitNamingStrategy));
+    return new LinkedHashMap<>(hibernateProperties
+        .determineHibernateProperties(jpaProperties.getProperties(),
+            new HibernateSettings().ddlAuto(() -> defaultDdlMode)
+                .hibernatePropertiesCustomizers(customizers)));
   }
 
   protected String[] getMappingResources() {
@@ -81,10 +91,12 @@ public abstract class LocJpaConfiguration {
 
   private static class NamingStrategiesHibernatePropertiesCustomizer implements
       HibernatePropertiesCustomizer {
+
     private final PhysicalNamingStrategy physicalNamingStrategy;
     private final ImplicitNamingStrategy implicitNamingStrategy;
 
-    NamingStrategiesHibernatePropertiesCustomizer(PhysicalNamingStrategy physicalNamingStrategy, ImplicitNamingStrategy implicitNamingStrategy) {
+    NamingStrategiesHibernatePropertiesCustomizer(PhysicalNamingStrategy physicalNamingStrategy,
+        ImplicitNamingStrategy implicitNamingStrategy) {
       this.physicalNamingStrategy = physicalNamingStrategy;
       this.implicitNamingStrategy = implicitNamingStrategy;
     }
