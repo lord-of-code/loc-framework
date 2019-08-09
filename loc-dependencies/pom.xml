@@ -31,11 +31,11 @@
 
     <brave.version>5.2.0</brave.version>
 
-    <problem-spring-web.version>0.24.0-RC.0</problem-spring-web.version>
+    <problem-spring-web.version>0.24.0</problem-spring-web.version>
 
-    <logbook.version>1.9.0</logbook.version>
+    <logbook.version>1.13.0</logbook.version>
 
-    <feign-form.version>3.0.0</feign-form.version>
+    <feign-form.version>3.8.0</feign-form.version>
 
     <weixin.sdk.version>3.2.0</weixin.sdk.version>
   </properties>
@@ -246,7 +246,10 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-javadoc-plugin</artifactId>
-          <version>3.0.0</version>
+          <version>3.1.1</version>
+          <configuration>
+            <javadocExecutable>${java.home}/bin/javadoc</javadocExecutable>
+          </configuration>
         </plugin>
         <plugin>
           <groupId>org.codehaus.mojo</groupId>
