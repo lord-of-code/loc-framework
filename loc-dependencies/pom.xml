@@ -29,7 +29,7 @@
     <mybatis.pagehelper.version>5.1.2</mybatis.pagehelper.version>
     <mybatis.plus.version>3.0.1</mybatis.plus.version>
 
-    <brave.version>5.2.0</brave.version>
+    <brave.version>5.6.5</brave.version>
 
     <problem-spring-web.version>0.24.0</problem-spring-web.version>
 

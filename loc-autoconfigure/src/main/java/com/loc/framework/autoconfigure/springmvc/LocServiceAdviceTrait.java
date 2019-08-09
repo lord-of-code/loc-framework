@@ -22,11 +22,10 @@ import org.zalando.problem.spring.web.advice.general.GeneralAdviceTrait;
 import org.zalando.problem.spring.web.advice.http.HttpAdviceTrait;
 import org.zalando.problem.spring.web.advice.io.IOAdviceTrait;
 import org.zalando.problem.spring.web.advice.routing.RoutingAdviceTrait;
-import org.zalando.problem.spring.web.advice.security.SecurityAdviceTrait;
 
 @API(status = API.Status.STABLE)
 public interface LocServiceAdviceTrait extends GeneralAdviceTrait, HttpAdviceTrait, IOAdviceTrait,
-    RoutingAdviceTrait, SecurityAdviceTrait {
+    RoutingAdviceTrait {
 
   @API(status = API.Status.INTERNAL)
   @ExceptionHandler(value = LocServiceException.class)

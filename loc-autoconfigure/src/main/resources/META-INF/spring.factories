@@ -1,17 +1,13 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
 com.loc.framework.autoconfigure.springmvc.LocSpringMvcAutoConfiguration,\
 com.loc.framework.autoconfigure.springmvc.LocAdviceErrorAutoConfiguration,\
-com.loc.framework.autoconfigure.swagger.Swagger2AutoConfiguration,\
 com.loc.framework.autoconfigure.shutdown.TomcatGracefulShutdownAutoConfiguration,\
 com.loc.framework.autoconfigure.jdbc.LocDataSourceAutoConfiguration,\
 com.loc.framework.autoconfigure.mybatis.LocMybatisAutoConfiguration,\
 com.loc.framework.autoconfigure.mybatis.PageHelperAutoConfiguration,\
 com.loc.framework.autoconfigure.okhttp.OkHttpAutoConfiguration,\
-com.loc.framework.autoconfigure.keycloak.LocKeycloakAutoConfiguration,\
-com.loc.framework.autoconfigure.keycloak.LocNoSecurityAutoConfiguration,\
 com.loc.framework.autoconfigure.redis.RedisCacheAutoConfiguration,\
 com.loc.framework.autoconfigure.kafka.LocKafkaAutoConfiguration,\
-com.loc.framework.autoconfigure.elasticjob.LocElasticJobAutoConfiguration,\
 com.loc.framework.autoconfigure.metrics.LocMetricsAutoConfigure,\
 com.loc.framework.autoconfigure.feign.LocFeignRetryAutoConfiguration,\
 com.loc.framework.autoconfigure.sleuth.OkHttp3SleuthConfiguration,\
