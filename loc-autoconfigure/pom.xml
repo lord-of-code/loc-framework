@@ -122,19 +122,6 @@
       <optional>true</optional>
     </dependency>
 
-    <!--keycloak-->
-    <dependency>
-      <groupId>org.keycloak</groupId>
-      <artifactId>keycloak-spring-boot-starter</artifactId>
-      <optional>true</optional>
-    </dependency>
-
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-security</artifactId>
-      <optional>true</optional>
-    </dependency>
-
     <!--kafka-->
     <dependency>
       <groupId>org.springframework.kafka</groupId>
@@ -142,22 +129,6 @@
       <optional>true</optional>
     </dependency>
 
-    <!--elastic job-->
-    <dependency>
-      <groupId>com.dangdang</groupId>
-      <artifactId>elastic-job-lite-core</artifactId>
-      <optional>true</optional>
-    </dependency>
-    <dependency>
-      <groupId>com.dangdang</groupId>
-      <artifactId>elastic-job-lite-spring</artifactId>
-      <optional>true</optional>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.curator</groupId>
-      <artifactId>curator-client</artifactId>
-      <optional>true</optional>
-    </dependency>
 
     <!-- actuator -->
     <dependency>
