@@ -21,7 +21,7 @@
     <spring.boot.version>2.1.7.RELEASE</spring.boot.version>
     <spring.cloud.version>Greenwich.SR2</spring.cloud.version>
 
-    <springfox-swagger2.version>2.9.2</springfox-swagger2.version>
+    <springdoc-openapi.version>1.1.8</springdoc-openapi.version>
     <log4jdbc.version>1.16</log4jdbc.version>
 
     <mybatis.version>3.4.6</mybatis.version>
@@ -147,17 +147,11 @@
       </dependency>
 
 
-      <!--swagger2-->
+      <!--swagger-->
       <dependency>
-        <groupId>io.springfox</groupId>
-        <artifactId>springfox-swagger2</artifactId>
-        <version>${springfox-swagger2.version}</version>
-      </dependency>
-
-      <dependency>
-        <groupId>io.springfox</groupId>
-        <artifactId>springfox-swagger-ui</artifactId>
-        <version>${springfox-swagger2.version}</version>
+        <groupId>org.springdoc</groupId>
+        <artifactId>springdoc-openapi-ui</artifactId>
+        <version>${springdoc-openapi.version}</version>
       </dependency>
 
       <!--jdbc-->

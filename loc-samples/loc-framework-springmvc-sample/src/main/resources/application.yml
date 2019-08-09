@@ -4,11 +4,6 @@ server:
 logging:
   file: ./logs/loc.log
 
-loc.web.springmvc.swagger2:
-  restapi:
-    base-package: "com.loc.framework.springmvc.sample.controller"
-#  enabled: false
-
 loc.tomcat.shutdown.wait-time: 20
 
 #sentry:
