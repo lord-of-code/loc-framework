@@ -4,6 +4,7 @@ server:
 logging:
   file: ./logs/loc.log
 
+
 loc.tomcat.shutdown.wait-time: 20
 
 #sentry:
