@@ -1,11 +1,12 @@
 package com.loc.framework.autoconfigure.okhttp;
 
-import static com.loc.framework.autoconfigure.utils.LocConstants.OKHTTP_ERROR_CODE;
+import static com.loc.framework.autoconfigure.common.LocConstants.OKHTTP_ERROR_CODE;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Strings;
 import com.loc.framework.autoconfigure.LocServiceException;
+import com.loc.framework.autoconfigure.common.BaseResult;
 import com.loc.framework.autoconfigure.utils.ProblemUtil;
 import java.io.IOException;
 import java.lang.reflect.Type;
@@ -46,7 +47,7 @@ public class LocOkHttpClient {
   }
 
 
-  public Problem get(OkHttpClientBuilder hnGetBuilder) {
+  public <T> BaseResult<T> get(OkHttpClientBuilder hnGetBuilder) {
     checkBasicParam(hnGetBuilder);
     Builder builder = createRequestBuilder(
         createGetUrl(hnGetBuilder.getUrl(), hnGetBuilder.getParams()), hnGetBuilder.getHeaders());
@@ -54,7 +55,7 @@ public class LocOkHttpClient {
   }
 
 
-  public Problem post(OkHttpClientBuilder okHttpClientBuilder) {
+  public <T> BaseResult<T> post(OkHttpClientBuilder okHttpClientBuilder) {
     checkBasicParam(okHttpClientBuilder);
     Builder builder = createRequestBuilder(okHttpClientBuilder.getUrl(),
         okHttpClientBuilder.getHeaders());
@@ -75,7 +76,7 @@ public class LocOkHttpClient {
     );
   }
 
-  public Problem postEncoded(OkHttpClientBuilder hnPostBuilder, List<String> excludeEncode) {
+  public <T> BaseResult<T> postEncoded(OkHttpClientBuilder hnPostBuilder, List<String> excludeEncode) {
     checkBasicParam(hnPostBuilder);
     Builder builder = createRequestBuilder(hnPostBuilder.getUrl(), hnPostBuilder.getHeaders());
 
@@ -99,7 +100,7 @@ public class LocOkHttpClient {
     );
   }
 
-  public Problem postJson(OkHttpClientBuilder okHttpClientBuilder) {
+  public <T> BaseResult<T> postJson(OkHttpClientBuilder okHttpClientBuilder) {
     checkBasicParam(okHttpClientBuilder);
     Builder builder = createRequestBuilder(okHttpClientBuilder.getUrl(),
         okHttpClientBuilder.getHeaders());
@@ -111,7 +112,7 @@ public class LocOkHttpClient {
   }
 
   @SuppressWarnings("unchecked")
-  private Problem returnBaseResult(Request request, TypeReference typeReference) {
+  private <T> BaseResult<T> returnBaseResult(Request request, TypeReference typeReference) {
     try {
       Response response = this.okHttpClient.newCall(request).execute();
       if (response.isSuccessful()) {
@@ -119,10 +120,10 @@ public class LocOkHttpClient {
         checkResult(result);
         Type type = typeReference.getType();
         if (isPrimitiveType(type)) {
-          return ProblemUtil.createProblem(result);
+          return new BaseResult(result);
         }
 
-        return ProblemUtil.createProblem(objectMapper.readValue(result, typeReference));
+        return BaseResult.success(objectMapper.readValue(result, typeReference));
       } else {
         log.error("request url: {} http status code:{}", request.url(), response.code());
         String result = Optional.ofNullable(response.body())
@@ -135,7 +136,7 @@ public class LocOkHttpClient {
               }
             })
             .orElse(Status.BAD_REQUEST.getReasonPhrase());
-        return Problem.valueOf(Status.BAD_REQUEST, result, URI.create(request.url().toString()));
+        return new BaseResult(Status.BAD_REQUEST.getStatusCode(), result);
       }
     } catch (Exception e) {
       throw new LocServiceException(OKHTTP_ERROR_CODE, e.getMessage());

@@ -2,7 +2,7 @@ package com.loc.framework.autoconfigure.metrics;
 
 import com.google.common.collect.Sets;
 import com.loc.framework.autoconfigure.utils.HostUtil;
-import com.loc.framework.autoconfigure.utils.LocConstants;
+import com.loc.framework.autoconfigure.common.LocConstants;
 import io.micrometer.core.instrument.MeterRegistry;
 import io.micrometer.core.instrument.config.MeterFilter;
 import io.micrometer.influx.InfluxMeterRegistry;

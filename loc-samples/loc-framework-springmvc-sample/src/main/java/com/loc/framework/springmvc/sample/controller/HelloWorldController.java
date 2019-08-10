@@ -2,6 +2,7 @@ package com.loc.framework.springmvc.sample.controller;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.google.common.collect.Lists;
+import com.loc.framework.autoconfigure.common.BaseResult;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -28,7 +29,7 @@ public class HelloWorldController {
 
   @Operation(description = "我是一个简单的GET接口")
   @GetMapping(value = "/test/get")
-  public Demo testGet(
+  public BaseResult<Demo> testGet(
       @Parameter(description = "名称") @RequestParam(name = "name") String name,
       @Parameter(description = "年龄") @RequestParam(name = "age") Integer age,
       @Parameter(description = "出生时间") @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") @RequestParam(name = "birthTime") LocalDateTime birthTime,
@@ -39,12 +40,12 @@ public class HelloWorldController {
     demo.setAge(age);
     demo.setBirthTime(birthTime);
     demo.setAddress(Lists.newArrayList(address));
-    return demo;
+    return BaseResult.success(demo);
   }
 
   @Operation(description = "我是一个简单的POST-FORM接口")
-  @PostMapping(value = "/test/post-form")
-  public Demo testPostForm(@Parameter(description = "名称") @RequestParam(name = "name") String name,
+  @PostMapping(value = "/test/post-form",consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+  public BaseResult<Demo> testPostForm(@Parameter(description = "名称") @RequestParam(name = "name") String name,
       @Parameter(description = "年龄") @RequestParam(name = "age") Integer age,
       @Parameter(description = "出生时间") @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") @RequestParam(name = "birthTime") LocalDateTime birthTime,
       @Parameter(description = "地址") @RequestParam(name = "address") String address) {
@@ -53,13 +54,13 @@ public class HelloWorldController {
     demo.setAge(age);
     demo.setBirthTime(birthTime);
     demo.setAddress(Lists.newArrayList(address));
-    return demo;
+    return BaseResult.success(demo);
   }
 
   @Operation(description = "我是一个简单的POST-BODY接口")
   @PostMapping(value = "/test/post-body", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-  public Demo testPostBody(@RequestBody Demo demo) {
-    return demo;
+  public BaseResult<Demo> testPostBody(@RequestBody Demo demo) {
+    return BaseResult.success(demo);
   }
 
 
