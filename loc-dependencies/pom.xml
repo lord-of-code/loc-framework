@@ -33,7 +33,7 @@
 
     <problem-spring-web.version>0.24.0</problem-spring-web.version>
 
-    <logbook.version>1.13.0</logbook.version>
+    <logbook.version>2.0.0-RC.1</logbook.version>
 
     <feign-form.version>3.8.0</feign-form.version>
 
@@ -60,6 +60,13 @@
         <groupId>io.zipkin.brave</groupId>
         <artifactId>brave-bom</artifactId>
         <version>${brave.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.zalando</groupId>
+        <artifactId>logbook-bom</artifactId>
+        <version>${logbook.version}</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -191,18 +198,6 @@
         <version>${problem-spring-web.version}</version>
       </dependency>
 
-      <!--logbook-->
-      <dependency>
-        <groupId>org.zalando</groupId>
-        <artifactId>logbook-okhttp</artifactId>
-        <version>${logbook.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.zalando</groupId>
-        <artifactId>logbook-spring-boot-starter</artifactId>
-        <version>${logbook.version}</version>
-      </dependency>
-
       <!--feign form -->
       <dependency>
         <groupId>io.github.openfeign.form</groupId>
@@ -264,7 +259,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-checkstyle-plugin</artifactId>
-          <version>3.0.0</version>
+          <version>3.1.0</version>
         </plugin>
         <plugin>
           <groupId>org.codehaus.mojo</groupId>

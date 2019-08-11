@@ -165,12 +165,10 @@
     <dependency>
       <groupId>org.zalando</groupId>
       <artifactId>logbook-okhttp</artifactId>
-      <optional>true</optional>
     </dependency>
     <dependency>
       <groupId>org.zalando</groupId>
       <artifactId>logbook-spring-boot-starter</artifactId>
-      <optional>true</optional>
     </dependency>
 
 
