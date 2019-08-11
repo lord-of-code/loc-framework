@@ -40,11 +40,14 @@ public class HelloWorldController {
     demo.setAge(age);
     demo.setBirthTime(birthTime);
     demo.setAddress(Lists.newArrayList(address));
+    log.trace(demo.toString());
+    log.info(demo.toString());
+    log.warn(demo.toString());
     return BaseResult.success(demo);
   }
 
   @Operation(description = "我是一个简单的POST-FORM接口")
-  @PostMapping(value = "/test/post-form",consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+  @PostMapping(value = "/test/post-form")
   public BaseResult<Demo> testPostForm(@Parameter(description = "名称") @RequestParam(name = "name") String name,
       @Parameter(description = "年龄") @RequestParam(name = "age") Integer age,
       @Parameter(description = "出生时间") @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") @RequestParam(name = "birthTime") LocalDateTime birthTime,

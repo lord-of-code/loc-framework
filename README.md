@@ -15,6 +15,7 @@
 ## loc-framework 2.0 主要改动
 1. 升级基础依赖的Spring Boot 2.2 和 Spring Cloud Hoxton
 2. 使用springdoc-openapi代替springfox（springfox长期不进行更新，存在的一些bug得不到解决，需要的一些feature得不到开发）
+3. 升级logbook到2.0.0大版本，提供更多的日志记录的功能
 
 
 ## springdoc-openapi对比于springfox的区别
@@ -22,6 +23,16 @@
 2. 注解使用了swagger-core的最新注解
 3. 支持了webflux的服务端
 4. 解决了一些重要bug
+
+## logbook需要注意的点
+1. logbook默认的DefaultSink记录日志是使用的trace级别，需要注意通过调整日志级别才能输出请求日志
+2. 需要排除一些不需要打印的路径(`/actuator/**`, `/v3/api-docs`, `/webjars/**`)
+
+
+## 记录访问日志默认规则
+1. request记录请求方法，请求头，请求参数（对于文件上传，和流上传不进行记录）
+2. response记录响应头，如果是正常返回则不记录响应体, 如果是status大于400的则记录响应体（对于返回文件和流不进行记录）
+
 
 ## 通过统一变量来管理框架版本
 1. Maven 版本必须是 3.5.2 +

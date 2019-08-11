@@ -3,6 +3,8 @@ server:
 
 logging:
   file: ./logs/loc.log
+  level:
+    org.zalando.logbook: trace
 
 
 loc.tomcat.shutdown.wait-time: 20
@@ -10,3 +12,11 @@ loc.tomcat.shutdown.wait-time: 20
 #sentry:
 #  dsn: https://public:private@host:port/1
 
+
+logbook:
+  strategy: body-only-if-status-at-least
+  minimum-status: 400
+  exclude:
+    - /actuator/**
+    - /webjars/**
+    - /v3/api-docs
