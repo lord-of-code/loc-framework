@@ -1,6 +1,7 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
 com.loc.framework.autoconfigure.springmvc.LocSpringMvcAutoConfiguration,\
 com.loc.framework.autoconfigure.springmvc.LocAdviceErrorAutoConfiguration,\
+com.loc.framework.autoconfigure.springmvc.LocResponseBodyAdvice,\
 com.loc.framework.autoconfigure.shutdown.TomcatGracefulShutdownAutoConfiguration,\
 com.loc.framework.autoconfigure.jdbc.LocDataSourceAutoConfiguration,\
 com.loc.framework.autoconfigure.mybatis.LocMybatisAutoConfiguration,\
